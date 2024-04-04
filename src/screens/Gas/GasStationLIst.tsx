@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, SafeAreaView, StatusBar } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { ActivityIndicator } from '../../components/ActivityIndicator';
 import { generalStyles } from '../utils/generatStyles';
@@ -52,7 +52,8 @@ const GasStationLIst = () => {
     }
 
     return (
-        <View style={[{ paddingBottom: 5 }, generalStyles.ScreenContainer]}>
+        <SafeAreaView style={[{ paddingBottom: 5 }, generalStyles.ScreenContainer]}>
+            <StatusBar backgroundColor={COLORS.primaryOrangeHex} />
 
             <View style={styles.containerStyle}>
                 <View style={[generalStyles.absoluteStyles, { left: 10, top: 25 }]}>
@@ -85,7 +86,7 @@ const GasStationLIst = () => {
                 )
             }
 
-        </View>
+        </SafeAreaView>
     )
 }
 

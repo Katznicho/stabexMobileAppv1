@@ -71,9 +71,7 @@ const Login = () => {
 
     try {
 
-
       setLoading(true)
-
 
       var details = {
         'userName': phoneNumber,
@@ -88,6 +86,10 @@ const Login = () => {
         formBody.push(encodedKey + "=" + encodedValue);
       }
       formBody = formBody.join("&");
+
+      console.log("=======form data========")
+      console.log(formBody)
+      console.log("======form data==========")
 
       fetch(LOGIN_IN_USER, {
         method: 'POST',
@@ -355,7 +357,7 @@ const Login = () => {
 
 
 
-        <View style={generalStyles.forgotPasswordContainer}>
+        <View style={[generalStyles.forgotPasswordContainer]}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => navigation.navigate("ForgotPasswordEmail")}

@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View, FlatList } from 'react-native'
+import { Pressable, StyleSheet, Text, View, FlatList, Platform } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../theme/theme';
@@ -7,10 +7,7 @@ import { generalStyles } from '../screens/utils/generatStyles';
 
 const OrdersFlatList = ({ ordersData }: any) => {
 
-
     const navigation = useNavigation<any>();
-
-
 
     return (
         <FlatList
@@ -30,13 +27,14 @@ const OrdersFlatList = ({ ordersData }: any) => {
                             )}
                     >
 
-
                         <View
                             style={{
                                 flexDirection: 'column',
                                 flex: 1,
                                 marginHorizontal: 10,
                                 marginTop: 10,
+                                padding: Platform.OS === 'ios' ? 10 : 0,
+                                elevation: 5,
                             }}
                         >
                             <Text style={[generalStyles.CardTitle]}>{item?.ApplicationUser?.Company}</Text>
@@ -89,14 +87,14 @@ export default OrdersFlatList
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.primaryBlackHex,
+        backgroundColor: Platform.OS === 'ios' ? COLORS.primaryBlackHex : COLORS.primaryLightWhiteGrey,
         borderRadius: 10,
         padding: 10,
         shadowColor: 'rgba(0, 0, 0, 0.1)',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 1,
         shadowRadius: 4,
-        elevation: 5,
+        elevation: 50,
         margin: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',

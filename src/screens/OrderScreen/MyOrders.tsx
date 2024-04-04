@@ -7,6 +7,7 @@ import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../../theme/theme'
 import OrdersFlatList from '../../components/OrdersFlatList'
 import { usePostQuery } from '../../hooks/usePostQuery'
 import { ActivityIndicator } from '../../components/ActivityIndicator'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 
 const MyOrders = () => {
 
@@ -25,10 +26,11 @@ const MyOrders = () => {
     if (isLoading) {
         return <ActivityIndicator />
     }
+    const tabBarHeight = useBottomTabBarHeight();
 
 
     return (
-        <SafeAreaView style={[generalStyles.ScreenContainer]}>
+        <SafeAreaView style={[generalStyles.ScreenContainer, {paddingBottom: tabBarHeight}]}>
             {
                 data?.data?.length === 0 && (
                     <View style={[generalStyles.centerContent, styles.viewStyles]} >

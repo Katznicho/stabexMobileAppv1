@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
 import { generalStyles } from '../screens/utils/generatStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
@@ -163,12 +163,13 @@ const styles = StyleSheet.create({
         width: 150
     },
     overAllContainer: {
-        backgroundColor: COLORS.primaryBlackHex,
+        backgroundColor: Platform.OS === 'android' ? COLORS.primaryBlackHex : COLORS.primaryLightWhiteGrey,
         borderRadius: SPACING.space_8,
         padding: SPACING.space_10,
         elevation: 10
     },
     additionCardContainerStyles: {
-        borderRightWidth: 0.5, borderRightColor: COLORS.primaryLightGreyHex
+        borderRightWidth: 0.5,
+        borderRightColor: COLORS.primaryLightGreyHex
     }
 })

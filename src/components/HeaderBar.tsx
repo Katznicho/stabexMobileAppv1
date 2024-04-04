@@ -1,8 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
-import GradientBGIcon from './GradientBGIcon';
-import ProfilePic from './ProfilePic';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -18,40 +16,46 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ title }) => {
   const greetings = useShowGreeting();
 
   return (
-    <View style={styles.HeaderContainer}>
-      <TouchableOpacity
-        onPress={() => navigation.toggleDrawer()}
-      >
-        <Entypo
-          name="menu"
-          color={COLORS.primaryBlackHex}
-          size={30}
-        />
+    <SafeAreaView style={styles.HeaderContainer}>
+      <View style={styles.viewContainer}>
 
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.toggleDrawer()}
+        >
+          <Entypo
+            name="menu"
+            color={COLORS.primaryBlackHex}
+            size={30}
+          />
 
+        </TouchableOpacity>
 
+        <View style={styles.centerView}>
+          <Text style={styles.HeaderText}>{greetings}</Text>
+        </View>
 
-      <View style={styles.centerView}>
-        <Text style={styles.HeaderText}>{greetings}</Text>
+        <View style={styles.centerView}>
+          <Text style={styles.titleText}>{title}</Text>
+        </View>
+
       </View>
 
-      <View style={styles.centerView}>
-        <Text style={styles.titleText}>{title}</Text>
-      </View>
-
-    </View >
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   HeaderContainer: {
-    paddingHorizontal: SPACING.space_18,
-    paddingVertical: SPACING.space_10,
+    // padding: 10,
     // flexDirection: 'row',
     // alignItems: 'center',
     // justifyContent: 'space-between',
     backgroundColor: COLORS.primaryOrangeHex
+  },
+  viewContainer: {
+    paddingHorizontal: SPACING.space_18,
+    paddingVertical: SPACING.space_10,
+
   },
   HeaderText: {
     fontFamily: FONTFAMILY.poppins_light,

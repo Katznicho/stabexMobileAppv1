@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { COLORS } from '../theme/theme';
-import { BlurView } from '@react-native-community/blur';
 import CustomIcon from '../components/CustomIcon';
 import HomeStack from './HomeStack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -26,19 +25,22 @@ const TabNavigator = () => {
         tabBarShowLabel: true,
         tabBarActiveTintColor: COLORS.primaryOrangeHex,
         tabBarInactiveTintColor: COLORS.primaryLightGreyHex,
-        tabBarStyle: styles.tabBarStyle,
+        tabBarStyle: Platform.OS === "ios" ? [styles.tabBarStyleIos] : [styles.tabBarStyleAndroid],
         tabBarLabelStyle: {
           fontSize: 12,
-          paddingBottom: 5
+          paddingBottom: Platform.OS == "ios" ? 0 : 5,
+          paddingVertical: Platform.OS == "ios" ? 0 : 0
+
         }
 
       }
       }
-      >
+    >
       <Tab.Screen
         name="HomeTab"
         component={HomeStack}
         options={{
+
           title: "Home",
           tabBarIcon: ({ focused, color, size }) => (
             <CustomIcon
@@ -113,7 +115,7 @@ const TabNavigator = () => {
 };
 
 const styles = StyleSheet.create({
-  tabBarStyle: {
+  tabBarStyleAndroid: {
     height: 60,
     position: 'absolute',
     backgroundColor: COLORS.primaryLightWhiteGrey,
@@ -122,8 +124,13 @@ const styles = StyleSheet.create({
     borderTopColor: 'transparent',
     marginHorizontal: 10,
     marginVertical: 10,
-    borderRadius: 20
+    borderRadius: 20,
   },
+  tabBarStyleIos: {
+    position: 'absolute',
+    backgroundColor: COLORS.primaryLightWhiteGrey,
+
+  }
 
 });
 

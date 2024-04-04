@@ -1,5 +1,7 @@
 
-export const BASE_URL = "https://development.stabexinternational.com/loyaltyapi";
+// export const BASE_URL = "https://development.stabexinternational.com/loyaltyapi";
+
+export const BASE_URL = "https://checksum.co.ke/stabexmobileapi";
 
 
 
