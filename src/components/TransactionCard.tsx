@@ -6,9 +6,9 @@ import { changeNumberToMonth } from '../screens/utils/helpers/helpers'
 import { PAYMENT_STATUS } from '../screens/utils/constants/constants'
 
 
-const TransactionCard: React.FC<{ data: any, cardDetails: any }> = ({ data, cardDetails }: any) => {
+const TransactionCard: React.FC<{ data: any }> = ({ data}: any) => {
 
-    const createdAtDate = new Date(data.created_at);
+    const createdAtDate = new Date(data.transaction_date);
 
     // Extract year, month, day, hour, and minutes
     const year = createdAtDate.getFullYear();
@@ -28,8 +28,8 @@ const TransactionCard: React.FC<{ data: any, cardDetails: any }> = ({ data, card
                 </View>
                 <View style={[styles.cardContainer]}>
                     <Text style={styles.CardTitle}>{data.transaction_type}</Text>
-                    <Text style={[styles.CardSubtitle, { color: COLORS.secondaryDarkGreyHex }]}>{data.payment_method}</Text>
-                    <Text style={[styles.CardSubtitle, { color: COLORS.secondaryDarkGreyHex }]}>{cardDetails?.card_number}</Text>
+                    <Text style={[styles.CardSubtitle, { color: COLORS.secondaryDarkGreyHex }]}>{data.comments}</Text>
+                    <Text style={[styles.CardSubtitle, { color: COLORS.secondaryDarkGreyHex }]}>{data?.card_number}</Text>
                     <Text style={[styles.CardSubtitle, {
                         fontWeight: "bold",
                         color: data?.transaction_status == PAYMENT_STATUS.FAILED ? COLORS.primaryRedHex :
@@ -39,7 +39,7 @@ const TransactionCard: React.FC<{ data: any, cardDetails: any }> = ({ data, card
                 </View>
                 <View style={[{ alignItems: 'center' }]}>
                     <Text style={styles.CardPriceCurrency}>UGX </Text>
-                    <Text style={styles.CardPriceCurrency}> {parseInt(data.amount)?.toLocaleString()} </Text>
+                    <Text style={styles.CardPriceCurrency}> {parseInt(data?.amount)?.toLocaleString()} </Text>
                 </View>
             </View>
         </View>

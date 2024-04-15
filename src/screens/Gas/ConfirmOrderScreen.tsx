@@ -12,7 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import SelectPaymentMethod from '../../components/SelectPaymentMethod'
 import DeliveryAddress from '../../components/DeliveryAddress'
 import AmountCalculator from '../../components/AmountCalculator'
-import { CREATE_CUSTOMER_ORDER_WITH_PAYMENT, CREATE_MY_ORDER, } from '../utils/constants/routes'
+import { CREATE_CUSTOMER_ORDER_WITH_PAYMENT, CREATE_MY_ORDER, SUBMIT_ORDER, } from '../utils/constants/routes'
 import { ActivityIndicator } from '../../components/ActivityIndicator'
 import { showMessage } from 'react-native-flash-message'
 import { Dialog, PanningProvider, RadioButton, RadioGroup, Switch } from 'react-native-ui-lib';
@@ -92,58 +92,52 @@ const ConfirmOrderScreen = () => {
 
 
 
-
     const onPlacePaymentOrder = () => {
-        console.log("placing order")
         try {
             setLoading(true)
 
             const extractedData = cartList.map(item => ({
                 price: item.unit_price,
-                product_id: item.Id,
+                product_id: item.product_id,
                 quantity: item.quantity,
-                total_price: item.unit_price * item.quantity
+                total_price: item.unit_price * item.quantity,
+
             }));
 
             const headers = new Headers();
             headers.append('Accept', 'application/json');
-            headers.append("X-Requested-With", "XMLHttpRequest");
+            headers.append("Content-Type", "application/json");
             headers.append('Authorization', `Bearer ${authToken}`);
 
             const totalCost = totalPrice + deliveryCharge
 
             const bodyData = JSON.stringify({
-                "station_id": station?.id,
+                "station_id": station?.Id,
                 "order_type": deliveryOption,
                 "pay_now": payNow,
                 "address_type": selectedDeliveryAddress?.address_type,
                 "address": selectedDeliveryAddress?.address,
                 "longitude": selectedDeliveryAddress?.longitude,
                 "latitude": selectedDeliveryAddress?.latitude,
-                "payment_method_id": selectedPaymentOption?.id,
+                "payment_method_id": selectedPaymentOption?.Id,
                 "purchase_cost": totalPrice,
-                "delivery_cost": deliveryCharge,
+                // "delivery_cost": deliveryCharge,
+                 "delivery_cost": "1000",
                 "total_cost": totalCost,
-                "delivery_address_id": selectedDeliveryAddress?.id,
+                "delivery_address_id": selectedDeliveryAddress?.Id,
                 "OrderedProductRequestModel": extractedData
 
             })
 
-            console.log(bodyData)
+             console.log(bodyData)
 
-
-            fetch(`${CREATE_CUSTOMER_ORDER_WITH_PAYMENT}`, {
+            fetch(`${SUBMIT_ORDER}`, {
                 headers,
                 method: 'POST',
                 body: bodyData
             })
                 .then(a => a.json())
                 .then(result => {
-
-                    console.log("===================response result=========")
-                    console.log(result)
-                    console.log("=============response result===============")
-
                     setLoading(false)
                     if (result.status == 1) {
                         setIsVisible(true)
@@ -154,6 +148,10 @@ const ConfirmOrderScreen = () => {
                             icon: "success",
                             duration: 3000
                         })
+                        //empty cart 
+                        dispatch(emptyCart());
+                        return navigation.navigate("Orders")
+                        //navigat
 
                         // Start checking after 5 seconds
                     }
@@ -171,9 +169,6 @@ const ConfirmOrderScreen = () => {
                 })
 
         } catch (error) {
-            console.log("===================response error=========")
-            console.log(error)
-            console.log("=============response error===============")
             setLoading(false)
             return showMessage({
                 'message': "Something went wrong",

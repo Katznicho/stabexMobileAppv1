@@ -7,6 +7,7 @@ import MyOrders from '../screens/OrderScreen/MyOrders';
 import { generalStyles } from '../screens/utils/generatStyles';
 import { COLORS } from '../theme/theme';
 import OrderDetails from '../screens/OrderScreen/OrderDetails';
+import OrderTabs from '../screens/OrderScreen/OrderTabs';
 
 
 
@@ -24,7 +25,7 @@ const OrderStack = () => {
             <Stack.Screen
 
                 name="OrderScreen"
-                component={MyOrders}
+                component={OrderTabs}
                 options={{
                     animation: 'slide_from_bottom',
                     title: 'My Orders',

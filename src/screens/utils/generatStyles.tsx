@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from "../../theme/theme";
 
 export const generalStyles = StyleSheet.create({
@@ -86,7 +86,7 @@ export const generalStyles = StyleSheet.create({
     width: '70%',
     backgroundColor: COLORS.primaryOrangeHex,
     borderRadius: 25,
-    padding: 10,
+    padding: Platform.OS == "android" ? 10 : 15,
     marginTop: 30,
     alignSelf: 'center',
     alignItems: 'center',
@@ -117,12 +117,12 @@ export const generalStyles = StyleSheet.create({
     borderBottomWidth: 1,
     // paddingBottom: 2,
     paddingHorizontal: 0,
-    paddingVertical: 0,
+    paddingVertical: Platform.OS === 'android' ? 0 : 10,
     marginTop: 5,
     // marginHorizontal: 20
   },
   formContainer: {
-    marginVertical: 5,
+    marginVertical: Platform.OS === 'android' ? 5 : 10,
     marginHorizontal: 25
   },
   titleHeaderStyles: {

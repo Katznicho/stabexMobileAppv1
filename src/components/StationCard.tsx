@@ -10,9 +10,9 @@ const StationCard: React.FC<any> = React.memo(({ data, position }: any) => {
     const navigation = useNavigation<any>();
 
 
-    // const distance = useMemo(() => {
-    //     return calculateDistance(position?.latitude, position?.longitude, parseFloat(data?.lat), parseFloat(data?.lon));
-    // }, [position, data?.lat, data?.lon]);
+    const distance = useMemo(() => {
+        return calculateDistance(position?.latitude, position?.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude));
+    }, [position, data?.latitude, data?.longitude]);
 
 
 
@@ -28,7 +28,7 @@ const StationCard: React.FC<any> = React.memo(({ data, position }: any) => {
             <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: "center" }]}>
                 <Entypo name="location-pin" color={COLORS.primaryOrangeHex} size={20} />
                 <Text style={[generalStyles.CardSubtitle, { marginHorizontal: 0, fontSize: 15 }]}>
-                    {10} kms
+                    {distance} kms
                 </Text>
             </View>
         </TouchableOpacity>

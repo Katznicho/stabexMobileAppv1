@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, ImageBackground, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, ImageBackground, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react';
 import { generalStyles } from '../utils/generatStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -16,91 +16,93 @@ const GasStationDetails = () => {
 
 
     return (
-        <KeyboardAwareScrollView
-            style={[{ flex: 1, width: '100%' }, generalStyles.ScreenContainer]}
-            keyboardShouldPersistTaps="always"
-            contentContainerStyle={{ paddingBottom: 100 }}
-        >
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                // contentContainerStyle={{ paddingBottom: tabBarHeight }}
+        <SafeAreaView style={[{ flex: 1, width: '100%' }, generalStyles.ScreenContainer]}>
+            <KeyboardAwareScrollView
+                style={[{ flex: 1, width: '100%' }, generalStyles.ScreenContainer]}
                 keyboardShouldPersistTaps="always"
+                contentContainerStyle={{ paddingBottom: 100 }}
             >
-                {/* show background image */}
-                <ImageBackground
-                    source={{ uri: station?.image }}
-                    style={styles.ItemBackgroundImage}
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    // contentContainerStyle={{ paddingBottom: tabBarHeight }}
+                    keyboardShouldPersistTaps="always"
                 >
-                    {/* back handler */}
-                    <View style={styles.ImageHeaderBarContainerWithBack}>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            onPress={() => {
-                                navigation.goBack()
-                            }}>
-                            <GradientBGIcon
-                                name="left"
-                                color={COLORS.primaryOrangeHex}
-                                size={FONTSIZE.size_16}
-                            />
-                        </TouchableOpacity>
+                    {/* show background image */}
+                    <ImageBackground
+                        source={{ uri: station?.image }}
+                        style={styles.ItemBackgroundImage}
+                    >
+                        {/* back handler */}
+                        <View style={styles.ImageHeaderBarContainerWithBack}>
+                            <TouchableOpacity
+                                activeOpacity={1}
+                                onPress={() => {
+                                    navigation.goBack()
+                                }}>
+                                <GradientBGIcon
+                                    name="left"
+                                    color={COLORS.primaryOrangeHex}
+                                    size={FONTSIZE.size_16}
+                                />
+                            </TouchableOpacity>
 
+
+                        </View>
+
+                        {/* back handler */}
+
+                        {/* more details */}
+
+
+                        {/* more details */}
+                    </ImageBackground>
+                    {/* show background */}
+                    <View style={styles.cardContainer}>
+
+
+                        <ProductCategories
+                            station={station}
+                        />
+
+                        <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
+                        <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]}>
+                            <View>
+                                <Text style={styles.CardTitle} >Name</Text>
+                                <Text style={styles.CardSubtitle}>{station?.name ?? station?.station_name}</Text>
+                            </View>
+                            <View>
+                                <Text style={styles.CardTitle} >Distance</Text>
+                                <Text style={styles.CardSubtitle}>
+                                    {calculateDistance(position.latitude, position.longitude, parseFloat(station?.latitude), parseFloat(station?.longitude))} kms away
+                                </Text>
+                            </View>
+
+                        </View>
+                        <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
+
+                        <View>
+                            <View>
+                                <Text style={styles.CardTitle} >MTN Merchant Code</Text>
+                                <Text style={styles.CardSubtitle}>{station?.mtn_merchant_code}</Text>
+                            </View>
+
+                            <View>
+                                <Text style={styles.CardTitle} >AIRTEL Merchant Code</Text>
+                                <Text style={styles.CardSubtitle}>{station?.airtel_merchant_code}</Text>
+                            </View>
+
+
+                        </View>
 
                     </View>
 
-                    {/* back handler */}
 
-                    {/* more details */}
-
-
-                    {/* more details */}
-                </ImageBackground>
-                {/* show background */}
-                <View style={styles.cardContainer}>
-
-
-                    <ProductCategories
-                        station={station}
-                    />
-
-                    <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
-                    <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]}>
-                        <View>
-                            <Text style={styles.CardTitle} >Name</Text>
-                            <Text style={styles.CardSubtitle}>{station?.name ?? station?.station_name}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.CardTitle} >Distance</Text>
-                            <Text style={styles.CardSubtitle}>
-                                {calculateDistance(position.latitude, position.longitude, parseFloat(station?.latitude), parseFloat(station?.longitude))} kms away
-                            </Text>
-                        </View>
-
-                    </View>
-                    <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
-
-                    <View>
-                        <View>
-                            <Text style={styles.CardTitle} >MTN Merchant Code</Text>
-                            <Text style={styles.CardSubtitle}>{station?.mtn_merchant_code}</Text>
-                        </View>
-
-                        <View>
-                            <Text style={styles.CardTitle} >AIRTEL Merchant Code</Text>
-                            <Text style={styles.CardSubtitle}>{station?.airtel_merchant_code}</Text>
-                        </View>
-
-
-                    </View>
-
-                </View>
-
-
-            </ScrollView>
+                </ScrollView>
 
 
 
-        </KeyboardAwareScrollView>
+            </KeyboardAwareScrollView>
+        </SafeAreaView>
     )
 }
 

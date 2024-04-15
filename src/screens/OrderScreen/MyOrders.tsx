@@ -20,6 +20,16 @@ const MyOrders = () => {
             // refetchOnMount: true,
         },
     })
+
+    console.log("============================")
+    console.log(data)
+    console.log("============================")
+
+
+    console.log("=======================")
+    console.log(error)
+    console.log("=======================")
+
     const navigation = useNavigation<any>();
 
 
@@ -30,7 +40,7 @@ const MyOrders = () => {
 
 
     return (
-        <SafeAreaView style={[generalStyles.ScreenContainer, {paddingBottom: tabBarHeight}]}>
+        <SafeAreaView style={[generalStyles.ScreenContainer, { paddingBottom: tabBarHeight }]}>
             {
                 data?.data?.length === 0 && (
                     <View style={[generalStyles.centerContent, styles.viewStyles]} >

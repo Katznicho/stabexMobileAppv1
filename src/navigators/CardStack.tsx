@@ -7,9 +7,7 @@ import Index from '../screens/cardScreens/Index';
 import ApplyForCard from '../screens/cardScreens/ApplyForCard';
 import CardScreen from '../screens/cardScreens/CardScreen';
 import CardTransactions from '../screens/cardScreens/CardTransactions';
-import HeaderBar from '../components/HeaderBar';
 import ArrowBack from '../components/ArrowBack';
-import PaymentMethods from '../screens/cardScreens/PaymentMethods';
 import PaymentSummary from '../screens/cardScreens/PaymentSummary';
 import LinkCard from '../screens/cardScreens/LinkCard';
 import VerifyCardOtp from '../screens/cardScreens/VerifyCardOtp';
@@ -109,23 +107,7 @@ const CardStack = () => {
             </Stack.Screen>
             {/* card transactions */}
 
-            {/* saved payment method */}
-            <Stack.Screen
-                name="TopToYourCard"
-                component={PaymentMethods}
-                options={{
-                    animation: 'slide_from_bottom',
-                    title: 'Top To Your Card',
-                    headerStyle: generalStyles.headerStyle,
-                    headerTitleStyle: generalStyles.titleHeaderStyles,
-                    headerTintColor: COLORS.primaryBlackHex,
-                    headerTitleAlign: 'center',
-                    headerLeft: () => (
-                        <ArrowBack />
-                    ),
-                }}
-            ></Stack.Screen>
-            {/* saved payment method */}
+
 
             {/* summary */}
             <Stack.Screen

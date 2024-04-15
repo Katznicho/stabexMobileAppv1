@@ -1,28 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
 import StationCard from './StationCard';
+import { calculateDistance } from '../screens/utils/helpers/helpers';
 
 const StationsList: React.FC<any> = ({ stations, position }: any) => {
-
+    const [sortedStations, setSortedStations] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+
 
     useEffect(() => {
-        const fetchStations = async () => {
+        fetchData();
+    }, [stations, position]); // Include searchText as a dependency
+
+    const fetchData = async () => {
+        try {
             setLoading(true);
-            // No sorting is done here, just set the stations directly
+            let sorted;
+            sorted = await sortStations(stations, position);
+            setSortedStations(sorted);
+        } finally {
             setLoading(false);
-        };
+            setRefreshing(false);
+        }
+    };
 
-        fetchStations();
-    }, [stations, position]);
-
-    if (loading) {
-        return (
-            <View style={styles.loaderContainer}>
-                <ActivityIndicator size="large" color="#0000ff" />
-            </View>
+    const sortStations = async (stationsToSort: any[], userPosition: any) => {
+        const sorted = await Promise.all(
+            stationsToSort.map(async (station) => {
+                const distance = 
+                      calculateDistance(
+                        userPosition?.latitude,
+                        userPosition?.longitude,
+                        parseFloat(station?.latitude),
+                        parseFloat(station?.longitude)
+                    )
+                    // Set distance to infinity if lat or lon is null
+                return { ...station, distance };
+            })
         );
-    }
+
+        sorted.sort((a, b) => {
+            return a.distance - b.distance;
+        });
+
+        return sorted;
+    };
+
+    const handleRefresh = () => {
+        setRefreshing(true);
+        fetchData();
+    };
 
     return (
         <View style={styles.container}>
@@ -30,7 +58,7 @@ const StationsList: React.FC<any> = ({ stations, position }: any) => {
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 horizontal={true}
-                data={stations}
+                data={sortedStations}
                 renderItem={({ item }) => <StationCard
                     data={item}
                     position={position}

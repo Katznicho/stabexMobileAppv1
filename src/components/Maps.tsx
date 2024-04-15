@@ -1,20 +1,27 @@
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, Platform, Text, TouchableOpacity, Linking } from 'react-native';
 import MapHeader from './MapHeader';
 import { useNavigation } from '@react-navigation/native';
+import { COLORS } from '../theme/theme';
+import MapView from "react-native-map-clustering";
+import { generalStyles } from '../screens/utils/generatStyles';
+import { calculateDistance } from '../screens/utils/helpers/helpers';
 
 
 export default ({ stations, position }: any) => {
 
-
-
     const navigation = useNavigation<any>();
+    // const { position } = useGetUserLocation()
 
     const onMarkerSelected = (marker: any) => {
-
-        return navigation.navigate('StationDetails', { data: marker })
+        return navigation.navigate('StationDetails', { data: marker, position })
     }
+    const openMapsForDirections = (item:any) => {
+        const destination = `${item?.latitude},${item?.longitude}`;
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
+        return Linking.openURL(url);
+      };
 
     return (
         <View style={styles.container}>
@@ -24,42 +31,77 @@ export default ({ stations, position }: any) => {
             <MapView
                 provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                 style={styles.map}
+                // mapType={Platform.OS == "android" ? "none" : "standard"}
                 region={{
                     latitude: position?.latitude,
                     longitude: position?.longitude,
-                    latitudeDelta: 0.015,
-                    longitudeDelta: 0.0121,
+                    latitudeDelta: 0.9,
+                    longitudeDelta: 0.9,
+
                 }}
                 showsUserLocation
                 showsMyLocationButton
             >
                 {
-                    stations?.map((item: any, index: number) => (
+                    stations?.map((item: any, index: number) => {
 
-                        <Marker
-                            key={item?.id}
+                        return (<Marker
+                            draggable
+                            key={index}
                             coordinate={{
-                                latitude: parseFloat(item?.lat),
-                                longitude: parseFloat(item?.lon)
+                                latitude: parseFloat(item?.latitude),
+                                longitude: parseFloat(item?.longitude)
                             }}
-                            // pinColor={COLORS.primaryOrangeHex}
+                            pinColor={COLORS.primaryOrangeHex}
 
                             title={item?.name}
                             description={item?.name}
-                            onPress={() => onMarkerSelected(item)}
+                        // onPress={() => onMarkerSelected(item)}
                         >
                             <Image
                                 source={require('../assets/app_images/red-maker.png')}
                                 style={{ width: 40, height: 60 }}
                             />
-                        </Marker>
-                    ))
+                            <Callout
+                                onPress={() => onMarkerSelected(item)}
+                                style={styles.containerCalloutStyle}
+                            >
+                                <View  style={[generalStyles.centerContent]}>
+                                    <View>
+                                        <Text style={[generalStyles.CardSubtitle]}>Station Name</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={[generalStyles.CardTitle]}>{item?.station_name}</Text>
+                                    </View>
+
+                                    <View>
+                                        <Text style={[generalStyles.CardSubtitle]}>Distance</Text>
+                                    </View>
+
+                                    <View>
+                                        <Text style={[generalStyles.CardTitle]}>
+                                            {calculateDistance(position?.latitude, position?.longitude, parseFloat(item?.latitude), parseFloat(item?.longitude))} kms away
+                                        </Text>
+                                    </View>
+
+                                    <TouchableOpacity   
+                                        onPress={() => openMapsForDirections(item)}
+                                    >
+                                          <Text style={[generalStyles.CardTitle , {color:COLORS.primaryRedHex}]}>Get Directions</Text>
+                                    </TouchableOpacity>
+
+                                </View>
+
+
+                            </Callout>
+                        </Marker>)
+                    }
+                    )
                 }
             </MapView>
         </View>
     )
 }
-
 
 
 const styles = StyleSheet.create({
@@ -78,4 +120,10 @@ const styles = StyleSheet.create({
     map: {
         ...StyleSheet.absoluteFillObject,
     },
+    containerCalloutStyle:{
+        width: 200,
+        // height: 300,
+        backgroundColor: COLORS.primaryBlackHex,
+        borderRadius: 20,
+    }
 });

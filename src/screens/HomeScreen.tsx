@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import HomeCards from '../components/HomeCards';
 import DeviceInfo from 'react-native-device-info';
-import { SAVE_DEVICE_INFO } from './utils/constants/routes';
+// import { SAVE_DEVICE_INFO } from './utils/constants/routes';
 import HomeScroller from '../components/HomeScroller';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
@@ -89,18 +89,18 @@ const HomeScreen = () => {
     body.append('device_user_agent', device_user_agent);
     body.append('device_type', device_type);
 
-    fetch(`${SAVE_DEVICE_INFO}`, {
-      headers,
-      method: 'POST',
-      body,
-    })
-      .then(response => response.json())
-      .then(result => {
+    // fetch(`${SAVE_DEVICE_INFO}`, {
+    //   headers,
+    //   method: 'POST',
+    //   body,
+    // })
+    //   .then(response => response.json())
+    //   .then(result => {
 
-      })
-      .catch(error => {
+    //   })
+    //   .catch(error => {
 
-      });
+    //   });
   }
 
   return (

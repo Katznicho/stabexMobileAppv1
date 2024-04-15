@@ -12,7 +12,7 @@ import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import { COLORS } from '../../theme/theme';
 import { generalStyles } from '../utils/generatStyles';
-import { convertFirebaseTimestampToReadableDate } from '../utils/helpers/helpers';
+
 
 const { width } = Dimensions.get('window');
 
@@ -111,10 +111,7 @@ const PaymentDetails = () => {
                         }}>
                         Paid On
                     </Text>
-                    <Text
-                        style={{ color: COLORS.primaryLightGreyHex, padding: 5 }}>
-                        {convertFirebaseTimestampToReadableDate(item.createdAt)}
-                    </Text>
+                    
                     <View style={[styles.bottom]} />
                 </View>
                 {/* paid on */}

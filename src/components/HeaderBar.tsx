@@ -46,10 +46,6 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ title }) => {
 
 const styles = StyleSheet.create({
   HeaderContainer: {
-    // padding: 10,
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'space-between',
     backgroundColor: COLORS.primaryOrangeHex
   },
   viewContainer: {

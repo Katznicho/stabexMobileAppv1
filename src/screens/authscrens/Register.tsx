@@ -448,7 +448,7 @@ const Register = () => {
 
           <TextInput
             style={[generalStyles.formInput, styles.textInputMarginRight, errors.firstName && styles.errorInput]}
-            placeholder={'enter your first name'}
+            placeholder={'Enter First Name'}
             keyboardType="default"
             placeholderTextColor={COLORS.primaryWhiteHex}
             onChangeText={text => setfirstName(text)}
@@ -472,7 +472,7 @@ const Register = () => {
 
           <TextInput
             style={[generalStyles.formInput, styles.textInputMarginRight, errors.lastName && styles.errorInput]}
-            placeholder={'enter your last name'}
+            placeholder={'Enter Last Name'}
             keyboardType="default"
             placeholderTextColor={COLORS.primaryWhiteHex}
             onChangeText={text => setlastName(text)}
@@ -496,7 +496,7 @@ const Register = () => {
                 <Text style={[generalStyles.formInputTextStyle]}>Select Country</Text>
               </View>
               <Picker
-                placeholder="select your  country"
+                placeholder="Select Country"
                 placeholderTextColor={COLORS.primaryLightGreyHex}
                 value={countryCode}
                 style={[generalStyles.formInput, errors.countryCode && styles.errorInput]}
@@ -544,7 +544,7 @@ const Register = () => {
               styles.textInputMarginRight,
               errors.phoneNumber && styles.errorInput
             ]}
-            placeholder={'enter your phone number'}
+            placeholder={'Enter Phone Number'}
             placeholderTextColor={COLORS.primaryWhiteHex}
             onChangeText={handlePhoneNumberChange}
             value={phoneNumber}
@@ -575,7 +575,7 @@ const Register = () => {
               styles.textInputMarginRight,
               errors.email && styles.errorInput
             ]}
-            placeholder={'enter email'}
+            placeholder={'Enter Email'}
             keyboardType="email-address"
             placeholderTextColor={COLORS.primaryWhiteHex}
             onChangeText={handleEmailChange}
@@ -602,7 +602,7 @@ const Register = () => {
               style={[generalStyles.formInput, { flex: 1 }, errors.password && styles.errorInput]}
               placeholderTextColor={COLORS.primaryWhiteHex}
               secureTextEntry={!showPassword}
-              placeholder={'enter password'}
+              placeholder={'Enter Password'}
               onChangeText={handlePasswordChange}
               value={password}
               underlineColorAndroid="transparent"
@@ -638,7 +638,7 @@ const Register = () => {
               style={[generalStyles.formInput, { flex: 1 }, errors.confirmpassword && styles.errorInput]}
               placeholderTextColor={COLORS.primaryWhiteHex}
               secureTextEntry={!showPassword}
-              placeholder={'confirm  password'}
+              placeholder={'Confirm Password'}
               onChangeText={handleConfirmPasswordChange}
               value={confirmPassword}
               underlineColorAndroid="transparent"

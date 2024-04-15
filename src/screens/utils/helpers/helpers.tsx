@@ -124,17 +124,17 @@ export const formatPhoneNumber = (number: any) => {
     return num;
 };
 
-// export function formatTime(timeStr: string) {
-//     const timeObj = moment(`1970-01-01T${timeStr}Z`);
-//     const formattedTime = timeObj
-//         .format('hh:mm A')
-//         .replace(/^(\d{1}):/, '0$1:');
-//     return formattedTime;
-// }
-
 export function formatTime(timeStr: string) {
-    return moment(timeStr, 'HH:mm:ss').format('h A');
+    const timeObj = moment(`1970-01-01T${timeStr}Z`);
+    const formattedTime = timeObj
+        .format('hh:mm A')
+        .replace(/^(\d{1}):/, '0$1:');
+    return formattedTime;
 }
+
+// export function formatTime(timeStr: string) {
+//     return moment(timeStr, 'HH:mm:ss').format('h A');
+// }
 
 export function getErrorMessage(errors: any, fieldName: string) {
     if (errors?.hasOwnProperty(fieldName)) {

@@ -26,10 +26,8 @@ const HomeStack = () => {
                 component={HomeScreen}
                 options={{
                     animation: 'slide_from_bottom',
-                    // headerShown: true
                     header: () => <HeaderBar
                         title={`${isGuest ? 'Guest' : user?.fullName}`}
-
                     />
                 }}
             >
@@ -40,13 +38,7 @@ const HomeStack = () => {
                 name="PayOnSite"
                 component={StationSiteList}
                 options={{
-                    animation: 'slide_from_bottom',
-                    title: 'Stations',
-                    headerStyle: generalStyles.headerStyle,
-                    headerTitleStyle: generalStyles.titleHeaderStyles,
-                    headerTintColor: COLORS.primaryBlackHex,
-                    headerTitleAlign: 'center',
-
+                 headerShown:false
                 }}>
 
             </Stack.Screen>

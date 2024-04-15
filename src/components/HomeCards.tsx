@@ -63,6 +63,7 @@ const HomeCards: React.FC<any> = () => {
                             name="payments"
                             size={30}
                             color={COLORS.primaryOrangeHex}
+                            onPress={() => navigation.navigate('PayOnSite')}
                         />
                         <Text style={[styles.CardSubtitle]}>Pay On Site</Text>
 
@@ -81,7 +82,6 @@ const HomeCards: React.FC<any> = () => {
                             name="gas-cylinder"
                             size={30}
                             color={COLORS.primaryOrangeHex}
-                            onPress={() => navigation.navigate('ProductStations')}
                         />
                         <Text style={[styles.CardSubtitle]}>Stabex Products </Text>
 

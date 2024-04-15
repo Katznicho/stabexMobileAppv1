@@ -1,26 +1,32 @@
-import { View } from 'react-native'
-import React from 'react'
-import { generalStyles } from '../utils/generatStyles'
-import { ActivityIndicator } from '../../components/ActivityIndicator'
-import useGetUserLocation from '../../hooks/useGetUserLocation'
-import { useApi } from '../../hooks/useApi'
-import StationsFlatList from '../../components/StationsFlatList'
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
-import { usePostQuery } from '../../hooks/usePostQuery'
+import { StyleSheet, View, Text, SafeAreaView, StatusBar, Platform } from 'react-native'
+import React, { useState } from 'react'
+import { ActivityIndicator } from '../../components/ActivityIndicator';
+import { generalStyles } from '../utils/generatStyles';
+import StationsFlatList from '../../components/StationsFlatList';
+import { COLORS, FONTSIZE } from '../../theme/theme';
+import ArrowBack from '../../components/ArrowBack';
+import SearchBar from '../../components/SearchBar';
+import { usePostQuery } from '../../hooks/usePostQuery';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store/dev';
+import useGetUserLocation from '../../hooks/useGetUserLocation';
+
 
 const StationSiteList = () => {
 
+    const [searchText, setSearchText] = useState('');
+    const [loading, setLoading] = useState(true);
+    const { authToken, user } = useSelector((state: RootState) => state.user);
 
+    const resetSearch = () => {
+        setSearchText('');
+    };
     const { position } = useGetUserLocation()
-    const tabBarHeight = useBottomTabBarHeight();
-
+    // const [position, setPosition] = useState<any>({});
 
 
     const { data, error, isLoading, refetch } = usePostQuery<any>({
-        endpoint: '/Stations/StationsList',
-        params: {
-            "account": "hasWalletAccount"
-        },
+        endpoint: '/api/Stations/StationsList',
         queryOptions: {
             enabled: true,
             refetchInterval: 20000,
@@ -30,12 +36,13 @@ const StationSiteList = () => {
     })
 
 
-
     if (error) {
-
+        console.log("error", error)
     }
 
-    if (isLoading || position === null) {
+
+
+    if (isLoading) {
         return <View style={[{ flex: 1 }, generalStyles.ScreenContainer]}>
             <ActivityIndicator />
 
@@ -43,16 +50,60 @@ const StationSiteList = () => {
     }
 
     return (
-        <View style={[{ paddingBottom: tabBarHeight }, generalStyles.ScreenContainer]}>
+        <SafeAreaView style={[generalStyles.ScreenContainer]}>
+            <View
+                style={{
+                    backgroundColor: COLORS.primaryOrangeHex,
+                    height: Platform.OS == "ios" ? 40 : StatusBar.currentHeight
+                }}
+            >
+                <StatusBar backgroundColor={COLORS.primaryOrangeHex} />
+            </View>
 
-            <StationsFlatList
-                stations={data?.data}
-                position={position}
-            />
+            <View style={styles.containerStyle}>
+                <View style={[generalStyles.absoluteStyles, { left: 10, top: 25 }]}>
+                    <ArrowBack />
+                </View>
+                <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "center", }]}>
 
-        </View>
+                    <Text style={[generalStyles.CardTitle, styles.textColor]}>Stations</Text>
+                </View>
+                <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "center" }]}>
+                    <Text style={[generalStyles.CardSubtitle, styles.textColor, { fontSize: FONTSIZE.size_16 }]}>{data?.data?.length} Results</Text>
+                </View>
+                <SearchBar
+                    searchText={searchText}
+                    setSearchText={setSearchText}
+                    resetSearch={resetSearch}
+                />
+            </View>
+            {
+                data?.data?.length && (
+                    <StationsFlatList
+                        stations={data?.data}
+                        position={position}
+                        // screen="StationGasDetails"
+                        searchText={searchText}
+                        setSearchText={setSearchText}
+                        resetSearch={resetSearch}
+                    />
+                )
+            }
+
+
+        </SafeAreaView>
     )
 }
 
 export default StationSiteList
 
+const styles = StyleSheet.create({
+    containerStyle: {
+        backgroundColor: COLORS.primaryOrangeHex,
+        padding: 20
+    },
+    textColor: {
+        color: COLORS.primaryBlackHex,
+        fontSize: FONTSIZE.size_28
+    },
+})

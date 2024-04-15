@@ -1,18 +1,18 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Completed from './Completed';
-import Pending from './Pending';
-import Failed from './Failed';
 import { COLORS } from '../../theme/theme';
+import Active from './Active';
+import Past from './Past';
+import MyOrders from './MyOrders';
 
 
 
 const Tab = createMaterialTopTabNavigator();
-const PaymentTabs = () => {
+const OrderTabs = () => {
 
     return (
         <Tab.Navigator
-            initialRouteName="My Payments"
+            initialRouteName="MyOrders"
             backBehavior="order"
             sceneContainerStyle={{
                 backgroundColor: COLORS.primaryBlackHex,
@@ -45,36 +45,28 @@ const PaymentTabs = () => {
         >
 
             <Tab.Screen
-                name="Completed"
-                component={Completed}
+                name="Active"
+                component={ MyOrders}
                 options={{
-                    tabBarLabel: 'Completed',
-                    tabBarAccessibilityLabel: 'Completed',
+                    tabBarLabel: 'Active Orders',
+                    tabBarAccessibilityLabel: 'Active Orders',
                     //add some styling here
                 }}
             />
 
             <Tab.Screen
-                name="Pending"
-                component={Pending}
+                name="Past"
+                component={MyOrders}
                 options={{
-                    tabBarLabel: 'Pending',
-                    tabBarAccessibilityLabel: 'Pending',
+                    tabBarLabel: 'Past Orders',
+                    tabBarAccessibilityLabel: 'Past Orders',
                     //add some styling here
                 }}
             />
-            <Tab.Screen
-                name="Failed"
-                component={Failed}
-                options={{
-                    tabBarLabel: 'Failed',
-                    tabBarAccessibilityLabel: 'Failed',
-                    //add some styling here
-                }}
-            />
+
 
         </Tab.Navigator>
     );
 };
 
-export default PaymentTabs;
+export default OrderTabs;

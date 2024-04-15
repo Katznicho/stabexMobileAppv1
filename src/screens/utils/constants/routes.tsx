@@ -1,9 +1,9 @@
 
 // export const BASE_URL = "https://development.stabexinternational.com/loyaltyapi";
 
-export const BASE_URL = "https://checksum.co.ke/stabexmobileapi";
+// export const BASE_URL = "https://checksum.co.ke/stabexmobileapi";
 
-
+export const BASE_URL = "https://development.stabexinternational.com/loyaltyapi";
 
 
 export const FETCH_COUNTRIES = `${BASE_URL}/api/Countries/CountriesList`
@@ -20,29 +20,12 @@ export const USER_SET_PASSWORD = `${BASE_URL}/api/Account/SetPassword`;
 export const GET_STATIONS_LIST = `${BASE_URL}/api/Stations/StationsList`;
 export const PRODUCT_LIST = `${BASE_URL}/api/Products/ProductsList`;
 export const SUMBIT_DELIVERY_ADDRESS = `${BASE_URL}/api/Orders/SubmitDeliveryAddress`;
-export const GET_CUSTOMER_ADDRESSES = `${BASE_URL}/api/Orders/MyDeliveryAddresses`
+export const GET_CUSTOMER_ADDRESSES = `${BASE_URL}/api/Orders/MyDeliveryAddresses`;
+export const SUBMIT_ORDER = `${BASE_URL}/api/Orders/SubmitOrder`;
+//api/Orders/SubmitOrder
 
 
 
-
-
-
-
-
-
-export const LOGIN = `${BASE_URL}/auth/login`;
-export const REGISTER = `${BASE_URL}/auth/register`;
-export const LOGOUT = `${BASE_URL}/auth/logout`;
-export const FORGOT_PASSWORD = `${BASE_URL}/auth/requestPasswordReset`;
-export const RESET_PASSWORD = `${BASE_URL}/auth/resetPassword`;
-export const RESEND_OTP = `${BASE_URL}/auth/resendOTP`
-export const VERIFY_EMAIL = `${BASE_URL}/auth/verifyEmail`
-export const SAVE_DEVICE_INFO = `${BASE_URL}/auth/saveDeviceInfo`
-export const SETUP_WALLET_ACCOUNT = `${BASE_URL}/auth/setUpUserWalletAccount`;
-export const UPDATEWALLETBALANCE = `${BASE_URL}/auth/updateShowWalletBalance`
-export const UPDATEUSERAVATAR = `${BASE_URL}/auth/updateUserAvatarUrl`
-export const UPDATE_USER_LOCATION = `${BASE_URL}/auth/updateUserLocation`;
-export const UPDATE_PASSWORD_FIRST_USER = `${BASE_URL}/auth/resetPasswordFirstUser`;
 export const PROFILE_UPLOAD = `${BASE_URL}/auth/profileUpload`
 
 
@@ -80,30 +63,6 @@ export const GET_PRODUCT_CATEGORIES = `${BASE_URL}/getProductCategories`
 
 
 
-//general
-export const GET_ALL_CATEGORIES = `${BASE_URL}/getAllCategories`;
-export const GET_ALL_SERVICES = `${BASE_URL}/getAllServices`;
-export const GET_ALL_AMENTITIES = `${BASE_URL}/getAllAmenities`;
-export const GET_ALL_PROPERTY_STATUSES = `${BASE_URL}/getAllPropertyStatuses`
-export const GET_ALL_CURRENCIES = `${BASE_URL}/getAllCurrencies`
-export const GET_ALL_PAYMENT_PERIODS = `${BASE_URL}/getAllPaymentPeriods`
-
-//stations
-export const GET_ALL_STATIONS = `${BASE_URL}/getAllStations`;
-export const GET_ALL_REGIONS = `${BASE_URL}/getAllRegions`
-
-//customer address
-export const CREATE_CUSTOMER_ADDRESS = `${BASE_URL}/createCustomerAddress`;
-
-//orders
-export const GET_CUSTOMER_ORDERS = `${BASE_URL}/getCustomerOrders`;
-export const CREATE_CUSTOMER_ORDER = `${BASE_URL}/createCustomerOrder`;
-export const CREATE_MY_ORDER = `${BASE_URL}/orderProducts`;
-export const CREATE_CUSTOMER_ORDER_WITH_PAYMENT = `${BASE_URL}/createCustomerOrderWithPayment`
-
-//transaction statuses
-export const GET_AIRTEL_TRANSACTION_STATUS = `${BASE_URL}/getAirtelTransactionStatus`
-export const GET_MTN_TRANSACTION_STATUS = `${BASE_URL}/getMtnTransactionEquiry`
 
 
 

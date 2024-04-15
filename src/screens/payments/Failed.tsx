@@ -6,25 +6,30 @@ import { USERPAYMENTS } from '../utils/constants/routes';
 import { generalStyles } from '../utils/generatStyles';
 import PaymentFlatList from '../../components/PaymentFlatList';
 import EmptyContainer from '../../components/EmptyContainer';
+import { usePostQuery } from '../../hooks/usePostQuery';
 
 
 const Failed = () => {
 
-    const { isError, data, error, fetchNextPage, hasNextPage, isFetching } = useFetchInfinite(PAYMENT_STATUS.CANCELLED, USERPAYMENTS, PAYMENT_STATUS.CANCELLED);
+    const { data, error, isLoading, refetch } = usePostQuery<any>({
+        endpoint: '/api/Statements/MyTransactions',
+        queryOptions: {
+            enabled: true,
+            // refetchInterval: 20000,
+            // refetchOnWindowFocus: true,
+            // refetchOnMount: true,
+        },
+    })
 
-    //flat the data
-    // const flattenedData = data?.pages.flatMap(page => page.results) || [];
-    const paymentData = data?.pages.flatMap(page => page.data);
-
-    const loadMoreData = () => {
-        if (hasNextPage && !isFetching && data?.pages[0].total !== paymentData?.length) return fetchNextPage()
-    };
+    console.log("========================")
+    console.log(data)
+    console.log("=========================")
 
 
     return (
         <SafeAreaView style={[generalStyles.ScreenContainer]}>
             {
-                data && paymentData?.length === 0 &&
+                data?.data?.length === 0 &&
                 <View style={[generalStyles.centerContent, styles.viewStyles]} >
                     <EmptyContainer
                         title={'You dont have any completed payments'}
@@ -33,10 +38,9 @@ const Failed = () => {
 
                 </View>
             }
+
             <PaymentFlatList
-                paymentData={paymentData}
-                loadMoreData={loadMoreData}
-                isFetching={isFetching}
+                paymentData={data?.data}
             />
 
         </SafeAreaView >

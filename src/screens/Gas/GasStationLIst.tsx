@@ -1,17 +1,16 @@
-import { StyleSheet, View, Text, SafeAreaView, StatusBar } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { StyleSheet, View, Text, SafeAreaView, StatusBar, Platform } from 'react-native'
+import React, { useState } from 'react'
 import { ActivityIndicator } from '../../components/ActivityIndicator';
 import { generalStyles } from '../utils/generatStyles';
 import StationsFlatList from '../../components/StationsFlatList';
-import useGetUserLocation from '../../hooks/useGetUserLocation';
 import { COLORS, FONTSIZE } from '../../theme/theme';
 import ArrowBack from '../../components/ArrowBack';
 import SearchBar from '../../components/SearchBar';
 import { usePostQuery } from '../../hooks/usePostQuery';
-import Entypo from 'react-native-vector-icons/Entypo';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store/dev';
-import { GET_STATIONS_LIST } from '../utils/constants/routes';
+import useGetUserLocation from '../../hooks/useGetUserLocation';
+
 
 const GasStationLIst = () => {
 
@@ -22,8 +21,8 @@ const GasStationLIst = () => {
     const resetSearch = () => {
         setSearchText('');
     };
-    // const { position } = useGetUserLocation()
-    const [position, setPosition] = useState<any>({});
+    const { position } = useGetUserLocation()
+    // const [position, setPosition] = useState<any>({});
 
 
     const { data, error, isLoading, refetch } = usePostQuery<any>({
@@ -35,7 +34,6 @@ const GasStationLIst = () => {
             refetchOnMount: true,
         },
     })
-
 
 
     if (error) {
@@ -52,8 +50,15 @@ const GasStationLIst = () => {
     }
 
     return (
-        <SafeAreaView style={[{ paddingBottom: 5 }, generalStyles.ScreenContainer]}>
-            <StatusBar backgroundColor={COLORS.primaryOrangeHex} />
+        <SafeAreaView style={[generalStyles.ScreenContainer]}>
+            <View
+                style={{
+                    backgroundColor: COLORS.primaryOrangeHex,
+                    height: Platform.OS == "ios" ? 40 : StatusBar.currentHeight
+                }}
+            >
+                <StatusBar backgroundColor={COLORS.primaryOrangeHex} />
+            </View>
 
             <View style={styles.containerStyle}>
                 <View style={[generalStyles.absoluteStyles, { left: 10, top: 25 }]}>
@@ -74,7 +79,6 @@ const GasStationLIst = () => {
             </View>
             {
                 data?.data?.length && (
-
                     <StationsFlatList
                         stations={data?.data}
                         position={position}
@@ -85,6 +89,7 @@ const GasStationLIst = () => {
                     />
                 )
             }
+
 
         </SafeAreaView>
     )

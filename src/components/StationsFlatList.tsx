@@ -1,31 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, ActivityIndicator, Text, SafeAreaView, TouchableOpacity, RefreshControl } from 'react-native';
+import { calculateDistance } from '../screens/utils/helpers/helpers';
+import StationListCard from './StationListCard';
 import { generalStyles } from '../screens/utils/generatStyles';
 import EmptyContainer from './EmptyContainer';
-import StationListCard from './StationListCard';
 
 const StationsFlatList = ({ stations, position, screen = "HomeStationDetails", searchText, resetSearch, setSearchText }: any) => {
-    const [filteredStations, setFilteredStations] = useState<any[]>([]);
+    const [sortedStations, setSortedStations] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
 
-    useEffect(() => {
-        filterStations();
-    }, [stations, searchText]); // Include searchText as a dependency
 
-    const filterStations = () => {
-        setLoading(true);
-        const filtered = stations?.filter((station: { station_name: string }) =>
-            station?.station_name?.toLowerCase().includes(searchText?.toLowerCase())
+    useEffect(() => {
+        fetchData();
+    }, [stations, position, searchText]); // Include searchText as a dependency
+
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+            let sorted;
+            if (searchText) {
+                sorted = await sortStations(stations.filter((station: { name: string }) =>
+                    station.name.toLowerCase().includes(searchText.toLowerCase())), position);
+            } else {
+                sorted = await sortStations(stations, position);
+            }
+            setSortedStations(sorted);
+        } finally {
+            setLoading(false);
+            setRefreshing(false);
+        }
+    };
+
+    const sortStations = async (stationsToSort: any[], userPosition: any) => {
+        const sorted = await Promise.all(
+            stationsToSort.map(async (station) => {
+                const distance = 
+                      calculateDistance(
+                        userPosition?.latitude,
+                        userPosition?.longitude,
+                        parseFloat(station?.latitude),
+                        parseFloat(station?.longitude)
+                    )
+                    // Set distance to infinity if lat or lon is null
+                return { ...station, distance };
+            })
         );
-        setFilteredStations(filtered);
-        setLoading(false);
-        setRefreshing(false);
+
+        sorted.sort((a, b) => {
+            return a.distance - b.distance;
+        });
+
+        return sorted;
     };
 
     const handleRefresh = () => {
         setRefreshing(true);
-        filterStations();
+        fetchData();
     };
 
     if (loading) {
@@ -36,7 +67,7 @@ const StationsFlatList = ({ stations, position, screen = "HomeStationDetails", s
         );
     }
 
-    if (filteredStations.length === 0) {
+    if (sortedStations.length === 0) {
         return (
             <SafeAreaView style={[generalStyles.ScreenContainer]}>
                 <View style={[generalStyles.centerContent, generalStyles.viewStyles]} >
@@ -58,20 +89,23 @@ const StationsFlatList = ({ stations, position, screen = "HomeStationDetails", s
         <FlatList
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            data={filteredStations}
-            renderItem={({ item, index }) => <StationListCard
-                key={index}
-                data={item}
-                position={position}
-                screen={screen}
-            />}
+            data={sortedStations}
+            renderItem={({ item })=>
+            {
+                return  (<StationListCard
+                    data={item}
+                    position={position}
+                    screen={screen}
+                />)
+            }
+        }
             refreshControl={
                 <RefreshControl
                     refreshing={refreshing}
                     onRefresh={handleRefresh}
                 />
             }
-            keyExtractor={(item) => item?.station_id?.toString()}
+            keyExtractor={(item) => item?.Id?.toString()}
         />
     );
 }

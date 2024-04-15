@@ -31,7 +31,7 @@ const StationListDetails = () => {
             >
                 {/* show background image */}
                 <ImageBackground
-                    source={{ uri: data?.image }}
+                     source={require("../../assets/app_images/stabex_station.jpg")}
                     style={styles.ItemBackgroundImage}
                 >
                     {/* back handler */}

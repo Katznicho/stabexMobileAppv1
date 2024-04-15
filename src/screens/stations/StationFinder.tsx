@@ -12,8 +12,6 @@ import { usePostQuery } from '../../hooks/usePostQuery';
 const StationFinder: React.FC<any> = () => {
 
     const { position } = useGetUserLocation()
-
-
     //useApi()
     const { data, error, isLoading, refetch } = usePostQuery<any>({
         endpoint: '/api/Stations/StationsList',
@@ -49,12 +47,10 @@ const StationFinder: React.FC<any> = () => {
                 <MapHeader />
             </View>
 
-            {/* <Maps
+             <Maps
                 stations={data?.data}
                 position={position}
-            /> */}
-
-
+            /> 
             <StationsLIst
                 stations={data?.data}
                 position={position}

@@ -22,9 +22,6 @@ const StationDetails = () => {
     return Linking.openURL(url);
   };
 
-
-
-
   return (
     <KeyboardAwareScrollView
       style={[{ flex: 1, width: '100%' }, generalStyles.ScreenContainer]}
@@ -38,7 +35,7 @@ const StationDetails = () => {
       >
         {/* show background image */}
         <ImageBackground
-          source={{ uri: data?.image }}
+          source={require("../../assets/app_images/stabex_station.jpg")}
           style={styles.ItemBackgroundImage}
         >
           {/* back handler */}
@@ -62,7 +59,6 @@ const StationDetails = () => {
 
           {/* more details */}
 
-
           {/* more details */}
         </ImageBackground>
         {/* show background */}
@@ -81,12 +77,12 @@ const StationDetails = () => {
           <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]}>
             <View>
               <Text style={styles.CardTitle} >Name</Text>
-              <Text style={styles.CardSubtitle}>{data?.name ?? data?.codeName}</Text>
+              <Text style={styles.CardSubtitle}>{data?.station_name }</Text>
             </View>
             <View>
               <Text style={styles.CardTitle} >Distance</Text>
               <Text style={styles.CardSubtitle}>
-                {calculateDistance(position.latitude, position.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude))} kms away
+                {calculateDistance(position?.latitude, position?.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude))} kms away
               </Text>
             </View>
 

@@ -87,9 +87,6 @@ const Login = () => {
       }
       formBody = formBody.join("&");
 
-      console.log("=======form data========")
-      console.log(formBody)
-      console.log("======form data==========")
 
       fetch(LOGIN_IN_USER, {
         method: 'POST',
@@ -100,9 +97,6 @@ const Login = () => {
       })
         .then((response) => response.text())
         .then((result) => {
-          console.log("========res===========")
-          console.log(result)
-          console.log("========res===========")
           setLoading(false);
           // Parse the response text into individual JSON objects
           const jsonObjects = result.trim().split(/\}\s*\{/);
@@ -140,6 +134,10 @@ const Login = () => {
               } else if (firstObject.status == 1) {
                 // Handle login successful logic
                 let token = firstObject?.access_token;
+
+                console.log("=====================")
+                console.log(token)
+                console.log("=====================")
 
                 AsyncStorage.setItem('token', token);
                 let name = `${firstObject?.FirstName} ${firstObject?.LastName}`
@@ -303,7 +301,7 @@ const Login = () => {
             onChangeFormattedText={(text) => {
               setPhoneNumber(text);
             }}
-            placeholder={'enter phone number'}
+            placeholder={'Enter Phone Number'}
             containerStyle={[generalStyles.formInput, { backgroundColor: COLORS.primaryBlackHex, }]}
             textContainerStyle={{ paddingVertical: 0, backgroundColor: COLORS.primaryBlackHex, }}
             textInputProps={{
@@ -333,7 +331,7 @@ const Login = () => {
               style={[generalStyles.formInput, { flex: 1 }]}
               placeholderTextColor={COLORS.primaryWhiteHex}
               secureTextEntry={!showPassword}
-              placeholder={'enter password'}
+              placeholder={'Enter Password'}
               onChangeText={text => setPassword(text)}
               value={password}
               underlineColorAndroid="transparent"

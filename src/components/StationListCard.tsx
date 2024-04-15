@@ -14,9 +14,30 @@ const StationListCard: React.FC<any> = React.memo(({ data, position, screen }: a
 
     const dispatch = useDispatch<AppDispatch>();
 
+    const distance = useMemo(() => {
+        return calculateDistance(position?.latitude, position?.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude));
+    }, [position, data?.latitude, data?.longitude]);
+
     // const distance = useMemo(() => {
-    //     return calculateDistance(position?.latitude, position?.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude));
+    //     // Check if position latitude and longitude are not null
+    //     if (position?.latitude !== null && position?.longitude !== null) {
+    //         // Check if data latitude and longitude are not null
+    //         if (data?.latitude !== null && data?.longitude !== null) {
+    //             return calculateDistance(position.latitude, position.longitude, parseFloat(data.latitude), parseFloat(data.longitude));
+    //         } else {
+    //             // Handle case where data latitude or longitude is null
+    //             return 0; // or return any other default value
+    //         }
+    //     } else {
+    //         // Handle case where position latitude or longitude is null
+    //         return 0; // or return any other default value
+    //     }
     // }, [position, data?.latitude, data?.longitude]);
+
+    // console.log("========distance============")
+    // console.log(distance(position?.latitude, position?.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude)))
+    
+    
 
     return (
         <View>
@@ -38,7 +59,7 @@ const StationListCard: React.FC<any> = React.memo(({ data, position, screen }: a
                 <View style={[generalStyles.flexStyles]}>
                     <Entypo name="location-pin" color={COLORS.primaryOrangeHex} size={20} />
                     <Text style={[generalStyles.CardSubtitle, { marginHorizontal: 0, fontSize: 15 }]}>
-                        {10} kms
+                        {distance} kms
                     </Text>
                 </View>
             </TouchableOpacity >
