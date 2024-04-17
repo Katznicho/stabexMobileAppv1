@@ -47,10 +47,12 @@ const Profile = () => {
     <KeyboardAwareScrollView
       style={[{ backgroundColor: COLORS.primaryLightWhiteGrey }, generalStyles.ScreenContainer]}
       keyboardShouldPersistTaps="always"
+      showsVerticalScrollIndicator={false}
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: tabBarHeight, backgroundColor: COLORS.primaryLightWhiteGrey }}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: tabBarHeight+50, backgroundColor: COLORS.primaryLightWhiteGrey }}
         keyboardShouldPersistTaps="always"
       >
         {/* profile details */}
