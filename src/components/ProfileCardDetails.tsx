@@ -99,7 +99,7 @@ const ProfileDetailsCard = () => {
     
                         <TouchableOpacity
                             activeOpacity={1}
-                            onPress={() => onSignOut()}
+                            onPress={() =>navigation.navigate("EditProfile")}
                             style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "space-between" }, styles.containerStyle, styles.bottomLine]}
                         >
                             <View style={{ flex: 0.1 }}>
@@ -121,7 +121,7 @@ const ProfileDetailsCard = () => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             activeOpacity={1}
-                            onPress={() => onSignOut()}
+                            onPress={() =>navigation.navigate("SavedAddresses")}
                             style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "space-between" }, styles.containerStyle, styles.bottomLine]}
                         >
                             <View style={{ flex: 0.1, marginLeft: 5 }}>
@@ -208,8 +208,8 @@ const ProfileDetailsCard = () => {
                         style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "space-between" }, styles.containerStyle, styles.bottomLine]}
                     >
                         <View style={{ flex: 0.1, marginLeft: 5 }}>
-                            <FontAwesome
-                                name="lock"
+                            <Entypo
+                                name="share"
                                 size={25}
                             />
 

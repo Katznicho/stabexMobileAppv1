@@ -11,6 +11,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import SupportScreen from '../screens/ProfileScreens/SupportScreen';
 import EditProfile from '../screens/ProfileScreens/EditProfile';
 import { generalStyles } from '../screens/utils/generatStyles';
+import AddAddress from '../screens/ProfileScreens/AddAddress';
+import SavedAddresses from '../screens/ProfileScreens/SavedAddresses';
 
 
 
@@ -111,7 +113,7 @@ const ProfileStack = () => {
         name="EditProfile"
         component={EditProfile}
         options={{
-          title: 'Edit Profile',
+          title: 'Account Settings',
           headerStyle: generalStyles.headerStyle,
           headerTitleStyle: generalStyles.titleHeaderStyles,
           headerTintColor: COLORS.primaryBlackHex,
@@ -130,6 +132,57 @@ const ProfileStack = () => {
           ),
         }}
       />
+      {/* saved address */}
+      <Stack.Screen
+        name="SavedAddresses"
+        component={SavedAddresses}
+        options={{
+          title: 'Saved Addresses',
+          headerStyle: generalStyles.headerStyle,
+          headerTitleStyle: generalStyles.titleHeaderStyles,
+          headerTintColor: COLORS.primaryBlackHex,
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ProfileScreen')}
+              style={{ marginLeft: 10 }}
+            >
+              <Entypo
+                name="chevron-left"
+                color={COLORS.primaryBlackHex}
+                size={28}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      {/* saved address */}
+
+      {/* add address */}
+      <Stack.Screen
+        name="AddAddress"
+        component={AddAddress}
+        options={{
+          title: 'Add Address',
+          headerStyle: generalStyles.headerStyle,
+          headerTitleStyle: generalStyles.titleHeaderStyles,
+          headerTintColor: COLORS.primaryBlackHex,
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ProfileScreen')}
+              style={{ marginLeft: 10 }}
+            >
+              <Entypo
+                name="chevron-left"
+                color={COLORS.primaryBlackHex}
+                size={28}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      {/* add address */}
 
     </Stack.Navigator>
   );

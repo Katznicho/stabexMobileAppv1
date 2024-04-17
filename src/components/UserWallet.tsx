@@ -72,7 +72,7 @@ const UserWallet = ({ card }: any) => {
                     <View>
                         <Text >
                             <Text style={[styles.avaialableText, { fontWeight: "bold" }]}>UGX   </Text>
-                            <Text style={[styles.avaialableText, { fontFamily: FONTFAMILY.poppins_bold, fontSize: 20, }]}>
+                            <Text style={[styles.avaialableText, { fontFamily: FONTFAMILY.Lovato_Bold, fontSize: 20, }]}>
                                 {`${showEye ? parseInt(data?.data)?.toLocaleString() : "****"}`}</Text>
 
                         </Text>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     avaialableText: {
         fontSize: 12,
         marginVertical: 10,
-        fontFamily: FONTFAMILY.poppins_light,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         color: COLORS.primaryBlackHex,
         paddingHorizontal: SPACING.space_10,
     },

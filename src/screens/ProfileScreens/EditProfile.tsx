@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { generalStyles } from '../utils/generatStyles';
 import { COLORS } from '../../theme/theme';
 import PhoneInput from "react-native-phone-number-input";
+import HeadProfileCard from '../../components/HeadProfileCard';
 
 
 const EditProfile = () => {
@@ -37,11 +38,9 @@ const EditProfile = () => {
             showsVerticalScrollIndicator={false}
         >
 
-            <View style={[generalStyles.viewStyles]}>
-                <Text style={[generalStyles.CardTitle]}>
-                    Edit Your Profile?
-                </Text>
-            </View>
+          {/* header */}
+           <HeadProfileCard />
+          {/* header */}
 
             {/* full name */}
             <View style={generalStyles.formContainer}>
@@ -51,7 +50,7 @@ const EditProfile = () => {
                 </View>
 
                 <TextInput
-                    style={[generalStyles.formInput, styles.textInputMarginRight]}
+                    style={[generalStyles.formInput, styles.textInputMarginRight, generalStyles.borderStyles]}
                     placeholder={'enter your full name name'}
                     keyboardType="default"
                     placeholderTextColor={COLORS.primaryWhiteHex}
@@ -84,7 +83,7 @@ const EditProfile = () => {
                         setPhoneNumber(text);
                     }}
                     placeholder={'enter phone number'}
-                    containerStyle={[generalStyles.formInput, { backgroundColor: COLORS.primaryLightWhiteGrey, }]}
+                    containerStyle={[generalStyles.formInput, { backgroundColor: COLORS.primaryLightWhiteGrey }, generalStyles.borderStyles]}
                     textContainerStyle={{ paddingVertical: 0, backgroundColor: COLORS.primaryLightWhiteGrey }}
                     textInputProps={{
                         placeholderTextColor: COLORS.primaryWhiteHex
@@ -105,7 +104,7 @@ const EditProfile = () => {
                 </View>
 
                 <TextInput
-                    style={[generalStyles.formInput, styles.textInputMarginRight]}
+                    style={[generalStyles.formInput, styles.textInputMarginRight, generalStyles.borderStyles]}
                     placeholder={'enter email'}
                     keyboardType="email-address"
                     placeholderTextColor={COLORS.primaryWhiteHex}

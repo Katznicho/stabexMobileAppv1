@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store/dev';
 import UploadComponent from './UploadComponent';
 import { updateProfilePicture } from '../redux/store/slices/UserSlice';
-import { DEFAULT_USER_PROFILE, MAIN_STORAGE } from '../screens/utils/constants/constants';
 import { generalStyles } from '../screens/utils/generatStyles';
 import { COLORS } from '../theme/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { PROFILE_UPLOAD, } from '../screens/utils/constants/routes';
 // import RNFetchBlob from 'rn-fetch-blob';
 import { ActivityIndicator } from './ActivityIndicator';
+import { DEFAULT_USER_PROFILE } from '../screens/utils/constants/constants';
 
 const HeadProfileCard = () => {
 
@@ -29,13 +29,12 @@ const HeadProfileCard = () => {
 
 
     const getImageUrl = (displayPicture: string | null) => {
-
-
-        if (displayPicture) {
-            return `${MAIN_STORAGE}/profile/${displayPicture}`
-        } else {
-            return DEFAULT_USER_PROFILE
-        }
+        // if (displayPicture) {
+        //     return `${MAIN_STORAGE}/profile/${displayPicture}`
+        // } else {
+        //     return DEFAULT_USER_PROFILE
+        // }
+        return DEFAULT_USER_PROFILE
 
     }
 

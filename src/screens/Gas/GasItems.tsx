@@ -41,7 +41,6 @@ const GasItems = () => {
     }
 
 
-
     return (
         <SafeAreaView style={[generalStyles.ScreenContainer]}>
             {data?.data?.length > 0 ? (
