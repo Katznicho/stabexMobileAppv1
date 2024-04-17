@@ -3,12 +3,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import React, { useState, useRef } from 'react'
 import { generalStyles } from '../utils/generatStyles';
 import { useNavigation } from '@react-navigation/native';
-import { COLORS } from '../../theme/theme';
+import { COLORS, FONTFAMILY } from '../../theme/theme';
 import { ActivityIndicator } from '../../components/ActivityIndicator';
 import { showMessage } from 'react-native-flash-message';
-import { LOGIN, LOGIN_IN_USER } from '../utils/constants/routes';
+import { LOGIN_IN_USER } from '../utils/constants/routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { updateUserState } from '../../redux/store/slices/UserSlice';
+import { skipFirstLogin, updateUserState } from '../../redux/store/slices/UserSlice';
 import { useDispatch } from 'react-redux';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import PhoneInput from "react-native-phone-number-input";
@@ -196,9 +196,6 @@ const Login = () => {
           }
         })
         .catch((error) => {
-          console.log("========error===========")
-          console.log(error)
-          console.log("========error===========")
           setLoading(false);
           showMessage({
             message: "Error",
@@ -209,10 +206,6 @@ const Login = () => {
             icon: "danger"
           });
         });
-
-
-
-
 
 
     } catch (error) {
@@ -272,27 +265,17 @@ const Login = () => {
         {/* login and register */}
 
         {/* center logo */}
-        <View style={generalStyles.centerContent}>
-          <Image
-            source={require('../../assets/app_images/stabex_logo.jpg')}
-            style={{
-              width: 100,
-              height: 100,
-              // tintColor: COLORS.primaryBlackHex,
-              borderRadius: 20
-            }}
-            resizeMode="contain"
-          />
+        <View style={[generalStyles.centerContent, {marginVertical:20}]}>
+            <Text style={[generalStyles.authTitle, {fontSize:15, color:COLORS.primaryBlackRGBA}]}>
+               Enter registered email or phone number and
+            </Text>
+            <Text style={[{fontSize:15, color:COLORS.primaryBlackRGBA, fontFamily:FONTFAMILY.Lovato_Bold}]}>password to login into your account</Text>
 
         </View>
         {/* center logo */}
 
         {/* phone number */}
-        <View style={generalStyles.formContainer}>
-          <View>
-            <Text style={generalStyles.formInputTextStyle}>
-              Phone Number </Text>
-          </View>
+        <View style={[generalStyles.formContainer]}>
           <PhoneInput
             ref={phoneInput}
             defaultValue={phoneNumber}
@@ -301,11 +284,14 @@ const Login = () => {
             onChangeFormattedText={(text) => {
               setPhoneNumber(text);
             }}
-            placeholder={'Enter Phone Number'}
-            containerStyle={[generalStyles.formInput, { backgroundColor: COLORS.primaryBlackHex, }]}
+            placeholder={'Phone Number'}
+          
+            containerStyle={[generalStyles.formInput, generalStyles.borderStyles,{ backgroundColor: COLORS.primaryBlackHex, }]}
             textContainerStyle={{ paddingVertical: 0, backgroundColor: COLORS.primaryBlackHex, }}
             textInputProps={{
-              placeholderTextColor: COLORS.primaryWhiteHex
+              placeholderTextColor: COLORS.primaryWhiteHex,
+              fontFamily: FONTFAMILY.Lovato_Bold,
+
             }}
             // countries={['UG', 'KE']}
             countryPickerProps={{
@@ -321,17 +307,14 @@ const Login = () => {
         {/* phone number */}
 
 
-        <View style={generalStyles.formContainer}>
-          <View>
-            <Text style={generalStyles.formInputTextStyle}>
-              Password</Text>
-          </View >
-          <View style={[generalStyles.flexStyles, styles.viewStyles]}>
+        <View style={[generalStyles.formContainer, {marginVertical:10}]}>
+          
+          <View style={[generalStyles.flexStyles,generalStyles.borderStyles , {alignItems:"center"}]}>
             <TextInput
-              style={[generalStyles.formInput, { flex: 1 }]}
+              style={[generalStyles.formInput]}
               placeholderTextColor={COLORS.primaryWhiteHex}
               secureTextEntry={!showPassword}
-              placeholder={'Enter Password'}
+              placeholder={'Password'}
               onChangeText={text => setPassword(text)}
               value={password}
               underlineColorAndroid="transparent"
@@ -372,6 +355,31 @@ const Login = () => {
           onPress={() => onPressLogin()}>
           <Text style={generalStyles.loginText}>{'Login'}</Text>
         </TouchableOpacity>
+
+                {/* already have an account login */}
+                <View style={[generalStyles.centerContent , {marginTop:20}]}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate("Register")}
+            style={[generalStyles.centerContent, { flexDirection: 'row' }]}
+          >
+             <Text style={generalStyles.CardTitle}>Dont have an account? </Text>
+            <Text style={generalStyles.forgotText}>
+              {'Register'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* already have an account login */}
+
+        {/* add skip  word */}
+        <TouchableOpacity
+                     activeOpacity={1}
+                     onPress={() =>dispatch(skipFirstLogin())}
+                     style={[generalStyles.centerContent, { flexDirection: 'row' }]}
+        >
+          <Text style={[generalStyles.forgotText, {marginTop: 10}]}>Skip for now</Text>
+        </TouchableOpacity>
+        {/* add skip  word */}
 
 
         {loading && <ActivityIndicator />}

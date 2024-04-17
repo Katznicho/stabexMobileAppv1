@@ -69,29 +69,22 @@ export const COLORS: Color = {
 };
 
 
-
 interface FontFamily {
-  poppins_black: string;
-  poppins_bold: string;
-  poppins_extrabold: string;
-  poppins_extralight: string;
-  poppins_light: string;
-  poppins_medium: string;
-  poppins_regular: string;
-  poppins_semibold: string;
-  poppins_thin: string;
+  Lovato_Black:string,
+  Lovato_Bold:string,
+  Lovato_Demi:string;
+  Lovato_Light:string;
+  Lovato_Regular:string;
 }
 
+
+
 export const FONTFAMILY: FontFamily = {
-  poppins_black: 'Poppins-Black',
-  poppins_bold: 'Poppins-Bold',
-  poppins_extrabold: 'Poppins-ExtraBold',
-  poppins_extralight: 'Poppins-ExtraLight',
-  poppins_light: 'Poppins-Light',
-  poppins_medium: 'Poppins-Medium',
-  poppins_regular: 'Poppins-Regular',
-  poppins_semibold: 'Poppins-SemiBold',
-  poppins_thin: 'Poppins-Thin',
+  Lovato_Black:'Lovato-Black',
+  Lovato_Bold:"Lovato-Bold",
+  Lovato_Demi:"Lovato-Demi",
+  Lovato_Light:"Lovato-Light",
+  Lovato_Regular:"Lovato-Regular",
 };
 
 interface FontSize {

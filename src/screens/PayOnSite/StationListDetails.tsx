@@ -141,12 +141,12 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     CardTitle: {
-        fontFamily: FONTFAMILY.poppins_medium,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_14,
     },
     CardSubtitle: {
-        fontFamily: FONTFAMILY.poppins_light,
+        fontFamily: FONTFAMILY.Lovato_Light,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_10,
         // marginHorizontal: SPACING.space_10

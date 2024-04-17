@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 
   },
   HeaderText: {
-    fontFamily: FONTFAMILY.poppins_light,
+    fontFamily: FONTFAMILY.Lovato_Regular,
     fontSize: FONTSIZE.size_16,
     color: COLORS.primaryBlackHex,
   },
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: COLORS.primaryBlackHex,
     fontSize: FONTSIZE.size_20,
-    fontFamily: FONTFAMILY.poppins_medium
+    fontFamily: FONTFAMILY.Lovato_Regular
 
   }
 });

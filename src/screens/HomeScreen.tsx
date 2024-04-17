@@ -18,7 +18,6 @@ const HomeScreen = () => {
   const tabBarHeight = useBottomTabBarHeight();
 
 
-
   // User device and push token
   useEffect(() => {
     if (!isGuest) { // Check if the user is not a guest

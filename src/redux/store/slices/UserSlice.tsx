@@ -75,6 +75,10 @@ export const userSlice = createSlice({
     },
     storedLinkedCard: (state, action: PayloadAction<any>) => {
       state.linkedCard = action.payload
+    },
+    skipFirstLogin: (state) => {
+      state.isGuest = true;
+      state.isLoggedIn = false
     }
 
   },
@@ -87,7 +91,8 @@ export const {
   updateProfilePicture,
   updateIsLoggedIn,
   showAuthScreen,
-  storedLinkedCard
+  storedLinkedCard,
+  skipFirstLogin
 } = userSlice.actions;
 
 export default userSlice.reducer;

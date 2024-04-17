@@ -1,38 +1,10 @@
 
-
 export const PAYMENT_STATUS = {
     PENDING: "Pending",
     COMPLETED: "Successful",
     FAILED: "Failed",
 }
 
-export const PAYMENT_TYPE = {
-    "Wallet": "Wallet",
-    "Donation": "Donation",
-    "Product": "Product",
-    "Other": "Other",
-    "Order": "Order"
-}
-
-export const APP_NAME = "Reuse";
-
-//firebase collections
-export const USER_COLLECTION: string = "users";
-
-//documents
-export const USER_DOCUMENT_STORAGE: string = 'users/documents';
-
-//firebase storage
-export const PROFILE_STORAGE: string = "profile/images"
-export const PRODUCT_STORAGE: string = "product/images";
-export const DOCUMENT_STORAGE: string = "document/images";
-export const PRODUCT_COLLECTION = "products";
-export const DEFAULT_USER_PROFILE = "https://media.istockphoto.com/id/519078727/photo/male-silhouette-as-avatar-profile-picture.jpg?b=1&s=170667a&w=0&k=20&c=JzPsyMEFcdQp2UlFqLVeuOaj2bOpteXUWFR9FJzTnBM=";
-
-
-//reuse storage
-export const MAIN_STORAGE = "https://stabexadmin.velocitytech.co.ke/storage"
-// export const CATEGORY_STORAGE = "https://reuse.risidev.com/storage/app/public/"
 
 
 

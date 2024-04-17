@@ -78,6 +78,11 @@
 		<string>Poppins-SemiBold.ttf</string>
 		<string>Poppins-Thin.ttf</string>
 		<string>app_icons.ttf</string>
+		<string>Lovato-Black.ttf</string>
+		<string>Lovato-Bold.ttf</string>
+		<string>Lovato-Demi.ttf</string>
+		<string>Lovato-Light.ttf</string>
+		<string>Lovato-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

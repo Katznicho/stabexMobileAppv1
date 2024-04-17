@@ -7,16 +7,17 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { RootState } from '../../redux/store/dev';
 import { useSelector } from 'react-redux';
+import { COLORS } from '../../theme/theme';
 
 const Profile = () => {
 
   const { isGuest } = useSelector((state: RootState) => state.user);
 
   const [profile_details,] = useState([
-    {
-      name: 'Edit Profile',
-      screen: 'EditProfile',
-    },
+    // {
+    //   name: 'Edit Profile',
+    //   screen: 'EditProfile',
+    // },
     {
       name: 'Private Policy',
       screen: 'PrivatePolicy',
@@ -44,22 +45,16 @@ const Profile = () => {
 
   return (
     <KeyboardAwareScrollView
-      style={[{ flex: 1, width: '100%' }, generalStyles.ScreenContainer]}
+      style={[{ backgroundColor: COLORS.primaryLightWhiteGrey }, generalStyles.ScreenContainer]}
       keyboardShouldPersistTaps="always"
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: tabBarHeight }}
+        contentContainerStyle={{ paddingBottom: tabBarHeight, backgroundColor: COLORS.primaryLightWhiteGrey }}
         keyboardShouldPersistTaps="always"
       >
-        {/* header profile card */}
-        <HeadProfileCard />
-        {/* header profile card */}
-
         {/* profile details */}
         <ProfileDetailsCard
-          details={profile_details}
-          showSwitch={false}
         />
         {/* profile details */}
       </ScrollView>

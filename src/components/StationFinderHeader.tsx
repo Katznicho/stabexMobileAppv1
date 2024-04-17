@@ -22,7 +22,8 @@ export default StationFinderHeader
 
 const styles = StyleSheet.create({
     HeaderContainer: {
-      backgroundColor: COLORS.primaryOrangeHex
+      backgroundColor: COLORS.primaryOrangeHex,
+      height: 100
     },
     viewContainer: {
       paddingHorizontal: SPACING.space_18,
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   
     },
     HeaderText: {
-      fontFamily: FONTFAMILY.poppins_light,
+      fontFamily: FONTFAMILY.Lovato_Regular,
       fontSize: FONTSIZE.size_16,
       color: COLORS.primaryBlackHex,
     },
@@ -40,8 +41,8 @@ const styles = StyleSheet.create({
     },
     titleText: {
       color: COLORS.primaryBlackHex,
-      fontSize: FONTSIZE.size_20,
-      fontFamily: FONTFAMILY.poppins_medium
+      fontSize: FONTSIZE.size_28,
+      fontFamily: FONTFAMILY.Lovato_Regular
   
     }
   });

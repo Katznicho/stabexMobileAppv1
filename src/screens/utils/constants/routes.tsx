@@ -24,6 +24,10 @@ export const GET_CUSTOMER_ADDRESSES = `${BASE_URL}/api/Orders/MyDeliveryAddresse
 export const SUBMIT_ORDER = `${BASE_URL}/api/Orders/SubmitOrder`;
 //api/Orders/SubmitOrder
 
+export const GET_WEEK_DAYS = `${BASE_URL}/api/Cards/WeekDays`;
+export const GET_REGIONS = `${BASE_URL}//api/Cards/Regions`;
+export const GET_STATION_BY_REGION = `${BASE_URL}/api/Cards/StationByRegion`;
+
 
 
 export const PROFILE_UPLOAD = `${BASE_URL}/auth/profileUpload`

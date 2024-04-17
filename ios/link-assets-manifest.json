@@ -34,6 +34,30 @@
       "sha1": "6bd89f6dc903e7fd4d5fc3a1a95ad2260a8f6179"
     },
     {
+      "path": "src/assets/app_images/stabex_station.jpg",
+      "sha1": "0c776a8f7850b77eb2dd42a57ffe03a71f13d1f2"
+    },
+    {
+      "path": "src/assets/fonts/Lovato-Black.ttf",
+      "sha1": "acca76357e42cd095f7f74b26635e7ff1772cf0b"
+    },
+    {
+      "path": "src/assets/fonts/Lovato-Bold.ttf",
+      "sha1": "658355a6e8a73652781e7c58d4c5b0676a7200ce"
+    },
+    {
+      "path": "src/assets/fonts/Lovato-Demi.ttf",
+      "sha1": "6043707108ba5734781f6d753f1e74d9a0309181"
+    },
+    {
+      "path": "src/assets/fonts/Lovato-Light.ttf",
+      "sha1": "2be4079b8a5bbfd90d2fbf8ac0db4a7a06d97dff"
+    },
+    {
+      "path": "src/assets/fonts/Lovato-Regular.ttf",
+      "sha1": "47f48bbee2b142b00de31c28bb0c5eeab099d9b7"
+    },
+    {
       "path": "src/assets/fonts/Poppins-Black.ttf",
       "sha1": "645e04c53c6b5b35bce654a811ebce16af8aa721"
     },

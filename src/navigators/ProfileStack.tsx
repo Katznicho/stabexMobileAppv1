@@ -14,6 +14,7 @@ import { generalStyles } from '../screens/utils/generatStyles';
 
 
 
+
 const Stack = createNativeStackNavigator();
 
 const ProfileStack = () => {
@@ -26,7 +27,7 @@ const ProfileStack = () => {
         name="ProfileScreen"
         component={Profile}
         options={{
-          title: 'My Profile',
+          title: 'Settings',
           headerStyle: generalStyles.headerStyle,
           headerTitleStyle: generalStyles.titleHeaderStyles,
           headerTintColor: COLORS.primaryBlackHex,

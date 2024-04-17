@@ -1,28 +1,42 @@
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import React, { useState, useEffect } from 'react'
 import { generalStyles } from '../utils/generatStyles'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Keyboard } from 'react-native'
-import { COLORS } from '../../theme/theme'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Keyboard, Linking } from 'react-native'
+import { COLORS, FONTFAMILY } from '../../theme/theme'
 import { useNavigation } from '@react-navigation/native'
 import { ActivityIndicator } from '../../components/ActivityIndicator'
 import { showMessage } from 'react-native-flash-message'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { FETCH_COUNTRIES, REGISTER_CUSTOMER, REQUEST_EMAIL_OTP, REQUEST_SMS_OTP } from '../utils/constants/routes'
-import { causeVibration, validateConfirmPassword, validateEmail, validatePassword, validatePhoneNumber } from '../utils/helpers/helpers';
+import { FETCH_COUNTRIES, REQUEST_EMAIL_OTP } from '../utils/constants/routes'
+import { validateConfirmPassword, validateEmail, validatePassword, validatePhoneNumber } from '../utils/helpers/helpers';
 import useGetUserLocation from '../../hooks/useGetUserLocation';
 import DeviceInfo from 'react-native-device-info';
-import { Picker, } from 'react-native-ui-lib';
+import { Checkbox, Picker, } from 'react-native-ui-lib';
 import Entypo from "react-native-vector-icons/Entypo";
 import { addEventListener } from "@react-native-community/netinfo";
 import WifiManager from 'react-native-wifi-reborn';
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { skipFirstLogin } from '../../redux/store/slices/UserSlice'
+import { AppDispatch } from '../../redux/store/dev'
+import { useDispatch } from 'react-redux'
+
 
 
 const Register = () => {
 
   const navigation = useNavigation<any>();
 
-  ;
+  const handleTermsPress = () => {
+    // Replace 'https://example.com/terms' with your actual terms and conditions URL
+    Linking.openURL('https://example.com/terms');
+  };
+
+  const handlePrivacyPress = () => {
+    // Replace 'https://example.com/privacy' with your actual privacy policy URL
+    Linking.openURL('https://example.com/privacy');
+  };
+
+  const dispatch =  useDispatch<AppDispatch>()
+
 
   const [ssid, setSSID] = useState('');
   const [bssid, setBSSID] = useState('');
@@ -34,6 +48,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = React.useState<any>('');
   const [countryCode, setCountryCode] = useState<any>("");
   const [deviceInfo, setDeviceInfo] = useState<any>(null);
+  const [Iaccept, setIaccept] = useState<boolean>(false);
 
   useEffect(() => { }, [countryCode])
 
@@ -171,8 +186,6 @@ const Register = () => {
 
   //phone number details
   const [phoneNumber, setPhoneNumber] = React.useState<any>('');
-
-
 
   //phone number details
 
@@ -414,8 +427,6 @@ const Register = () => {
             },
           ]}
         >
-
-
           <View>
             <TouchableOpacity
               onPress={() => {
@@ -427,9 +438,7 @@ const Register = () => {
             </TouchableOpacity>
           </View>
 
-          <View
-
-          >
+          <View>
             <TouchableOpacity>
               <Text style={generalStyles.authTitle}>Register</Text>
             </TouchableOpacity>
@@ -439,16 +448,14 @@ const Register = () => {
         </View>
         {/*  register */}
 
+        {/* Enter details below to create an account */}
+        <Text style={[generalStyles.authTitle, {fontSize:15, color:COLORS.primaryWhiteHex}]}>Enter details below to create an account.</Text>
+
         {/* first name */}
         <View style={generalStyles.formContainer}>
-          <View>
-            <Text style={generalStyles.formInputTextStyle}>
-              First Name</Text>
-          </View>
-
           <TextInput
-            style={[generalStyles.formInput, styles.textInputMarginRight, errors.firstName && styles.errorInput]}
-            placeholder={'Enter First Name'}
+            style={[generalStyles.formInput, styles.borderStyles, styles.textInputMarginRight, errors.firstName && styles.errorInput]}
+            placeholder={'First Name'}
             keyboardType="default"
             placeholderTextColor={COLORS.primaryWhiteHex}
             onChangeText={text => setfirstName(text)}
@@ -465,14 +472,9 @@ const Register = () => {
 
         {/* second name */}
         <View style={generalStyles.formContainer}>
-          <View>
-            <Text style={generalStyles.formInputTextStyle}>
-              Last Name</Text>
-          </View>
-
           <TextInput
-            style={[generalStyles.formInput, styles.textInputMarginRight, errors.lastName && styles.errorInput]}
-            placeholder={'Enter Last Name'}
+            style={[generalStyles.formInput,styles.borderStyles, styles.textInputMarginRight, errors.lastName && styles.errorInput]}
+            placeholder={'Last Name'}
             keyboardType="default"
             placeholderTextColor={COLORS.primaryWhiteHex}
             onChangeText={text => setlastName(text)}
@@ -492,14 +494,11 @@ const Register = () => {
         {
           countries.length > 0 && (
             <View style={generalStyles.formContainer}>
-              <View>
-                <Text style={[generalStyles.formInputTextStyle]}>Select Country</Text>
-              </View>
               <Picker
                 placeholder="Select Country"
                 placeholderTextColor={COLORS.primaryLightGreyHex}
                 value={countryCode}
-                style={[generalStyles.formInput, errors.countryCode && styles.errorInput]}
+                style={[generalStyles.formInput,styles.borderStyles ,errors.countryCode && styles.errorInput]}
                 enableModalBlur={false}
                 onChange={item => setCountryCode(item)}
                 trailingAccessory={<View style={styles.iconStyles}>
@@ -526,25 +525,18 @@ const Register = () => {
             </View>
           )
         }
-
-
-
         {/* country */}
 
         {/* phone number */}
         <View style={generalStyles.formContainer}>
-          <View>
-            <Text style={generalStyles.formInputTextStyle}>
-              Phone Number</Text>
-          </View>
-
           <TextInput
             style={[
               generalStyles.formInput,
+              styles.borderStyles,
               styles.textInputMarginRight,
               errors.phoneNumber && styles.errorInput
             ]}
-            placeholder={'Enter Phone Number'}
+            placeholder={'Phone Number'}
             placeholderTextColor={COLORS.primaryWhiteHex}
             onChangeText={handlePhoneNumberChange}
             value={phoneNumber}
@@ -560,22 +552,16 @@ const Register = () => {
         </View>
         {/* phone number */}
 
-
-
         {/* email */}
         <View style={generalStyles.formContainer}>
-          <View>
-            <Text style={generalStyles.formInputTextStyle}>
-              Email</Text>
-          </View>
-
           <TextInput
             style={[
               generalStyles.formInput,
+              styles.borderStyles,
               styles.textInputMarginRight,
               errors.email && styles.errorInput
             ]}
-            placeholder={'Enter Email'}
+            placeholder={'Email Address'}
             keyboardType="email-address"
             placeholderTextColor={COLORS.primaryWhiteHex}
             onChangeText={handleEmailChange}
@@ -593,16 +579,12 @@ const Register = () => {
         {/* password */}
         {/* password */}
         <View style={[generalStyles.formContainer]}>
-          <View>
-            <Text style={generalStyles.formInputTextStyle}>
-              Password</Text>
-          </View>
-          <View style={[generalStyles.flexStyles, styles.viewStyles]}>
+          <View style={[generalStyles.flexStyles, {alignItems: 'center'}]}>
             <TextInput
-              style={[generalStyles.formInput, { flex: 1 }, errors.password && styles.errorInput]}
+              style={[generalStyles.formInput,styles.borderStyles , errors.password && styles.errorInput]}
               placeholderTextColor={COLORS.primaryWhiteHex}
               secureTextEntry={!showPassword}
-              placeholder={'Enter Password'}
+              placeholder={'Password'}
               onChangeText={handlePasswordChange}
               value={password}
               underlineColorAndroid="transparent"
@@ -629,13 +611,9 @@ const Register = () => {
         {/* confirm password */}
         {/* confirm password */}
         <View style={generalStyles.formContainer}>
-          <View>
-            <Text style={generalStyles.formInputTextStyle}>
-              Confirm Password</Text>
-          </View>
-          <View style={[generalStyles.flexStyles, styles.viewStyles]}>
+          <View style={[generalStyles.flexStyles, {alignItems: 'center'}]}>
             <TextInput
-              style={[generalStyles.formInput, { flex: 1 }, errors.confirmpassword && styles.errorInput]}
+              style={[generalStyles.formInput,styles.borderStyles , errors.confirmpassword && styles.errorInput]}
               placeholderTextColor={COLORS.primaryWhiteHex}
               secureTextEntry={!showPassword}
               placeholder={'Confirm Password'}
@@ -644,7 +622,7 @@ const Register = () => {
               underlineColorAndroid="transparent"
               autoCapitalize="none"
             />
-            <MaterialCommunityIcons
+             <MaterialCommunityIcons
               name={showPassword ? 'eye-off' : 'eye'}
               size={24}
               color={COLORS.secondaryGreyHex}
@@ -662,12 +640,73 @@ const Register = () => {
 
         {/* confirm  password*/}
 
+        {/* conform to terms and conditions */}
+        <View style={[generalStyles.flexStyles, { alignItems: 'center' }, generalStyles.formContainer]}>
+          <View style={{ marginHorizontal: 3 }}>
+            <Checkbox
+              value={Iaccept}
+              onValueChange={() => setIaccept(!Iaccept)}
+              borderRadius={0}
+              size={20}
+            />
+          </View>
+
+          <View>
+            <TouchableOpacity onPress={handleTermsPress} style={{marginHorizontal:10}}>
+              <View style={[generalStyles.flexStyles, {marginRight:5}]}>
+                <Text style={generalStyles.CardTitle}> 
+                  I accept the
+                   <Text style={[generalStyles.CardTitle, { color: 'blue', fontFamily:FONTFAMILY.Lovato_Bold }]}> Terms and Conditions</Text>
+                   <Text style={generalStyles.CardTitle}> and have read </Text>
+                 </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handlePrivacyPress} style={{marginHorizontal:10}}>
+              <View style={[generalStyles.flexStyles]}>
+                 <Text style={generalStyles.CardTitle}>the</Text>
+                <Text style={[generalStyles.CardTitle, { color: 'blue', fontFamily:FONTFAMILY.Lovato_Bold }]}> Privacy Policy</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+        </View>
+
+        {/* conform to terms and conditions */}
+
         <TouchableOpacity
-          activeOpacity={1}
-          style={generalStyles.loginContainer}
-          onPress={() => onRegister()}>
+          activeOpacity={Iaccept ? 1 : 0.5} // Set activeOpacity to 1 when enabled, and 0.5 when disabled
+          style={[generalStyles.loginContainer, { opacity: Iaccept ? 1 : 0.5 }]} // Adjust opacity based on Iaccept state
+          disabled={!Iaccept}
+          onPress={onRegister}>
           <Text style={generalStyles.loginText}>{'Register'}</Text>
         </TouchableOpacity>
+
+        {/* already have an account login */}
+        <View style={[generalStyles.centerContent , {marginTop:20}]}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate("Login")}
+            style={[generalStyles.centerContent, { flexDirection: 'row' }]}
+          >
+             <Text style={generalStyles.CardTitle}>Already have an account? </Text>
+            <Text style={generalStyles.forgotText}>
+              {'Login'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* already have an account login */}
+
+                {/* add skip  word */}
+                <TouchableOpacity
+                     activeOpacity={1}
+                     onPress={() =>dispatch(skipFirstLogin())}
+                     style={[generalStyles.centerContent, { flexDirection: 'row' }]}
+        >
+          <Text style={[generalStyles.forgotText, {marginTop: 10}]}>Skip for now</Text>
+        </TouchableOpacity>
+        {/* add skip  word */}
+
 
         {loading && <ActivityIndicator />}
       </KeyboardAwareScrollView>
@@ -679,7 +718,7 @@ export default Register
 
 const styles = StyleSheet.create({
   icon: {
-    marginLeft: -20,
+    marginLeft: -40,
   },
   container: {
     flex: 1,
@@ -699,6 +738,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 20,
     paddingHorizontal: 10,
+    fontFamily:FONTFAMILY.Lovato_Regular
   },
   countryButton: {
     marginBottom: 20,
@@ -723,7 +763,17 @@ const styles = StyleSheet.create({
     right: 10
   },
   errorInput: {
-    borderBottomColor: COLORS.primaryRedHex,
-    borderBottomWidth: 2,
+    borderColor: COLORS.primaryRedHex,
+    // borderWidth: 2,
+    fontFamily:FONTFAMILY.Lovato_Regular
   },
+  borderStyles: {
+    borderWidth: 0.5,
+    borderBottomWidth: 0.5,
+    height: 45,
+    borderColor: COLORS.primaryLightGreyHex,
+    borderRadius: 10,
+    paddingLeft: 10,
+    paddingRight: 10
+},
 })

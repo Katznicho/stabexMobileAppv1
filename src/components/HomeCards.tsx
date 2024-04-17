@@ -1,23 +1,54 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Platform, Alert } from 'react-native'
 import { generalStyles } from '../screens/utils/generatStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../redux/store/dev';
+import { logoutUser, showAuthScreen } from '../redux/store/slices/UserSlice';
 
 
 
 const HomeCards: React.FC<any> = () => {
 
     const navigation = useNavigation<any>();
+    const dispatch = useDispatch<AppDispatch>();
+    const { user,  isGuest } = useSelector((state: RootState) => state.user);
+
+    const handleShowAlert = () => {
+        try {
+            Alert.alert(
+                'Login',
+                "You need to login first to see this screen",
+                [
+                    {
+                        text: 'Cancel',
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => {
+                            dispatch(logoutUser());
+                            return dispatch(showAuthScreen(true));
+                        },
+                    },
+                ],
+                { cancelable: false },
+            );
+        } catch (error) {
+            console.error('Error handling alert:', error);
+        }
+    }
+
     return (
         <View>
             <View style={[generalStyles.viewStyles, generalStyles.flexStyles, styles.overAllContainer, { alignItems: 'center', justifyContent: 'space-between' }]}>
                 <TouchableOpacity style={[styles.CardContainer, styles.additionCardContainerStyles]}
                     activeOpacity={1}
-                    onPress={() => navigation.navigate('Stations')}
+                    onPress={() => isGuest ? handleShowAlert() : navigation.navigate('Stations')}
 
                 >
                     <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
@@ -37,7 +68,7 @@ const HomeCards: React.FC<any> = () => {
                 <TouchableOpacity
                     activeOpacity={1}
                     style={[styles.CardContainer]}
-                    onPress={() => navigation.navigate('Card')}
+                    onPress={() =>isGuest ? handleShowAlert() : navigation.navigate('Cards')}
                 >
                     <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
                         <AntDesign
@@ -56,14 +87,14 @@ const HomeCards: React.FC<any> = () => {
             <View style={[generalStyles.viewStyles, generalStyles.flexStyles, styles.overAllContainer, { alignItems: 'center', justifyContent: 'space-between' }]}>
                 <TouchableOpacity style={[styles.CardContainer, styles.additionCardContainerStyles]}
                     activeOpacity={1}
-                    onPress={() => navigation.navigate('PayOnSite')}
+                    onPress={() => isGuest ? handleShowAlert() : navigation.navigate('PayOnSite')}
                 >
                     <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
                         <MaterialIcons
                             name="payments"
                             size={30}
                             color={COLORS.primaryOrangeHex}
-                            onPress={() => navigation.navigate('PayOnSite')}
+                            onPress={() => isGuest ? handleShowAlert() : navigation.navigate('PayOnSite')}
                         />
                         <Text style={[styles.CardSubtitle]}>Pay On Site</Text>
 
@@ -75,7 +106,7 @@ const HomeCards: React.FC<any> = () => {
                 <TouchableOpacity
                     activeOpacity={1}
                     style={[styles.CardContainer]}
-                    onPress={() => navigation.navigate('Gas')}
+                    onPress={() => isGuest ? handleShowAlert() : navigation.navigate('Gas')}
                 >
                     <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
                         <MaterialCommunityIcons
@@ -95,14 +126,14 @@ const HomeCards: React.FC<any> = () => {
             <View style={[generalStyles.viewStyles, generalStyles.flexStyles, styles.overAllContainer, { alignItems: 'center', justifyContent: 'space-between' }]}>
                 <TouchableOpacity style={[styles.CardContainer, styles.additionCardContainerStyles]}
                     activeOpacity={1}
-                    onPress={() => navigation.navigate('LubricantStack')}
+                    onPress={() =>isGuest ? handleShowAlert() : navigation.navigate('LubricantStack')}
                 >
                     <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
                         <MaterialCommunityIcons
                             name="tools"
                             size={30}
                             color={COLORS.primaryOrangeHex}
-                            onPress={() => navigation.navigate('LubricantStack')}
+                            onPress={() =>isGuest ? handleShowAlert() : navigation.navigate('LubricantStack')}
                         />
                         <Text style={[styles.CardSubtitle]}>Lubricants</Text>
 
@@ -114,14 +145,14 @@ const HomeCards: React.FC<any> = () => {
                 <TouchableOpacity
                     activeOpacity={1}
                     style={[styles.CardContainer]}
-                    onPress={() => navigation.navigate('ServiceBayStack')}
+                    onPress={() =>isGuest ? handleShowAlert() : navigation.navigate('ServiceBayStack')}
                 >
                     <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
                         <MaterialIcons
                             name="miscellaneous-services"
                             size={25}
                             color={COLORS.primaryOrangeHex}
-                            onPress={() => navigation.navigate('ServiceBayStack')}
+                            onPress={() =>isGuest ? handleShowAlert() : navigation.navigate('ServiceBayStack')}
                         />
                         <Text style={[styles.CardSubtitle]}>Service Bay</Text>
 
@@ -139,18 +170,18 @@ export default HomeCards
 
 const styles = StyleSheet.create({
     CardTitle: {
-        fontFamily: FONTFAMILY.poppins_medium,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_16,
     },
     CardSubtitle: {
-        fontFamily: FONTFAMILY.poppins_light,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_14,
         marginHorizontal: SPACING.space_10
     },
     CardPriceCurrency: {
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         color: COLORS.primaryOrangeHex,
         fontSize: FONTSIZE.size_18,
     },

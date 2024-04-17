@@ -20,8 +20,6 @@ const SupportScreen = () => {
             skipCanOpen: true // Skip the canOpenURL check
         }
         call(args).catch(console.error);
-
-
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primaryBlackHex }}>

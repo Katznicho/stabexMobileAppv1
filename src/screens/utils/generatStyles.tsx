@@ -11,7 +11,7 @@ export const generalStyles = StyleSheet.create({
   },
   ScreenTitle: {
     fontSize: FONTSIZE.size_28,
-    fontFamily: FONTFAMILY.poppins_semibold,
+    fontFamily: FONTFAMILY.Lovato_Bold,
     color: COLORS.primaryWhiteHex,
     paddingLeft: SPACING.space_30,
   },
@@ -46,10 +46,11 @@ export const generalStyles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 20,
     width: 100,
+    fontFamily: FONTFAMILY.Lovato_Regular,
   },
   authTitle: {
     fontSize: 20,
-    fontFamily: FONTFAMILY.poppins_regular,
+    fontFamily: FONTFAMILY.Lovato_Bold,
     color: COLORS.primaryOrangeHex,
     marginTop: 25,
     marginBottom: 8,
@@ -58,13 +59,14 @@ export const generalStyles = StyleSheet.create({
     marginLeft: 30,
   },
   textStyle: {
-    fontFamily: FONTFAMILY.poppins_light,
+    fontFamily: FONTFAMILY.Lovato_Light,
     color: COLORS.primaryWhiteHex,
     fontSize: 15,
   },
   errorText: {
     color: COLORS.primaryRedHex,
     fontSize: 14,
+    fontFamily: FONTFAMILY.Lovato_Regular,
   },
   InputContainer: {
     height: 42,
@@ -79,8 +81,8 @@ export const generalStyles = StyleSheet.create({
     marginVertical: 10,
     alignItems: 'center',
     elevation: 5,
-
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: FONTFAMILY.Lovato_Regular,
   },
   loginContainer: {
     width: '70%',
@@ -98,12 +100,12 @@ export const generalStyles = StyleSheet.create({
   },
   forgotText: {
     color: COLORS.primaryOrangeHex,
-    fontFamily: FONTFAMILY.poppins_light,
+    fontFamily: FONTFAMILY.Lovato_Bold,
   },
   loginText: {
     color: COLORS.primaryBlackHex,
-    fontFamily: FONTFAMILY.poppins_light,
-    // fontFamily: FONTFAMILY.poppins_medium,
+    fontFamily: FONTFAMILY.Lovato_Bold,
+    fontSize: FONTSIZE.size_20
   },
   viewStyles: {
     marginHorizontal: 20,
@@ -113,25 +115,25 @@ export const generalStyles = StyleSheet.create({
   formInput: {
     color: COLORS.primaryWhiteHex,
     fontSize: 15,
-    borderBottomColor: COLORS.primaryWhiteHex,
-    borderBottomWidth: 1,
-    // paddingBottom: 2,
+    fontFamily: FONTFAMILY.Lovato_Regular,
     paddingHorizontal: 0,
     paddingVertical: Platform.OS === 'android' ? 0 : 10,
     marginTop: 5,
-    // marginHorizontal: 20
+    width:"100%",
+    // marginHorizontal:10
   },
   formContainer: {
     marginVertical: Platform.OS === 'android' ? 5 : 10,
-    marginHorizontal: 25
+    marginHorizontal: 10
   },
   titleHeaderStyles: {
     fontSize: 25,
-    fontFamily: FONTFAMILY.poppins_extrabold,
+    fontFamily: FONTFAMILY.Lovato_Bold,
+
   },
   formInputTextStyle: {
     fontSize: 15,
-    fontFamily: FONTFAMILY.poppins_semibold,
+    fontFamily: FONTFAMILY.Lovato_Bold,
     color: COLORS.primaryWhiteHex
   },
   headerStyle: {
@@ -141,27 +143,36 @@ export const generalStyles = StyleSheet.create({
     paddingBottom: 100
   },
   CardTitle: {
-    fontFamily: FONTFAMILY.poppins_medium,
+    fontFamily: FONTFAMILY.Lovato_Regular,
     color: COLORS.primaryWhiteHex,
     fontSize: FONTSIZE.size_14,
   },
   CardSubtitle: {
-    fontFamily: FONTFAMILY.poppins_light,
+    fontFamily: FONTFAMILY.Lovato_Regular,
     color: COLORS.primaryWhiteHex,
     fontSize: FONTSIZE.size_10,
-    // marginHorizontal: SPACING.space_10
   },
   CardPriceCurrency: {
-    fontFamily: FONTFAMILY.poppins_semibold,
+    fontFamily: FONTFAMILY.Lovato_Light,
     color: COLORS.primaryOrangeHex,
     fontSize: FONTSIZE.size_12,
   },
   errorInput: {
     borderBottomColor: COLORS.primaryRedHex,
     borderBottomWidth: 2,
+    fontFamily: FONTFAMILY.Lovato_Regular,
   },
   textInputMarginRight: {
     marginRight: 15
   },
+  borderStyles: {
+    borderWidth: 0.5,
+    borderBottomWidth: 0.5,
+    height: 45,
+    borderColor: COLORS.primaryLightGreyHex,
+    borderRadius: 10,
+    paddingLeft: 10,
+    paddingRight: 10
+},
 
 });
