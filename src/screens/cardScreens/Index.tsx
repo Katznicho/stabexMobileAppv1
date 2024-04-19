@@ -118,7 +118,7 @@ const Index = () => {
                         style={[generalStyles.loginContainer, styles.buttonStyles]}
                         onPress={() => setOpenPicker(true)}
                     >
-                        <Text style={[generalStyles.loginText, { fontSize: FONTSIZE.size_16, fontWeight: "bold" }, generalStyles.centerContent]}>{'Link Card'}</Text>
+                        <Text style={[generalStyles.loginText, { fontSize: FONTSIZE.size_18 }, generalStyles.centerContent]}>{'Link Card'}</Text>
                     </TouchableOpacity>
 
                     <View style={[generalStyles.centerContent, styles.viewStyles]} >
@@ -130,7 +130,7 @@ const Index = () => {
                         style={[generalStyles.loginContainer, styles.buttonStyles]}
                         onPress={() => navigation.navigate('ApplyForCard')}
                     >
-                        <Text style={[generalStyles.loginText, { fontSize: FONTSIZE.size_16, fontWeight: "bold" }, generalStyles.centerContent]}>{'Apply For Card'}</Text>
+                        <Text style={[generalStyles.loginText, { fontSize: FONTSIZE.size_18,}, generalStyles.centerContent]}>{'Apply'}</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -153,7 +153,7 @@ export default Index
 const styles = StyleSheet.create({
     ScreenTitle: {
         fontSize: FONTSIZE.size_28,
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.Lovato_Bold,
         color: COLORS.primaryBlackHex,
         paddingLeft: SPACING.space_30,
     },

@@ -1,21 +1,108 @@
 import React, { useEffect } from 'react';
-import { ScrollView, Dimensions,  Text } from 'react-native';
+import { ScrollView, Dimensions, Text, FlatList, TouchableOpacity, Image, Linking } from 'react-native';
 import { generalStyles } from './utils/generatStyles';
 import { RootState } from '../redux/store/dev';
 import { useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import HomeCards from '../components/HomeCards';
 import DeviceInfo from 'react-native-device-info';
-// import { SAVE_DEVICE_INFO } from './utils/constants/routes';
-import HomeScroller from '../components/HomeScroller';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import useGetUserLocation from '../hooks/useGetUserLocation';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import HomeCardCarousel from '../components/HomeCardCarousel';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const width = Dimensions.get('window').width;
+const { width, height } = Dimensions.get('window');
+
+const cards = [
+  {
+    name: "Find Stations",
+    route: "Stations",
+    isBig: false,
+    isDisabled: false,
+    mode: ['contain', 'cover'],
+    arrayImages: [
+      require("../assets/app_images/station_finder_one.jpeg"),
+
+    ]
+  },
+  {
+    name: " Stabex Card",
+    route: "Card",
+    isDisabled: false,
+    isBig: false,
+    arrayImages: [
+      require("../assets/app_images/card_one.jpeg"),
+      require("../assets/app_images/stabex_station.jpg")
+    ]
+  },
+  {
+    name: "Pay on Site",
+    route: "PayOnSite",
+    isDisabled: false,
+    isBig: false,
+    arrayImages: [
+      require("../assets/app_images/stabex_station.jpg"),
+      require("../assets/app_images/stabex_station.jpg")
+    ]
+  },
+  {
+    name: "Stabex Gas",
+    route: "Gas",
+    isDisabled: false,
+    isBig: false,
+    // image: require("../../assets/home/second.jpeg"),
+    arrayImages: [
+      require("../assets/app_images/gas_one.jpeg"),
+    ]
+  },
+  {
+    name: "Lubricants",
+    route: "LubricantStack",
+    isBig: true,
+    isDisabled: false,
+    arrayImages: [
+      require("../assets/app_images/lubricant_one.jpeg"),
+    ]
+  },
+  {
+    name: "Service Bay",
+    route: "ServiceBayStack",
+    isBig: false,
+    isDisabled: false,
+    arrayImages: [
+      require("../assets/app_images/service_bay.jpeg"),
+    ]
+  },
+  {
+    isDisabled: true,
+    arrayImages: [
+      require("../assets/app_images/advertising_one.jpeg"),
+      // require("../assets/app_images/advertising_two.jpeg"),
+      require("../assets/app_images/advertising_three.jpeg"),
+      require("../assets/app_images/advertising_four.jpeg"),
+    ]
+  },
+  {
+    isDisabled: true,
+    arrayImages: [
+      require('../assets/app_images/cooking_gas.jpeg'),
+      require('../assets/app_images/apply_for_card.jpeg'),
+      require('../assets/app_images/spend_less.jpeg'),
+      require("../assets/app_images/cooking_gas.jpeg")
+    ]
+  },
+
+
+]
 
 const HomeScreen = () => {
+  const { position } = useGetUserLocation()
   const { isGuest, authToken } = useSelector((state: RootState) => state.user);
 
   const tabBarHeight = useBottomTabBarHeight();
+  const navigation = useNavigation<any>();
+
 
 
   // User device and push token
@@ -87,19 +174,6 @@ const HomeScreen = () => {
     body.append('device_os_version', device_os_version);
     body.append('device_user_agent', device_user_agent);
     body.append('device_type', device_type);
-
-    // fetch(`${SAVE_DEVICE_INFO}`, {
-    //   headers,
-    //   method: 'POST',
-    //   body,
-    // })
-    //   .then(response => response.json())
-    //   .then(result => {
-
-    //   })
-    //   .catch(error => {
-
-    //   });
   }
 
   return (
@@ -110,14 +184,137 @@ const HomeScreen = () => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always"
-        contentContainerStyle={{ paddingBottom: tabBarHeight }}
+        contentContainerStyle={{ paddingBottom: tabBarHeight + 50 }}
       >
-        {/* Home cards */}
-        <HomeCards />
+
+        {/* first section */}
+        <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "center", marginVertical: 10 }]}>
+          <TouchableOpacity
+            style={{ marginLeft: 10, marginRight: 10 }}
+            activeOpacity={1}
+            onPress={() => Linking.openURL("https://stabexinternational.com/")}
+          >
+            <HomeCardCarousel
+              cards={cards}
+              cardIndex={6}
+              width={width / 2.2}
+              height={height / 2.4}
+              carouselHeight={210}
+              IconComponent={AntDesign}
+              iconName="find"
+            />
+          </TouchableOpacity>
+
+          <View style={{ marginRight: 10 }}>
+            <TouchableOpacity
+              style={{ marginBottom: 10 }}
+              activeOpacity={1}
+              onPress={() => navigation.navigate("Stations")}
+            >
+              <HomeCardCarousel
+                cards={cards}
+                cardIndex={0}
+                width={width / 2.2}
+                height={height / 2.4}
+                carouselHeight={100}
+              />
+
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => navigation.navigate("Card")}
+            >
+              <HomeCardCarousel
+                cards={cards}
+                cardIndex={1}
+                width={width / 2.2}
+                height={height / 2.4}
+                carouselHeight={100}
+              />
+
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* first section */}
+
+        {/* second section */}
+        <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "center", marginVertical: 10 }]}>
+          <TouchableOpacity
+            style={{ marginLeft: 0, marginRight: 10 }}
+            activeOpacity={1}
+            onPress={() => navigation.navigate("PayOnSite")}
+          >
+            <HomeCardCarousel
+              cards={cards}
+              cardIndex={2}
+              width={width / 2.2}
+              height={height / 2.4}
+              carouselHeight={100}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate("Gas")}
+          >
+            <HomeCardCarousel
+              cards={cards}
+              cardIndex={3}
+              width={width / 2.2}
+              height={height / 2.4}
+              carouselHeight={100}
+            />
+          </TouchableOpacity>
+        </View>
+        {/* second section */}
+
+        {/* third section */}
+        <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "center", marginVertical: 10 }]}>
+          <TouchableOpacity
+            style={{ marginLeft: 0, marginRight: 10 }}
+            activeOpacity={1}
+            onPress={() => navigation.navigate("LubricantStack")}
+          >
+            <HomeCardCarousel
+              cards={cards}
+              cardIndex={4}
+              width={width / 2.2}
+              height={height / 2.4}
+              carouselHeight={100}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate("ServiceStack")}
+          >
+            <HomeCardCarousel
+              cards={cards}
+              cardIndex={5}
+              width={width / 2.2}
+              height={height / 2.4}
+              carouselHeight={100}
+            />
+          </TouchableOpacity>
+        </View>
+        {/* third section */}
+
         {/* Home scroller */}
         <Text style={[generalStyles.CardTitle, { marginHorizontal: 20 }]}>For You</Text>
-        <HomeScroller />
+
+        {/* <HomeScroller /> */}
+        <TouchableOpacity
+          style={{ marginLeft: 10, marginRight: 10 }}
+          activeOpacity={1}
+        >
+          <HomeCardCarousel
+            cards={cards}
+            cardIndex={7}
+            width={width - 20}
+            height={height / 1.5}
+            carouselHeight={180}
+          />
+        </TouchableOpacity>
         {/* Home Scroller */}
+
       </ScrollView>
     </KeyboardAwareScrollView>
   );

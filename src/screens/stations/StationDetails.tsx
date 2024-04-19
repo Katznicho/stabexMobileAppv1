@@ -1,19 +1,23 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, ImageBackground, Linking } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { generalStyles } from '../utils/generatStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../../theme/theme'
 import GradientBGIcon from '../../components/GradientBGIcon'
 import { calculateDistance } from '../utils/helpers/helpers'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store/dev'
+import { GET_PRODUCT_CATEGORIES, PAYMENT_METHODS } from '../utils/constants/routes'
+import { Checkbox } from 'react-native-ui-lib'
 
 
 const StationDetails = () => {
 
   const navigation = useNavigation<any>();
+  const { authToken } = useSelector((state: RootState) => state.user);
 
   const { data, position } = useRoute<any>().params;
-
 
 
   const openMapsForDirections = () => {
@@ -21,6 +25,43 @@ const StationDetails = () => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
     return Linking.openURL(url);
   };
+
+  const [products, setProducts] = useState<any>([])
+  const [paymentMethods , setPaymentMethods]=  useState<any>([]);
+
+
+  useEffect(() => {
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append("Content-Type", "application/json");
+    headers.append('Authorization', `Bearer ${authToken}`);
+
+    fetch(GET_PRODUCT_CATEGORIES, {
+      method: 'POST',
+      headers
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        setProducts(result?.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+      fetch(PAYMENT_METHODS, {
+        method: 'POST',
+        headers
+      })
+      .then((response) => response.json())
+      .then((result) => {
+        setPaymentMethods(result?.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+  
+  }, [])
 
   return (
     <KeyboardAwareScrollView
@@ -55,41 +96,125 @@ const StationDetails = () => {
 
           </View>
 
-          {/* back handler */}
-
-          {/* more details */}
 
           {/* more details */}
         </ImageBackground>
         {/* show background */}
         <View style={styles.cardContainer}>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={[generalStyles.loginContainer, {
-              marginTop: 5,
-            }]}
-            onPress={() => openMapsForDirections()}
-          >
-            <Text style={generalStyles.loginText}>{'Take me there'}</Text>
-          </TouchableOpacity>
-
           <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
           <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]}>
             <View>
-              <Text style={styles.CardTitle} >Name</Text>
-              <Text style={styles.CardSubtitle}>{data?.station_name }</Text>
+              <Text style={[generalStyles.CardTitle, {color:COLORS.primaryBlackRGBA}]} >Station Name</Text>
+              <Text style={[generalStyles.CardSubtitle, {fontSize:20}]}>{data?.station_name}</Text>
             </View>
             <View>
-              <Text style={styles.CardTitle} >Distance</Text>
-              <Text style={styles.CardSubtitle}>
-                {calculateDistance(position?.latitude, position?.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude))} kms away
+              <Text style={[generalStyles.CardTitle, {color:COLORS.primaryBlackRGBA}]} >Distance</Text>
+              <Text style={[generalStyles.CardSubtitle, {fontSize:15}]}>
+                {calculateDistance(position?.latitude, position?.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude))} km(s) away
               </Text>
             </View>
 
           </View>
+     
+          <TouchableOpacity
+            activeOpacity={1}
+            style={[generalStyles.loginContainer, {
+              marginTop: 15,
+            }]}
+            onPress={() => openMapsForDirections()}
+          >
+            <Text style={generalStyles.loginText}>{'Directions'}</Text>
+          </TouchableOpacity>
 
         </View>
-        {/* {renderMap()} */}
+
+        <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
+        {/* products  */}
+        <View>
+
+          <Text style={[generalStyles.authTitle, { fontSize: 18, color: COLORS.primaryBlackRGBA }]}>
+            Products
+          </Text>
+          <View style={styles.formContainer}>
+            <View style={styles.columnContainer}>
+              {
+                products
+                  ? products.slice(0, Math.ceil(products.length / 2)).map((item: any) => (
+                    <Checkbox
+                      key={item?.Id}
+                      label={item?.category_name}
+                      value={true} // Assuming you have a property named "products" in your state
+                      color={COLORS.primaryOrangeHex}
+                      containerStyle={generalStyles.viewStyles}
+                      labelStyle={styles.labelStyles}
+                    />
+                  ))
+                  : null
+              }
+            </View>
+            <View style={styles.columnContainer}>
+              {
+                products
+                  ? products.slice(Math.ceil(products.length / 2)).map((item: any) => (
+                    <Checkbox
+                      key={item?.Id}
+                      label={item?.category_name}
+                      value={true} // Assuming you have a property named "products" in your state
+                      color={COLORS.primaryOrangeHex}
+                      containerStyle={generalStyles.viewStyles}
+                      labelStyle={styles.labelStyles}
+                    />
+                  ))
+                  : null
+              }
+            </View>
+          </View>
+        </View>
+
+        {/* products */}
+
+         {/* Accepted Methods */}
+         <View>
+
+          <Text style={[generalStyles.authTitle, { fontSize: 18, color: COLORS.primaryBlackRGBA }]}>
+            We Accept
+          </Text>
+          <View style={styles.formContainer}>
+            <View style={styles.columnContainer}>
+              {
+                paymentMethods
+                  ? paymentMethods.slice(0, Math.ceil(products.length / 2)).map((item: any) => (
+                    <Checkbox
+                      key={item?.Id}
+                      label={item?.description}
+                      value={true} // Assuming you have a property named "products" in your state
+                      color={COLORS.primaryOrangeHex}
+                      containerStyle={generalStyles.viewStyles}
+                      labelStyle={styles.labelStyles}
+                    />
+                  ))
+                  : null
+              }
+            </View>
+            <View style={styles.columnContainer}>
+              {
+                paymentMethods
+                  ? paymentMethods.slice(Math.ceil(products.length / 2)).map((item: any) => (
+                    <Checkbox
+                      key={item?.Id}
+                      label={item?.description}
+                      value={true} // Assuming you have a property named "products" in your state
+                      color={COLORS.primaryOrangeHex}
+                      containerStyle={generalStyles.viewStyles}
+                      labelStyle={styles.labelStyles}
+                    />
+                  ))
+                  : null
+              }
+            </View>
+          </View>
+        </View>
+         {/* Accepted Methods */}
 
       </ScrollView>
 
@@ -116,17 +241,11 @@ const styles = StyleSheet.create({
     width: "80%",
     marginVertical: 10
   },
-  CardTitle: {
-    fontFamily: FONTFAMILY.Lovato_Regular,
-    color: COLORS.primaryWhiteHex,
-    fontSize: FONTSIZE.size_14,
+  formContainer: {
+    flexDirection: 'row', // This will make the columns side by side
+    justifyContent: 'space-between', // Adjust as needed
   },
-  CardSubtitle: {
-    fontFamily: FONTFAMILY.Lovato_Light,
-    color: COLORS.primaryWhiteHex,
-    fontSize: FONTSIZE.size_10,
-    // marginHorizontal: SPACING.space_10
-  },
+
   ImageHeaderBarContainerWithBack: {
     padding: SPACING.space_30,
     flexDirection: 'row',
@@ -143,4 +262,10 @@ const styles = StyleSheet.create({
     height: 300,
     marginVertical: 10,
   },
+  columnContainer: {
+    flex: 1, // This will make both columns take equal width
+  },
+  labelStyles: {
+    fontFamily: FONTFAMILY.Lovato_Demi, color: COLORS.primaryWhiteHex
+  }
 })

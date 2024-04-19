@@ -358,9 +358,7 @@ const ConfirmOrderScreen = () => {
                     )
                 }
 
-
                 {/* radio buttons */}
-
 
                 {/* my number */}
 
@@ -405,7 +403,7 @@ const ConfirmOrderScreen = () => {
                                     // placeholderStyle={{ borderColor: 'red' }}
                                     keyboardType="default"
 
-                                    placeholder={'enter phone number'}
+                                    placeholder={'Phone Number'}
                                     onChangeText={text =>
                                         setOtherPhoneNumber(text)
                                     }

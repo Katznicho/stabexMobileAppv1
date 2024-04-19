@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import { ActivityIndicator } from '../../components/ActivityIndicator'
 import { showMessage } from 'react-native-flash-message'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { FETCH_COUNTRIES, REQUEST_EMAIL_OTP } from '../utils/constants/routes'
+import { FETCH_COUNTRIES, REQUEST_EMAIL_OTP, REQUEST_STABEX_OTP } from '../utils/constants/routes'
 import { validateConfirmPassword, validateEmail, validatePassword, validatePhoneNumber } from '../utils/helpers/helpers';
 import useGetUserLocation from '../../hooks/useGetUserLocation';
 import DeviceInfo from 'react-native-device-info';
@@ -350,18 +350,22 @@ const Register = () => {
           "Email": email,
           "Password": password,
           "ConfirmPassword": confirmPassword,
+          "CountryCode": countryCode,
+          "PhoneNumber": phoneNumber.slice(1),
+          "MobileNumber": phoneNumber.slice(1),
         }
       )
-
-
-      fetch(`${REQUEST_EMAIL_OTP}`, {
+       console.log(body)
+      fetch(`${REQUEST_STABEX_OTP}`, {
         method: 'POST',
         headers,
         body: body
       })
         .then(response => response.json())
         .then(async result => {
-
+            console.log("==================")
+            console.log(result)
+            console.log("==================")
           if (result.status == 1) {
             navigation.navigate("VerifyEmail", {
               phoneNumber: countryCode + phoneNumber.slice(1),
@@ -373,7 +377,7 @@ const Register = () => {
           else {
             // failure
             showMessage({
-              message: "Failed In Catch",
+              message: "Failed to register",
               description: result?.message,
               type: "info",
               autoHide: true,

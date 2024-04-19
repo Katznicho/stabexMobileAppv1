@@ -133,17 +133,19 @@ const SitePay: React.FC<Props> = ({ openPicker, setOpenPicker, station }: Props)
                     />
 
                 </TouchableOpacity>
-                <View style={[generalStyles.formContainer]}>
+                 {/* pay area */}
+                  <View style={{marginTop:30}}>
+                  <View style={[generalStyles.formContainer]}>
                     <View>
                         <Text style={generalStyles.formInputTextStyle}>
                             Pay Now
                         </Text>
                     </View>
-                    <Text style={[generalStyles.textStyle]}>Please follow the prompts below to top up your card</Text>
+                    <Text style={[generalStyles.textStyle, {marginVertical:10}]}>Please follow the prompts below to top up your card</Text>
                     <View>
                         <TextInput
                             style={styles.formInput}
-                            placeholder={'enter amount'}
+                            placeholder={'Enter Amount'}
                             keyboardType="number-pad"
                             placeholderTextColor={COLORS.secondaryGreyHex}
                             onChangeText={text => setAmount(text)}
@@ -168,7 +170,6 @@ const SitePay: React.FC<Props> = ({ openPicker, setOpenPicker, station }: Props)
                             return (
                                 <PaymentCard key={index}
                                     data={item}
-                                    // onPress={() => setSelectedPaymentMethod(item)}
                                     selectedPaymentMethod={selectedPaymentMethod}
                                     setSelectedPaymentMethod={setSelectedPaymentMethod}
                                 />
@@ -188,6 +189,11 @@ const SitePay: React.FC<Props> = ({ openPicker, setOpenPicker, station }: Props)
                         {'Proceed'}
                     </Text>
                 </TouchableOpacity>
+
+                  </View>
+
+
+                {/* pay area */}
 
 
 

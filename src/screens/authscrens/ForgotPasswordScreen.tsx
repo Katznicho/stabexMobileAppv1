@@ -13,7 +13,6 @@ import {
     withTiming,
 } from 'react-native-reanimated';
 import { showMessage } from 'react-native-flash-message';
-import { FORGOT_PASSWORD } from '../utils/constants/routes';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { generalStyles } from '../utils/generatStyles';
 import { COLORS } from '../../theme/theme';
@@ -65,65 +64,65 @@ const ForgotPasswordScreen = () => {
         const body = new FormData();
         body.append('phone_number', phoneNumber);
 
-        fetch(`${FORGOT_PASSWORD}`, {
-            method: 'POST',
-            headers,
-            body,
-        })
-            .then(response => response.json())
-            .then(async result => {
+        // fetch(`${FORGOT_PASSWORD}`, {
+        //     method: 'POST',
+        //     headers,
+        //     body,
+        // })
+        //     .then(response => response.json())
+        //     .then(async result => {
 
-                if (result?.errors) {
-                    setErrors(result.errors);
-                    causeVibration();
-                    triggerErrorAnimation();
-                    showMessage({
-                        message: 'Phone number not found',
-                        description: 'This phone number is not registered with us',
-                        type: 'info',
-                        icon: 'info',
-                        duration: 3000,
-                        autoHide: true,
-                    });
-                    return setLoading(false);
-                }
+        //         if (result?.errors) {
+        //             setErrors(result.errors);
+        //             causeVibration();
+        //             triggerErrorAnimation();
+        //             showMessage({
+        //                 message: 'Phone number not found',
+        //                 description: 'This phone number is not registered with us',
+        //                 type: 'info',
+        //                 icon: 'info',
+        //                 duration: 3000,
+        //                 autoHide: true,
+        //             });
+        //             return setLoading(false);
+        //         }
 
-                if (result.response === 'failure') {
-                    setErrors({
-                        // email: [result?.message],
-                        password: [result?.message],
-                    });
-                    causeVibration();
-                    triggerErrorAnimation();
-                    showMessage({
-                        message: 'Email not found',
-                        description: 'This phone nummber is not registered with us',
-                        type: 'info',
-                        icon: 'info',
-                        duration: 3000,
-                        autoHide: true,
-                    });
-                    return setLoading(false);
-                }
-                showMessage({
-                    message: 'A code has been sent to your  phone number and email',
-                    description: 'Please check ',
-                    type: 'success',
-                    icon: 'success',
-                    duration: 3000,
-                    autoHide: true,
-                });
+        //         if (result.response === 'failure') {
+        //             setErrors({
+        //                 // email: [result?.message],
+        //                 password: [result?.message],
+        //             });
+        //             causeVibration();
+        //             triggerErrorAnimation();
+        //             showMessage({
+        //                 message: 'Email not found',
+        //                 description: 'This phone nummber is not registered with us',
+        //                 type: 'info',
+        //                 icon: 'info',
+        //                 duration: 3000,
+        //                 autoHide: true,
+        //             });
+        //             return setLoading(false);
+        //         }
+        //         showMessage({
+        //             message: 'A code has been sent to your  phone number and email',
+        //             description: 'Please check ',
+        //             type: 'success',
+        //             icon: 'success',
+        //             duration: 3000,
+        //             autoHide: true,
+        //         });
 
-                navigation.navigate('ChangePasswordForgotEmail', {
-                    phoneNumber: phoneNumber
-                });
+        //         navigation.navigate('ChangePasswordForgotEmail', {
+        //             phoneNumber: phoneNumber
+        //         });
 
 
-                setLoading(false);
-            })
-            .catch(error => {
-                setLoading(false);
-            });
+        //         setLoading(false);
+        //     })
+        //     .catch(error => {
+        //         setLoading(false);
+        //     });
     }
     return (
         <KeyboardAwareScrollView

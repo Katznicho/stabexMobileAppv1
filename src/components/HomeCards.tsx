@@ -55,7 +55,7 @@ const HomeCards: React.FC<any> = () => {
                         <AntDesign
                             name="find"
                             size={30}
-                            color={COLORS.primaryOrangeHex}
+                            color={COLORS.primaryRedHex}
                         // onPress={() => navigation.navigate('Stations')}
                         />
                         <Text style={[styles.CardSubtitle]}>Station Discovery</Text>
@@ -68,13 +68,13 @@ const HomeCards: React.FC<any> = () => {
                 <TouchableOpacity
                     activeOpacity={1}
                     style={[styles.CardContainer]}
-                    onPress={() =>isGuest ? handleShowAlert() : navigation.navigate('Cards')}
+                    onPress={() =>isGuest ? handleShowAlert() : navigation.navigate('Card')}
                 >
                     <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
                         <AntDesign
                             name="creditcard"
                             size={30}
-                            color={COLORS.primaryOrangeHex}
+                            color={COLORS.primaryRedHex}
                         />
                         <Text style={[styles.CardSubtitle]}>Stabex Card </Text>
 
@@ -93,7 +93,7 @@ const HomeCards: React.FC<any> = () => {
                         <MaterialIcons
                             name="payments"
                             size={30}
-                            color={COLORS.primaryOrangeHex}
+                            color={COLORS.primaryRedHex}
                             onPress={() => isGuest ? handleShowAlert() : navigation.navigate('PayOnSite')}
                         />
                         <Text style={[styles.CardSubtitle]}>Pay On Site</Text>
@@ -112,9 +112,9 @@ const HomeCards: React.FC<any> = () => {
                         <MaterialCommunityIcons
                             name="gas-cylinder"
                             size={30}
-                            color={COLORS.primaryOrangeHex}
+                            color={COLORS.primaryRedHex}
                         />
-                        <Text style={[styles.CardSubtitle]}>Stabex Products </Text>
+                        <Text style={[styles.CardSubtitle]}>Stabex Gas </Text>
 
                     </View>
 
@@ -132,7 +132,7 @@ const HomeCards: React.FC<any> = () => {
                         <MaterialCommunityIcons
                             name="tools"
                             size={30}
-                            color={COLORS.primaryOrangeHex}
+                            color={COLORS.primaryRedHex}
                             onPress={() =>isGuest ? handleShowAlert() : navigation.navigate('LubricantStack')}
                         />
                         <Text style={[styles.CardSubtitle]}>Lubricants</Text>
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
         fontSize: FONTSIZE.size_16,
     },
     CardSubtitle: {
-        fontFamily: FONTFAMILY.Lovato_Regular,
+        fontFamily: FONTFAMILY.Lovato_Bold,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_14,
         marginHorizontal: SPACING.space_10
@@ -196,11 +196,11 @@ const styles = StyleSheet.create({
     overAllContainer: {
         backgroundColor: Platform.OS === 'android' ? COLORS.primaryBlackHex : COLORS.primaryLightWhiteGrey,
         borderRadius: SPACING.space_8,
-        padding: SPACING.space_10,
-        elevation: 10
+        padding: SPACING.space_18,
+        elevation: 5
     },
     additionCardContainerStyles: {
-        borderRightWidth: 0.5,
-        borderRightColor: COLORS.primaryLightGreyHex
+        borderRightWidth: 2,
+        borderRightColor: COLORS.primaryRedHex
     }
 })

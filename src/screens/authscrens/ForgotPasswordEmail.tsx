@@ -14,7 +14,7 @@ import {
     withTiming,
 } from 'react-native-reanimated';
 import { showMessage } from 'react-native-flash-message';
-import { FORGOT_PASSWORD, USER_FORGOT_PASSWORD } from '../utils/constants/routes';
+import {  USER_FORGOT_PASSWORD } from '../utils/constants/routes';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { generalStyles } from '../utils/generatStyles';
 import { COLORS } from '../../theme/theme';
@@ -116,35 +116,6 @@ const ForgotPasswordEmail = () => {
                             duration: 3000
                         })
                     }
-
-                    // if (result?.errors) {
-                    //     setErrors(result.errors);
-                    //     causeVibration();
-                    //     triggerErrorAnimation();
-                    //     return setLoading(false);
-                    // }
-
-                    // if (result.response === 'failure') {
-                    //     setErrors({
-                    //         // email: [result?.message],
-                    //         password: [result?.message],
-                    //     });
-                    //     causeVibration();
-                    //     triggerErrorAnimation();
-                    //     return setLoading(false);
-                    // }
-                    // showMessage({
-                    //     message: "Code Resent",
-                    //     description: "An otp has been resent to your email",
-                    //     icon: "success",
-                    //     type: "success",
-                    //     autoHide: true,
-                    //     duration: 3000
-                    // })
-
-                    // navigation.navigate('VerifyEmail', { email: email });
-
-
                     setLoading(false);
                 })
                 .catch(error => {
@@ -203,18 +174,16 @@ const ForgotPasswordEmail = () => {
                 <View>
                     {/* email */}
                     <View style={generalStyles.formContainer}>
-                        <View>
-                            <Text style={generalStyles.formInputTextStyle}>
-                                Email</Text>
-                        </View>
+                        
 
                         <TextInput
                             style={[
                                 generalStyles.formInput,
+                                generalStyles.borderStyles,
                                 generalStyles.textInputMarginRight,
                                 errors.email && generalStyles.errorInput
                             ]}
-                            placeholder={'enter email'}
+                            placeholder={'Email Address'}
                             keyboardType="email-address"
                             placeholderTextColor={COLORS.primaryWhiteHex}
                             onChangeText={handleEmailChange}

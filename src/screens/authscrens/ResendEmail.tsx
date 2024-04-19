@@ -14,7 +14,6 @@ import Animated, {
     withTiming,
 } from 'react-native-reanimated';
 import { causeVibration, validateEmail } from '../utils/helpers/helpers';
-import { RESEND_OTP } from '../utils/constants/routes';
 import { generalStyles } from '../utils/generatStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { TouchableOpacity } from 'react-native';
@@ -97,48 +96,48 @@ const ResendEmailScreen = () => {
         // body.append('email', email.toLowerCase());
         body.append("phone_number", phoneNumber);
 
-        fetch(`${RESEND_OTP}`, {
-            method: 'POST',
-            headers,
-            body,
-        })
-            .then(response => response.json())
-            .then(async result => {
+        // fetch(`${RESEND_OTP}`, {
+        //     method: 'POST',
+        //     headers,
+        //     body,
+        // })
+        //     .then(response => response.json())
+        //     .then(async result => {
 
-                if (result?.errors) {
-                    setErrors(result.errors);
-                    causeVibration();
-                    triggerErrorAnimation();
-                    return setLoading(false);
-                }
+        //         if (result?.errors) {
+        //             setErrors(result.errors);
+        //             causeVibration();
+        //             triggerErrorAnimation();
+        //             return setLoading(false);
+        //         }
 
-                if (result.response === 'failure') {
-                    setErrors({
-                        // email: [result?.message],
-                        password: [result?.message],
-                    });
-                    causeVibration();
-                    triggerErrorAnimation();
-                    return setLoading(false);
-                }
-                showMessage({
-                    message: "Code Resent",
-                    description: "An otp has been resent to your email",
-                    icon: "success",
-                    type: "success",
-                    autoHide: true,
-                    duration: 3000
-                })
+        //         if (result.response === 'failure') {
+        //             setErrors({
+        //                 // email: [result?.message],
+        //                 password: [result?.message],
+        //             });
+        //             causeVibration();
+        //             triggerErrorAnimation();
+        //             return setLoading(false);
+        //         }
+        //         showMessage({
+        //             message: "Code Resent",
+        //             description: "An otp has been resent to your email",
+        //             icon: "success",
+        //             type: "success",
+        //             autoHide: true,
+        //             duration: 3000
+        //         })
 
-                navigation.navigate('VerifyEmail', { email: email });
+        //         navigation.navigate('VerifyEmail', { email: email });
 
 
-                setLoading(false);
-            })
-            .catch(error => {
+        //         setLoading(false);
+        //     })
+        //     .catch(error => {
 
-                setLoading(false);
-            });
+        //         setLoading(false);
+        //     });
     }
 
     return (

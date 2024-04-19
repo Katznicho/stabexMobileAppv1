@@ -24,24 +24,24 @@ const ProductRestriction = ({ cardApplication, setCardApplication, goToNextStep,
                             regions.map((item: any) => {
                                 return (
                                     <Checkbox
-                                        key={item.id}
-                                        label={item.name}
-                                        value={cardApplication.regions?.includes(item.id)} // Assuming you have a cardApplication named "regions" in your state
+                                        key={item.Id}
+                                        label={item.category_description}
+                                        value={cardApplication.regions?.includes(item.Id)} // Assuming you have a cardApplication named "regions" in your state
                                         color={COLORS.primaryOrangeHex}
                                         containerStyle={styles.viewStyles}
                                         onValueChange={(isChecked: boolean) => {
-                                            // Check if the region ID is already in the array
-                                            const isRegionInArray = cardApplication.regions?.includes(item.id);
+                                            // Check if the region Id is already in the array
+                                            const isRegionInArray = cardApplication.regions?.includes(item.Id);
 
                                             // Create a new array based on the checkbox state
                                             let updatedRegions: any[];
 
                                             if (isChecked && !isRegionInArray) {
-                                                // Add the region ID to the array if the checkbox is checked and the ID is not present
-                                                updatedRegions = [...(cardApplication.regions || []), item.id];
+                                                // Add the region Id to the array if the checkbox is checked and the Id is not present
+                                                updatedRegions = [...(cardApplication.regions || []), item.Id];
                                             } else if (!isChecked && isRegionInArray) {
-                                                // Remove the region ID from the array if the checkbox is unchecked and the ID is present
-                                                updatedRegions = (cardApplication.regions || []).filter((id: string) => id !== item.id);
+                                                // Remove the region Id from the array if the checkbox is unchecked and the Id is present
+                                                updatedRegions = (cardApplication.regions || []).filter((Id: string) => Id !== item.Id);
                                             } else {
                                                 // No change needed if the checkbox state and array state are consistent
                                                 updatedRegions = cardApplication.regions;
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     },
     labelStyles: {
         color: COLORS.primaryWhiteHex,
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.Lovato_Bold,
         fontSize: 15
     },
     iconStyles: {

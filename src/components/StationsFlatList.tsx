@@ -20,8 +20,8 @@ const StationsFlatList = ({ stations, position, screen = "HomeStationDetails", s
             setLoading(true);
             let sorted;
             if (searchText) {
-                sorted = await sortStations(stations.filter((station: { name: string }) =>
-                    station.name.toLowerCase().includes(searchText.toLowerCase())), position);
+                sorted = await sortStations(stations.filter((station: { station_name: string }) =>
+                    station?.station_name?.toLowerCase()?.includes(searchText.toLowerCase())), position);
             } else {
                 sorted = await sortStations(stations, position);
             }

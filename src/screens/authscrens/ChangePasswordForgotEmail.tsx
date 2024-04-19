@@ -228,13 +228,10 @@ const ChangePasswordForgotEmail = () => {
 
                 {/* code */}
                 <View style={generalStyles.formContainer}>
-                    <View>
-                        <Text style={generalStyles.formInputTextStyle}>
-                            Code </Text>
-                    </View>
+                    
                     <TextInput
-                        style={generalStyles.formInput}
-                        placeholder="Enter Code"
+                        style={[generalStyles.formInput, generalStyles.borderStyles]}
+                        placeholder="Code"
                         placeholderTextColor={COLORS.primaryLightGreyHex}
                         keyboardType="number-pad"
                         value={otpCode}
@@ -263,16 +260,13 @@ const ChangePasswordForgotEmail = () => {
                 {/* code */}
                 {/* password */}
                 <View style={[generalStyles.formContainer]}>
-                    <View>
-                        <Text style={generalStyles.formInputTextStyle}>
-                            Password</Text>
-                    </View>
-                    <View style={[generalStyles.flexStyles, styles.viewStyles]}>
+                    
+                    <View style={[generalStyles.flexStyles, {alignItems: 'center'}]}>
                         <TextInput
-                            style={[generalStyles.formInput, { flex: 1 }, errors.password && generalStyles.errorInput]}
+                            style={[generalStyles.formInput, generalStyles.borderStyles, errors.password && generalStyles.errorInput]}
                             placeholderTextColor={COLORS.primaryWhiteHex}
                             secureTextEntry={!showPassword}
-                            placeholder={'enter password'}
+                            placeholder={'Password'}
                             onChangeText={handlePasswordChange}
                             value={password}
                             underlineColorAndroid="transparent"
@@ -299,16 +293,13 @@ const ChangePasswordForgotEmail = () => {
                 {/* confirm password */}
                 {/* confirm password */}
                 <View style={generalStyles.formContainer}>
-                    <View>
-                        <Text style={generalStyles.formInputTextStyle}>
-                            Confirm Password</Text>
-                    </View>
-                    <View style={[generalStyles.flexStyles, styles.viewStyles]}>
+                    
+                    <View style={[generalStyles.flexStyles, {alignItems: 'center'}]}>
                         <TextInput
-                            style={[generalStyles.formInput, { flex: 1 }, errors.confirmpassword && generalStyles.errorInput]}
+                            style={[generalStyles.formInput, generalStyles.borderStyles, errors.confirmpassword && generalStyles.errorInput]}
                             placeholderTextColor={COLORS.primaryWhiteHex}
                             secureTextEntry={!showPassword}
-                            placeholder={'confirm  password'}
+                            placeholder={'Confirm  Password'}
                             onChangeText={handleConfirmPasswordChange}
                             value={confirmPassword}
                             underlineColorAndroid="transparent"
@@ -369,7 +360,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     icon: {
-        marginLeft: -20,
+        marginLeft: -40,
     },
     viewStyles: {
         alignItems: 'center',

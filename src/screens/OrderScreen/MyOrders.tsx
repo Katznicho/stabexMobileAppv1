@@ -81,7 +81,7 @@ export default MyOrders
 const styles = StyleSheet.create({
     ScreenTitle: {
         fontSize: FONTSIZE.size_28,
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.Lovato_Bold,
         color: COLORS.primaryBlackHex,
         paddingLeft: SPACING.space_30,
     },

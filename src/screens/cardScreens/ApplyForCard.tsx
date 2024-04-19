@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -7,12 +7,12 @@ import { useSelector } from 'react-redux';
 import { Wizard, WizardStepStates, } from 'react-native-ui-lib';
 import { generalStyles } from '../utils/generatStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { COLORS } from '../../theme/theme';
+import { COLORS, FONTFAMILY } from '../../theme/theme';
 import CardInfo from './ApplyForCardScreens/CardInfo';
 import Features from './ApplyForCardScreens/Features';
 import ProductRestriction from './ApplyForCardScreens/ProductRestriction';
 import { ActivityIndicator } from '../../components/ActivityIndicator';
-import { APPLY_FOR_CARD, GET_ALL_REGIONS, GET_ALL_STATIONS } from '../utils/constants/routes';
+import { APPLY_FOR_CARD, GET_PRODUCT_CATEGORIES, GET_REGIONS, GET_WEEK_DAYS, SUBMIT_APPLICATION } from '../utils/constants/routes';
 import { showMessage } from 'react-native-flash-message';
 
 
@@ -23,11 +23,7 @@ interface State {
     toastMessage?: string;
 }
 
-
-
 const ApplyForCard = () => {
-
-
 
     const navigation = useNavigation<any>();
     const tabBarHeight = useBottomTabBarHeight();
@@ -49,7 +45,8 @@ const ApplyForCard = () => {
         regions: [],
         usageDays: [],
         email: "",
-        station_id: ""
+        station_id: "",
+        vehicleRegistration:""
     });
 
     useEffect(() => {
@@ -65,71 +62,20 @@ const ApplyForCard = () => {
 
     const [idTypes, setIdTypes] = useState([
         {
-            id: 1,
+            id: "National Identity Card",
             name: 'National Identity Card',
         }, {
-            id: 2,
+            id: "Passport",
             name: 'Passport'
         }, {
-            id: 3,
+            id: "Driving License",
             name: 'Driving License'
         }
     ])
 
-    const [products, setProducts] = useState<any>(
-        [
+    const [products, setProducts] = useState<any>([])
 
-            {
-                id: "Airtime", name: "Airtime"
-            }, {
-                id: "Cylinder", name: "Cylinder"
-            }, {
-                id: "Diesel", name: "Diesel"
-            }, {
-                id: "Services", name: "Services"
-            }, {
-                id: "Lubricants", name: "Lubricants"
-            }, {
-                id: "Pole", name: "Pole"
-            },
-            {
-                id: "HousePipez", name: "HousePipe"
-            }
-        ]
-    )
-
-    const [weekDays, setWeekDays] = useState<any>([
-
-        {
-            id: "Monday",
-            name: "Monday"
-        },
-        {
-            id: "Tuesday",
-            name: "Tuesday"
-        },
-        {
-            id: "Wednesday",
-            name: "Wednesday"
-        },
-        {
-            id: "Thursday",
-            name: "Thursday"
-        },
-        {
-            id: "Friday",
-            name: "Friday"
-        },
-        {
-            id: "Saturday",
-            name: "Saturday"
-        },
-        {
-            id: "Sunday",
-            name: "Sunday"
-        },
-
-    ])
+    const [weekDays, setWeekDays] = useState<any>([])
 
     const [stations, setStations] = useState<any>([]);
     const [regions, setRegions] = useState<any>([]);
@@ -137,41 +83,59 @@ const ApplyForCard = () => {
     // const [regions , setRegions] = 
 
     useEffect(() => {
-        setLoading(true)
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authToken}`
-        }
+         setLoading(true)
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append("Content-Type", "application/json");
+        headers.append('Authorization', `Bearer ${authToken}`);
 
-        fetch(GET_ALL_STATIONS, {
-            method: 'GET',
+        //   console.log(authToken)
+        fetch(GET_WEEK_DAYS, {
+            method: 'POST',
             headers
-        }).then((res) => res.json()).then((data) => {
-            setStations(data?.data)
         })
+            .then((response) => response.json())
+            .then((result) => {
+                setWeekDays(result?.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
 
-        fetch(GET_ALL_REGIONS, {
-            method: 'GET',
+        fetch(GET_REGIONS, {
+            method: 'POST',
             headers
-        }).then((res) => res.json()).then((data) => {
-            setRegions(data?.data)
-        }).catch((err) => {
-
         })
+            .then((response) => response.json())
+            .then((result) => {
+                setRegions(result?.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
+        fetch(GET_PRODUCT_CATEGORIES, {
+            method: 'POST',
+            headers
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                setProducts(result?.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         setLoading(false);
     }, [])
 
 
     const onApplyForCard = () => {
-
-
         try {
             //if any fields are empty show message indicating all fields required
             if (
-                cardApplication.cardHolderName == "" || cardApplication.cardHolderEmail == "" ||
-                cardApplication.cardHolderMobile == "" || cardApplication.idType == "" || cardApplication.idNumber == "" ||
-                cardApplication.products.length == 0 || cardApplication.regions.length == 0 || cardApplication.usageDays.length == 0 ||
-                cardApplication.stationId == ""
+                 cardApplication.idType == "" || cardApplication.idNumber == "" ||
+                cardApplication.products.length == 0 || cardApplication.regions.length == 0 || cardApplication.usageDays.length == 0
+                
             ) {
                 return showMessage({
                     message: "All fields required",
@@ -189,44 +153,63 @@ const ApplyForCard = () => {
                 const headers = new Headers();
                 headers.append('Accept', 'application/json');
                 headers.append('Authorization', `Bearer ${authToken}`);
+                headers.append("Content-Type", "application/json");
 
-                const formData = new FormData();
-                formData.append("card_holder_name", cardApplication.cardHolderName);
-                formData.append("mobile_number", cardApplication.cardHolderMobile)
-                formData.append("id_type", cardApplication.idType);
-                formData.append("id_number", cardApplication.idNumber)
-                formData.append("station_id", cardApplication.station_id)
-                formData.append("email", cardApplication.cardHolderEmail)
-                formData.append("phone_number", cardApplication.cardHolderMobile)
-                formData.append("station_id", cardApplication.station_id)
-                formData.append("terms_and_conditions", 1)
+                 let allowedRegions = cardApplication.regions?.map((r:any) => {
+                     return { 
+                         region_id: r,
+                     }
+                 })
 
-                //send the products as an array
-                //amenities loop through and also append them as an array
-                cardApplication?.products?.
-                    forEach((product: any) => {
-                        formData.append("products[]", product)
-                    })
+                 let allowedDays = cardApplication.usageDays?.map((d:any) => {
+                     return {
+                         Day: d
+                     }
+                 })
 
-                //send regions
-                cardApplication.regions.forEach((region: any) => {
-                    formData.append("regions[]", region)
-                })
+                 let allowedCategories = cardApplication.products?.map((c:any) => {
+                     return {
+                         category_id: c
+                     }
+                 })
 
-                //days
-                cardApplication.usageDays.forEach((day: any) => {
-                    formData.append("usage_days[]", day)
-                })
+                 const bodyData = JSON.stringify({
+                        "customer_type": "sample string 1",
+                        "has_accepted_terms": true,
+                        "card_holder_name": user.fullName,
+                        "company_name": "Stabex International",
+                        "company_registration_no": "sample string 4",
+                        "mobile_number":user.phone,
+                        "id_type":cardApplication.idType,
+                        "id_number":cardApplication.idNumber,
+                        "vehicle_registration":cardApplication.vehicleRegistration,
+                        "email_address":user.email,
+                        "card_id": "sample string 10",
+                        "mileage_input": true,
+                        "driver_code": true,
+                        "sms_alert": true,
+                        "DeviceID": "sample string 11",
+                        "Channel": "sample string 12",
+                        "allowedRegions": allowedRegions,
+                        "allowedDays": allowedDays,
+                        "allowedCategories":allowedCategories 
+                 })
 
+                 console.log("=====card application body============")
+                 console.log(bodyData)
+                 console.log("===========card application body===============")
 
-                fetch(`${APPLY_FOR_CARD}`, {
+                
+                fetch(`${SUBMIT_APPLICATION}`, {
                     headers,
                     method: 'POST',
-                    body: formData
+                    body:bodyData
                 })
                     .then(a => a.json())
                     .then(res => {
-                        if (res.response == "success") {
+                         console.log('====response=========')
+                         console.log(res)
+                        if (res.status==1) {
                             setLoading(false)
                             showMessage({
                                 message: "Card Application Succeed",
@@ -236,7 +219,7 @@ const ApplyForCard = () => {
                                 autoHide: true,
                                 duration: 5000
                             });
-                            return navigation.goBack();
+                            return navigation.navigate("HomeTab");
 
                         }
                         else {

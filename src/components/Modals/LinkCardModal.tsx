@@ -171,7 +171,7 @@ const LinkCardModal: React.FC<Props> = ({ openPicker, setOpenPicker }: Props) =>
                 </TouchableOpacity>
                 <View>
                     <View style={[generalStyles.viewStyles]}>
-                        <Text style={[generalStyles.CardTitle, { fontWeight: "bold", fontSize: FONTSIZE.size_20 }]}>
+                        <Text style={[generalStyles.CardTitle, {  fontSize: FONTSIZE.size_20 }]}>
                             Link an existing card
                         </Text>
                     </View>
@@ -181,7 +181,7 @@ const LinkCardModal: React.FC<Props> = ({ openPicker, setOpenPicker }: Props) =>
 
                     <View>
                         <TextInput
-                            style={generalStyles.formInput}
+                            style={[generalStyles.formInput, generalStyles.borderStyles]}
                             placeholder={'Enter card number'}
                             keyboardType='email-address'
                             placeholderTextColor={COLORS.secondaryGreyHex}

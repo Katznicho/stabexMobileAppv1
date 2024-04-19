@@ -143,7 +143,7 @@ export const generalStyles = StyleSheet.create({
     paddingBottom: 100
   },
   CardTitle: {
-    fontFamily: FONTFAMILY.Lovato_Regular,
+    fontFamily: FONTFAMILY.Lovato_Bold,
     color: COLORS.primaryWhiteHex,
     fontSize: FONTSIZE.size_14,
   },

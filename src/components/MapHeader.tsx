@@ -1,144 +1,92 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import {  COLORS,  SPACING } from '../theme/theme';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { COLORS, SPACING } from '../theme/theme';
+import { useNavigation } from '@react-navigation/native';
+import SearchBar from './SearchBar';
 import { generalStyles } from '../screens/utils/generatStyles';
-import Entypo from 'react-native-vector-icons/Entypo';
-navigator.geolocation = require("@react-native-community/geolocation")
 
-const MapHeader = () => {
+const MapHeader = ({ stations, position }: any) => {
+    const navigation = useNavigation<any>();
+    const [searchText, setSearchText] = useState('');
+    const [filteredStations, setFilteredStations] = useState(stations);
 
+    const resetSearch = () => {
+        setSearchText('');
+        setFilteredStations(stations);
+    };
 
-
-    const [location, setLocation] = useState<any>({ lat: 0, lng: 0 })
-    const [loading, setLoading] = useState(true)
+    const handleSearch = (text: string) => {
+        setSearchText(text);
+        if (text === '') {
+            // If search text is empty, reset filtered stations to default list
+            setFilteredStations(stations);
+        } else {
+            // Otherwise, filter the stations based on the search text
+            const filtered = stations?.filter((station: any) =>
+                station.station_name?.toLowerCase().includes(text?.toLowerCase())
+            );
+            setFilteredStations(filtered);
+        }
+    };
 
     return (
         <View style={styles.headerContainer}>
-            <View style={styles.InputContainerComponent}>
-
-                {/* location */}
-                <GooglePlacesAutocomplete
-                    nearbyPlacesAPI="GooglePlacesSearch"
-                    placeholder={"search stabex station "}
-                    currentLocation={true}
-                    enableHighAccuracyLocation={true}
-                    autoFillOnNotFound={true}
-                    textInputProps={{
-                        placeholderTextColor: COLORS.primaryWhiteHex
+            <SearchBar
+                searchText={searchText}
+                setSearchText={handleSearch}
+                resetSearch={resetSearch}
+            />
+            {searchText.length > 0 && (
+                <FlatList
+                    style={styles.flatList}
+                    data={filteredStations}
+                    keyExtractor={(item, index) => index.toString()}
+                    contentContainerStyle={{
+                        marginHorizontal: 10,
+                        borderRadius: 10,
                     }}
-                    renderRow={(data) => <View style={[generalStyles.flexStyles, { alignItems: 'center' }]}>
-                        <Entypo name="location-pin" color={COLORS.primaryOrangeHex} size={20} />
-                        <Text style={{ color: COLORS.primaryOrangeHex }}>{data.description}</Text>
-                    </View>}
-
-                    renderDescription={(row) => row.description}
-                    fetchDetails={true}
-                    debounce={400}
-                    onFail={(error) => {
-                    }}
-                    enablePoweredByContainer={false}
-                    minLength={2}
-                    styles={{
-                        container: {
-                            flex: 1,
-                            width: "100%",
-                            backgroundColor: COLORS.primaryBlackHex,
-                            marginHorizontal: 0,
-                            marginVertical: 10
-                        },
-                        textInputContainer: {
-                            backgroundColor: COLORS.primaryBlackHex,
-                            borderTopWidth: 0,
-                            borderBottomWidth: 0,
-                            marginHorizontal: 20,
-                            borderRadius: 20,
-                        },
-                        textInput: {
-                            color: COLORS.primaryWhiteHex,
-                            backgroundColor: COLORS.primaryBlackHex,
-                            fontSize: 16,
-                            borderWidth: 0.5,
-                            borderColor: COLORS.primaryWhiteHex,
-                            width: "100%",
-                        },
-                        predefinedPlacesDescription: {
-                            color: COLORS.primaryOrangeHex,
-                        },
-                        listView: {
-                            backgroundColor: COLORS.primaryBlackHex,
-                            borderRadius: 10,
-                            // marginHorizontal: 10,
-                            marginTop: 10,
-                            // elevation: 5,
-                            zIndex: 5,
-                        },
-                        row: {
-                            backgroundColor: COLORS.primaryBlackHex,
-                            padding: 13,
-                            height: 50,
-                            flexDirection: 'row',
-                        },
-                        separator: {
-                            height: 0.5,
-                            backgroundColor: COLORS.primaryOrangeHex,
-                        },
-                        description: {
-                            color: COLORS.primaryOrangeHex,
-                        },
-                        poweredContainer: {
-                            backgroundColor: COLORS.primaryBlackHex,
-                            borderBottomLeftRadius: 10,
-                            borderBottomRightRadius: 10,
-                            borderColor: COLORS.primaryOrangeHex,
-                            borderTopWidth: 0.5,
-                        },
-                        powered: {
-                            color: COLORS.primaryOrangeHex,
-                        },
-                    }}
-                    onPress={(data, details = null) => {
-                        setLocation({
-                            lat: details?.geometry.location.lat,
-                            lng: details?.geometry.location.lng
-                        })
-                    }}
-                    query={{
-                        key: 'AIzaSyBXkd1LbK_vv70_iP2yw7tH1VJJPQF_ho8',
-                        language: 'en',
-                        components: 'country:ug'
-                    }}
-                    GooglePlacesDetailsQuery={{
-                        fields: ['formatted_address', 'geometry'],
-                        language: 'en',
-                        components: 'country:ug',
-
-
-                    }}
+                    renderItem={({ item }) => (
+                        <View
+                            style={{
+                                paddingVertical: 10,
+                                paddingHorizontal: SPACING.space_10,
+                                borderColor:COLORS.primaryBlackHex,
+                                // borderWidth: 0.5,
+                                borderBottomWidth: 0.5,
+                                backgroundColor: COLORS.primaryBlackHex,
+                                // alignItems: 'center',
+                            
+                            }}
+                        >
+                            <Text
+                                onPress={() =>
+                                    navigation.navigate('StationDetails', {
+                                        data: item,
+                                        position,
+                                    })
+                                }
+                                style={[generalStyles.CardTitle, {fontSize:22}]}
+                            >
+                                {item?.station_name}
+                            </Text>
+                        </View>
+                    )}
                 />
-                {/* location */}
-            </View>
+            )}
         </View>
-    )
-}
+    );
+};
 
-export default MapHeader
+export default MapHeader;
 
 const styles = StyleSheet.create({
     headerContainer: {
         position: 'absolute',
         zIndex: 10,
-        padding: 5,
-        width: "100%"
-
+        // padding: 5,
+        width: '100%',
     },
-    InputContainerComponent: {
-        flexDirection: 'row',
-        marginHorizontal: SPACING.space_10,
-        marginVertical: SPACING.space_10,
-        // borderRadius: BORDERRADIUS.radius_20,
-        backgroundColor: COLORS.primaryBlackHex,
-        alignItems: 'center',
+    flatList: {
+        maxHeight: 400, // Specify the maximum height for the FlatList
     },
-
-})
+});

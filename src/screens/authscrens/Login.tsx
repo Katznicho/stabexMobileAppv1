@@ -79,7 +79,7 @@ const Login = () => {
         'grant_type': 'password'
       };
 
-      var formBody = [];
+      var formBody:any = [];
       for (var property in details) {
         var encodedKey = encodeURIComponent(property);
         var encodedValue = encodeURIComponent(details[property]);
@@ -290,7 +290,7 @@ const Login = () => {
             textContainerStyle={{ paddingVertical: 0, backgroundColor: COLORS.primaryBlackHex, }}
             textInputProps={{
               placeholderTextColor: COLORS.primaryWhiteHex,
-              fontFamily: FONTFAMILY.Lovato_Bold,
+              // fontFamily: FONTFAMILY.Lovato_Bold,
 
             }}
             // countries={['UG', 'KE']}

@@ -7,23 +7,18 @@ import { COLORS, FONTSIZE } from '../../theme/theme';
 import ArrowBack from '../../components/ArrowBack';
 import SearchBar from '../../components/SearchBar';
 import { usePostQuery } from '../../hooks/usePostQuery';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store/dev';
 import useGetUserLocation from '../../hooks/useGetUserLocation';
 
 
 const GasStationLIst = () => {
 
     const [searchText, setSearchText] = useState('');
-    const [loading, setLoading] = useState(true);
-    const { authToken, user } = useSelector((state: RootState) => state.user);
+    
 
     const resetSearch = () => {
         setSearchText('');
     };
     const { position } = useGetUserLocation()
-    // const [position, setPosition] = useState<any>({});
-
 
     const { data, error, isLoading, refetch } = usePostQuery<any>({
         endpoint: '/api/Stations/StationsList',

@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     TextInputContainer: {
         flex: 0.9,
         height: SPACING.space_20 * 3,
-        fontFamily: FONTFAMILY.poppins_medium,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         fontSize: FONTSIZE.size_14,
         color: COLORS.primaryWhiteHex,
     },

@@ -29,7 +29,7 @@ const GasStationDetails = () => {
                 >
                     {/* show background image */}
                     <ImageBackground
-                        source={{ uri: station?.image }}
+                        source={require("../../assets/app_images/stabex_station.jpg")}
                         style={styles.ItemBackgroundImage}
                     >
                         {/* back handler */}
@@ -127,12 +127,12 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     CardTitle: {
-        fontFamily: FONTFAMILY.poppins_medium,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_14,
     },
     CardSubtitle: {
-        fontFamily: FONTFAMILY.poppins_light,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_10,
         // marginHorizontal: SPACING.space_10

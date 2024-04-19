@@ -200,13 +200,9 @@ const VerificationScreen = () => {
 
                 <View>
                     <View style={generalStyles.formContainer}>
-                        <View>
-                            <Text style={generalStyles.formInputTextStyle}>
-                                Code </Text>
-                        </View>
                         <TextInput
-                            style={generalStyles.formInput}
-                            placeholder="Enter Code"
+                            style={[generalStyles.formInput, generalStyles.borderStyles]}
+                            placeholder="Code"
                             placeholderTextColor={COLORS.primaryLightGreyHex}
                             keyboardType="number-pad"
                             value={otpCode}

@@ -11,7 +11,6 @@ const GasItems = () => {
     const { station, category } = useRoute<any>().params;
 
 
-
     const { data, error, isLoading, refetch } = usePostQuery<any>({
         endpoint: '/api/Products/ProductsList',
         params: {

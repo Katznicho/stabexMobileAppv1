@@ -246,7 +246,7 @@ const TopUpModal: React.FC<Props> = ({ openPicker, setOpenPicker, card }: Props)
                     <View>
                         <TextInput
                             style={styles.formInput}
-                            placeholder={' Enter amount'}
+                            placeholder={' Enter Amount'}
                             keyboardType="number-pad"
                             placeholderTextColor={COLORS.secondaryGreyHex}
                             onChangeText={text => setAmount(text)}

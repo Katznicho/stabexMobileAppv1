@@ -1,28 +1,25 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { useRef } from 'react'
+import React  from 'react'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { generalStyles } from '../../utils/generatStyles';
 import { COLORS, FONTFAMILY } from '../../../theme/theme';
-import PhoneInput from "react-native-phone-number-input";
 import Entypo from "react-native-vector-icons/Entypo";
 import { Picker } from 'react-native-ui-lib';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store/dev';
+
+
 
 const CardInfo = ({ cardApplication, setCardApplication, goToNextStep, errors, setErrors, idTypes }: any) => {
 
     const tabBarHeight = useBottomTabBarHeight();
-    const phoneInput = useRef<PhoneInput>(null);
 
 
-    const isDisabled = () => {
-        if (cardApplication.cardHolderName == "" || cardApplication.cardHolderEmail == "" || cardApplication.cardHolderMobile == ""
-            || cardApplication.idType == "" || cardApplication.idNumber == "") {
-            return true
-        }
-        else {
-            return false
-        }
-    }
 
+    const isDisabled = () =>
+        !cardApplication.idType || !cardApplication.idNumber;
+
+    const { user } = useSelector((state: RootState) => state.user);
 
 
     return (
@@ -56,9 +53,10 @@ const CardInfo = ({ cardApplication, setCardApplication, goToNextStep, errors, s
                         onChangeText={text => setCardApplication((prev: any) => {
                             return { ...prev, cardHolderName: text }
                         })}
-                        value={cardApplication.cardHolderName}
+                        value={user?.fullName}
                         underlineColorAndroid="transparent"
                         autoCapitalize="none"
+                        editable={false}
 
                     />
                 </View>
@@ -87,9 +85,10 @@ const CardInfo = ({ cardApplication, setCardApplication, goToNextStep, errors, s
                         onChangeText={text => setCardApplication((prev: any) => {
                             return { ...prev, cardHolderEmail: text }
                         })}
-                        value={cardApplication.cardHolderEmail}
+                        value={user?.email}
                         underlineColorAndroid="transparent"
                         autoCapitalize="none"
+                        editable={false}
 
                     />
                 </View>
@@ -108,24 +107,23 @@ const CardInfo = ({ cardApplication, setCardApplication, goToNextStep, errors, s
                     <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
                         Mobile Number*</Text>
                 </View>
-                <PhoneInput
-                    ref={phoneInput}
-                    defaultValue={cardApplication.cardHolderMobile}
-                    defaultCode="UG"
-                    layout="second"
-                    onChangeFormattedText={(text) => {
-                        // setPhoneNumber(text);
-                        setCardApplication((prev: any) => {
-                            return { ...prev, cardHolderMobile: text }
-                        })
-                    }}
-                    placeholder={'enter phone number'}
-                    containerStyle={[generalStyles.formInput, styles.borderStyles, { backgroundColor: COLORS.primaryLightWhiteGrey, }]}
-                    textContainerStyle={{ paddingVertical: 0, backgroundColor: COLORS.primaryLightWhiteGrey }}
-                    textInputProps={{
-                        placeholderTextColor: COLORS.primaryWhiteHex
-                    }}
-                />
+                <View>
+                    <TextInput
+                        style={[generalStyles.formInput, styles.borderStyles]}
+                        placeholderTextColor={COLORS.primaryWhiteHex}
+                        // placeholderStyle={{ borderColor: 'red' }}
+                        keyboardType="default"
+                        placeholder={'enter card holder name'}
+                        onChangeText={text => setCardApplication((prev: any) => {
+                            return { ...prev, cardHolderEmail: text }
+                        })}
+                        value={user?.phone}
+                        underlineColorAndroid="transparent"
+                        autoCapitalize="none"
+                        editable={false}
+                    />
+                </View>
+                
                 <View>
                     {errors.phoneNumber && <Text style={generalStyles.errorText}>{errors.phoneNumber}</Text>}
                 </View>
@@ -141,7 +139,7 @@ const CardInfo = ({ cardApplication, setCardApplication, goToNextStep, errors, s
                         Select ID Type*</Text>
                 </View>
                 <Picker
-                    placeholder=" select  Id type"
+                    placeholder="select Id type"
                     placeholderTextColor={COLORS.primaryLightGreyHex}
                     value={cardApplication.idType}
                     style={[generalStyles.formInput, styles.borderStyles, styles.inlineTextInputStyles]}
@@ -173,33 +171,37 @@ const CardInfo = ({ cardApplication, setCardApplication, goToNextStep, errors, s
             {/* id type */}
 
             {/* id number */}
-            <View style={styles.formContainer}>
-                <View>
-                    <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
-                        ID Number*</Text>
+            {
+                 cardApplication.idType &&(
+                    <View style={styles.formContainer}>
+                    <View>
+                        <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
+                            {cardApplication.idType} Number*</Text>
+                    </View>
+                    <View>
+                        <TextInput
+                            style={[generalStyles.formInput, styles.borderStyles, styles.extraMargingRight]}
+                            placeholderTextColor={COLORS.primaryWhiteHex}
+                            // placeholderStyle={{ borderColor: 'red' }}
+                            keyboardType="default"
+                            placeholder={`Enter ${cardApplication.idType} number`}
+                            onChangeText={text => setCardApplication((prev: any) => {
+                                return { ...prev, idNumber: text }
+                            })}
+                            value={cardApplication.idNumber}
+                            underlineColorAndroid="transparent"
+                            autoCapitalize="none"
+                        />
+                    </View>
+    
+                    <View>
+                        {errors.id_number && <Text style={generalStyles.errorText}>{errors.id_number}</Text>}
+                    </View>
+    
                 </View>
-                <View>
-                    <TextInput
-                        style={[generalStyles.formInput, styles.borderStyles, styles.extraMargingRight]}
-                        placeholderTextColor={COLORS.primaryWhiteHex}
-                        // placeholderStyle={{ borderColor: 'red' }}
-                        keyboardType="default"
-                        placeholder={'enter id number'}
-                        onChangeText={text => setCardApplication((prev: any) => {
-                            return { ...prev, idNumber: text }
-                        })}
-                        value={cardApplication.idNumber}
-                        underlineColorAndroid="transparent"
-                        autoCapitalize="none"
+                 )
+            }
 
-                    />
-                </View>
-
-                <View>
-                    {errors.id_number && <Text style={generalStyles.errorText}>{errors.id_number}</Text>}
-                </View>
-
-            </View>
             {/* id number */}
 
             {/* button section */}
@@ -256,11 +258,12 @@ const styles = StyleSheet.create({
     },
     labelStyles: {
         color: COLORS.primaryWhiteHex,
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         fontSize: 15
     },
     iconStyles: {
         position: 'absolute',
-        right: 10
+        right: 10,
+        fontFamily: FONTFAMILY.Lovato_Regular,
     },
 })

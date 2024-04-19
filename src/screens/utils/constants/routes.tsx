@@ -10,6 +10,7 @@ export const FETCH_COUNTRIES = `${BASE_URL}/api/Countries/CountriesList`
 export const REGISTER_CUSTOMER = `${BASE_URL}/api/Account/Register`
 export const REQUEST_SMS_OTP = `${BASE_URL}/api/Account/RequestSMSOTP`
 export const REQUEST_EMAIL_OTP = `${BASE_URL}/api/Account/RequestEmailOTP`
+export const REQUEST_STABEX_OTP = `${BASE_URL}/api/Account/RequestStabexOTP`
 export const VERIFY_EMAIL_OTP = `${BASE_URL}/api/Account/VerifyEmailOTP`
 export const VERIFY_SMS_OTP = `${BASE_URL}/Account/VerifySMSOTP`
 export const LOGIN_IN_USER = `${BASE_URL}/Token`;
@@ -23,10 +24,15 @@ export const SUMBIT_DELIVERY_ADDRESS = `${BASE_URL}/api/Orders/SubmitDeliveryAdd
 export const GET_CUSTOMER_ADDRESSES = `${BASE_URL}/api/Orders/MyDeliveryAddresses`;
 export const SUBMIT_ORDER = `${BASE_URL}/api/Orders/SubmitOrder`;
 //api/Orders/SubmitOrder
+export const PAYMENT_METHODS = `${BASE_URL}/api/Payment/PaymentModes`;
 
 export const GET_WEEK_DAYS = `${BASE_URL}/api/Cards/WeekDays`;
-export const GET_REGIONS = `${BASE_URL}//api/Cards/Regions`;
+export const GET_REGIONS = `${BASE_URL}/api/Cards/Regions`;
 export const GET_STATION_BY_REGION = `${BASE_URL}/api/Cards/StationByRegion`;
+export const GET_PRODUCT_CATEGORIES = `${BASE_URL}/api/Products/ProductCategories`;
+
+//cards
+export  const SUBMIT_APPLICATION = `${BASE_URL}/api/Cards/SubmitCardRequest`;
 
 
 
@@ -61,17 +67,13 @@ export const IMAGES_UPLOAD = `${BASE_URL}/uploadIdImages`
 
 
 //products
-export const GET_GAS_PRODUCTS = `${BASE_URL}/getGasProducts`;
+export const GET_GAS_PRODUCTS = `${BASE_URL}/api/getGasProducts`;
 //getProductCategories
-export const GET_PRODUCT_CATEGORIES = `${BASE_URL}/getProductCategories`
 
 
 
-
-
-
-export const GET_SERVICE_BAYS = `${BASE_URL}/getServiceBays`;
-export const GET_LUBRICANTS = `${BASE_URL}/getLubricants`;
+export const GET_SERVICE_BAYS = `${BASE_URL}/api/getServiceBays`;
+export const GET_LUBRICANTS = `${BASE_URL}/api/getLubricants`;
 
 
 

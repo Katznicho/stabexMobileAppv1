@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
 import React from 'react'
 import { generalStyles } from '../../utils/generatStyles'
 import { COLORS, FONTFAMILY } from '../../../theme/theme'
@@ -33,36 +33,66 @@ const Features = ({ cardApplication, setCardApplication, goToNextStep, errors, s
                 </Text>
             </View>
 
+            {/* vehicle registration */}
+            <View style={generalStyles.formContainer}>
+                <View>
+                    <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
+                        Vehicle Registration*</Text>
+                </View>
+                <View>
+                    <TextInput
+                        style={[generalStyles.formInput, styles.borderStyles]}
+                        placeholderTextColor={COLORS.primaryWhiteHex}
+                        // placeholderStyle={{ borderColor: 'red' }}
+                        keyboardType="default"
+                        placeholder={'Enter Vehicle Registration'}
+                        onChangeText={text => setCardApplication((prev: any) => {
+                            return { ...prev, vehicleRegistration: text }
+                        })}
+                        value={cardApplication.vehicleRegistration}
+                        underlineColorAndroid="transparent"
+                        autoCapitalize="none"
+                        
+                    />
+                </View>
+                
+                <View>
+                    {errors.vehicleRegistration && <Text style={generalStyles.errorText}>{errors.vehicleRegistration}</Text>}
+                </View>
+
+            </View>
+            {/* vehicle registration */}
+
             {/* products */}
             <View>
                 <View style={styles.formContainer}>
                     <View>
                         <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
-                            Select Products*</Text>
+                            Select Products Category*</Text>
                     </View>
                     <View>
                         {
                             products.map((item: any) => {
                                 return (
                                     <Checkbox
-                                        key={item.id}
-                                        label={item.name}
-                                        value={cardApplication.products?.includes(item.id)} // Assuming you have a property named "products" in your state
+                                        key={item.Id}
+                                        label={item?.category_name}
+                                        value={cardApplication.products?.includes(item.Id)} // Assuming you have a property named "products" in your state
                                         color={COLORS.primaryOrangeHex}
                                         containerStyle={styles.viewStyles}
                                         onValueChange={(isChecked: boolean) => {
                                             // Check if the product ID is already in the array
-                                            const isProductInArray = cardApplication.products?.includes(item.id);
+                                            const isProductInArray = cardApplication.products?.includes(item.Id);
 
                                             // Create a new array based on the checkbox state
                                             let updatedProducts: any[];
 
                                             if (isChecked && !isProductInArray) {
                                                 // Add the product ID to the array if the checkbox is checked and the ID is not present
-                                                updatedProducts = [...(cardApplication.products || []), item.id];
+                                                updatedProducts = [...(cardApplication.products || []), item.Id];
                                             } else if (!isChecked && isProductInArray) {
                                                 // Remove the product ID from the array if the checkbox is unchecked and the ID is present
-                                                updatedProducts = (cardApplication.products || []).filter((id: string) => id !== item.id);
+                                                updatedProducts = (cardApplication.products || []).filter((id: string) => id !== item.Id);
                                             } else {
                                                 // No change needed if the checkbox state and array state are consistent
                                                 updatedProducts = cardApplication.products;
@@ -97,24 +127,24 @@ const Features = ({ cardApplication, setCardApplication, goToNextStep, errors, s
                             weekDays.map((item: any) => {
                                 return (
                                     <Checkbox
-                                        key={item.id}
-                                        label={item.name}
-                                        value={cardApplication.usageDays?.includes(item.id)} // Assuming you have a cardApplication named "usageDays" in your state
+                                        key={item.Day}
+                                        label={item?.Day}
+                                        value={cardApplication.usageDays?.includes(item.Day)} // Assuming you have a cardApplication named "usageDays" in your state
                                         color={COLORS.primaryOrangeHex}
                                         containerStyle={styles.viewStyles}
                                         onValueChange={(isChecked: boolean) => {
-                                            // Check if the day ID is already in the array
-                                            const isDayInArray = cardApplication.usageDays?.includes(item.id);
+                                            // Check if the day Day is already in the array
+                                            const isDayInArray = cardApplication.usageDays?.includes(item.Day);
 
                                             // Create a new array based on the checkbox state
                                             let updatedDays: any[];
 
                                             if (isChecked && !isDayInArray) {
-                                                // Add the day ID to the array if the checkbox is checked and the ID is not present
-                                                updatedDays = [...(cardApplication.usageDays || []), item.id];
+                                                // Add the day Day to the array if the checkbox is checked and the Day is not present
+                                                updatedDays = [...(cardApplication.usageDays || []), item.Day];
                                             } else if (!isChecked && isDayInArray) {
-                                                // Remove the day ID from the array if the checkbox is unchecked and the ID is present
-                                                updatedDays = (cardApplication.usageDays || []).filter((id: string) => id !== item.id);
+                                                // Remove the day Day from the array if the checkbox is unchecked and the Day is present
+                                                updatedDays = (cardApplication.usageDays || []).filter((Day: string) => Day !== item.Day);
                                             } else {
                                                 // No change needed if the checkbox state and array state are consistent
                                                 updatedDays = cardApplication.usageDays;
@@ -208,7 +238,7 @@ const styles = StyleSheet.create({
     },
     labelStyles: {
         color: COLORS.primaryWhiteHex,
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.Lovato_Bold,
         fontSize: 15
     },
 })

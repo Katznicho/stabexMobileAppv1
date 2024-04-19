@@ -49,24 +49,24 @@ const App = () => {
     //  SplashScreen.hide();
   }, []);
 
-  //  const hanldeAnimatedSplashScreen = () => {
-  //    //hide after 1 second
-  //     setTimeout(() => setShowSplash(false), 1000);
-  //  }
+
 
   //hide after 1 second
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setShowSplash(false);
-    }, 10000);
+    }, 1000); // Timeout set to 1 second
 
-  }, []);
+    return () => {
+      clearTimeout(timeoutId); // Clear the timeout when the component unmounts
+    };
+  }, []); 
 
    return showSplash ? (
     <AnimatedLottieView
       source={require("./src/assets/splash/stabex_splash.json")}
       progress={animationProgress.current}
-      style={{width: "100%", height: "100%"}}
+      style={{flex:1}}
     />
 ) : !connected ? (
     <GestureHandlerRootView style={{ flex: 1 }}>
