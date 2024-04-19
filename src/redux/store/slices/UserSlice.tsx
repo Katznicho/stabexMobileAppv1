@@ -6,7 +6,8 @@ export interface UserState {
   isGuest: boolean
   user: User
   authToken: string,
-  linkedCard: any
+  linkedCard: any,
+  station: any[]
 }
 
 interface User {
@@ -30,7 +31,9 @@ const initialState: UserState = {
     phone: "",
   },
   authToken: '',
-  linkedCard: null
+  linkedCard: null,
+  station: []
+  
 
 };
 
@@ -79,6 +82,11 @@ export const userSlice = createSlice({
     skipFirstLogin: (state) => {
       state.isGuest = true;
       state.isLoggedIn = false
+    },
+    storeStations: (state, action: PayloadAction<any>) => {
+      console.log("storing stations")
+       console.log(action.payload)
+      state.station = action.payload
     }
 
   },
@@ -92,7 +100,8 @@ export const {
   updateIsLoggedIn,
   showAuthScreen,
   storedLinkedCard,
-  skipFirstLogin
+  skipFirstLogin,
+  storeStations
 } = userSlice.actions;
 
 export default userSlice.reducer;

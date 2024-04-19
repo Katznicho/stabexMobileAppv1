@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { ScrollView, Dimensions, Text, FlatList, TouchableOpacity, Image, Linking } from 'react-native';
 import { generalStyles } from './utils/generatStyles';
-import { RootState } from '../redux/store/dev';
-import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../redux/store/dev';
+import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DeviceInfo from 'react-native-device-info';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -11,6 +11,9 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import HomeCardCarousel from '../components/HomeCardCarousel';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { usePostQuery } from '../hooks/usePostQuery';
+import { storeStations } from '../redux/store/slices/UserSlice';
+import { sortStations } from './utils/helpers/helpers';
 
 const { width, height } = Dimensions.get('window');
 
@@ -38,7 +41,7 @@ const cards = [
   },
   {
     name: "Pay on Site",
-    route: "PayOnSite",
+    route: "ShortestSiteDistance",
     isDisabled: false,
     isBig: false,
     arrayImages: [
@@ -92,8 +95,6 @@ const cards = [
       require("../assets/app_images/cooking_gas.jpeg")
     ]
   },
-
-
 ]
 
 const HomeScreen = () => {
@@ -102,6 +103,31 @@ const HomeScreen = () => {
 
   const tabBarHeight = useBottomTabBarHeight();
   const navigation = useNavigation<any>();
+  const dispatch = useDispatch<AppDispatch>();
+
+  //fetch stations
+  const { data, error, isLoading, refetch } = usePostQuery<any>({
+    endpoint: '/api/Stations/StationsList',
+    queryOptions: {
+        enabled: true,
+        refetchInterval: 20000,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+    },
+})
+
+useEffect(() => {
+  if (data) {
+    // const sorted = await sortStations(data?.data, position);
+     const sortByDistance = async()=>{
+        const sorted =  await sortStations(data?.data, position);
+        dispatch(storeStations(sorted));
+     }
+
+    sortByDistance();
+  }
+}, [data, dispatch]);
+  //fetch stations
 
 
 
@@ -242,7 +268,7 @@ const HomeScreen = () => {
           <TouchableOpacity
             style={{ marginLeft: 0, marginRight: 10 }}
             activeOpacity={1}
-            onPress={() => navigation.navigate("PayOnSite")}
+            onPress={() => navigation.navigate("ShortestSiteDistance")}
           >
             <HomeCardCarousel
               cards={cards}

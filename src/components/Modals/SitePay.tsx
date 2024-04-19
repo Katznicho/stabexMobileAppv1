@@ -1,46 +1,29 @@
 import { StyleSheet, ScrollView, TouchableOpacity, View, TextInput, Text } from 'react-native'
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import RBSheet from "react-native-raw-bottom-sheet";
-import { COLORS } from '../../theme/theme';
+import { COLORS, FONTFAMILY, FONTSIZE } from '../../theme/theme';
 import { generalStyles } from '../../screens/utils/generatStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import AmountScroller from '../AmountScroller';
-import PaymentCard from '../PaymentCard';
 import { showMessage } from 'react-native-flash-message';
 import call from 'react-native-phone-call'
-
-
+import { useNavigation } from '@react-navigation/native';
+import SelectPaymentMethod from '../SelectPaymentMethod';
 type Props = {
     openPicker: boolean;
     setOpenPicker: (openPicker: boolean) => void;
     station: any
-
 };
 
 
 
-const amounts = ["1000", "2000", "3000", "50000", "12000", "40000"];
-
-const PaymentList = [
-    {
-        name: 'AIRTEL',
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3gatG0jIL1ybYTW5-1kCsT6iKKcMtiB_FJpKkxZotaA&s",
-        text: "Pay with Airtel"
-    },
-    {
-        name: 'MTN',
-        image: "https://upload.wikimedia.org/wikipedia/commons/9/93/New-mtn-logo.jpg",
-        text: "Pay with MTN"
-
-    },
-
-];
-
 
 const SitePay: React.FC<Props> = ({ openPicker, setOpenPicker, station }: Props) => {
 
+
+
     const refRBSheet = useRef<any>();
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = React.useState<any>(null)
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = React.useState<any>(null);
+    const navigation = useNavigation<any>();
 
     useEffect(() => {
         if (openPicker) {
@@ -92,17 +75,16 @@ const SitePay: React.FC<Props> = ({ openPicker, setOpenPicker, station }: Props)
 
     }
 
+    const [selectedPaymentOption, setSelectedPaymentOption] = useState<any>(null)
+
     return (
         <RBSheet
             ref={refRBSheet}
             height={600}
-            closeOnDragDown={false}
             closeOnPressMask={false}
             // openDuration={250}
             customStyles={{
                 container: {
-                    // justifyContent: 'center',
-                    // alignItems: 'center',
                     backgroundColor: COLORS.primaryBlackHex,
                     borderRadius: 10,
                     elevation: 10
@@ -133,64 +115,85 @@ const SitePay: React.FC<Props> = ({ openPicker, setOpenPicker, station }: Props)
                     />
 
                 </TouchableOpacity>
-                 {/* pay area */}
-                  <View style={{marginTop:30}}>
-                  <View style={[generalStyles.formContainer]}>
+                {/* pay area */}
+                <View style={{ marginTop: 30 }}>
+                    {/* station details area */}
                     <View>
-                        <Text style={generalStyles.formInputTextStyle}>
-                            Pay Now
+                        <Text style={[generalStyles.authTitle, { fontSize: 20, color: COLORS.primaryBlackRGBA }]}>
+                            {`Station Details`}
                         </Text>
+                        <View style={[generalStyles.formContainer, styles.stationCard]}>
+                        <View>
+                            <Text style={[generalStyles.CardPriceCurrency, styles.stationCardText, { fontSize: 15, color: COLORS.primaryBlackRGBA, fontFamily:FONTFAMILY.Lovato_Demi }]}>Station Name</Text>
+                            <Text style={[generalStyles.CardTitle, styles.stationCardText, {fontSize:22}]}>{station?.station_name}</Text>
+                        </View>
+                        <View>
+                            {/* button  area*/}
+                            <View>
+
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    style={[generalStyles.loginContainer, styles.buttonStyles]}
+                                    onPress={() => {
+                                        setOpenPicker(false)
+                                        return navigation.navigate("PayOnSite");
+
+                                    }}
+                                >
+                                    <Text style={[generalStyles.loginText, { fontSize: FONTSIZE.size_14,  }, generalStyles.centerContent]}>{'Change'}</Text>
+                                </TouchableOpacity>
+
+                            </View>
+
+                            {/* button  area*/}
+                        </View>
+
+                        </View>
+
                     </View>
-                    <Text style={[generalStyles.textStyle, {marginVertical:10}]}>Please follow the prompts below to top up your card</Text>
-                    <View>
-                        <TextInput
-                            style={styles.formInput}
-                            placeholder={'Enter Amount'}
-                            keyboardType="number-pad"
-                            placeholderTextColor={COLORS.secondaryGreyHex}
-                            onChangeText={text => setAmount(text)}
-                            value={amount}
-                            underlineColorAndroid="transparent"
-                            autoCapitalize="none"
-                        />
+                    {/* station details area */}
+                    <View style={[generalStyles.formContainer]}>
+                        <View>
+                            <Text style={[generalStyles.formInputTextStyle, { fontSize: 22, color: COLORS.primaryBlackRGBA, fontFamily:FONTFAMILY.Lovato_Demi, marginHorizontal:10, marginVertical:10 }]}>
+                                Pay Now
+                            </Text>
+                        </View>
+                        <View>
+                            <TextInput
+                                style={styles.formInput}
+                                placeholder={'  Enter Amount'}
+                                keyboardType="number-pad"
+                                placeholderTextColor={COLORS.secondaryGreyHex}
+                                onChangeText={text => setAmount(text)}
+                                value={amount}
+                                underlineColorAndroid="transparent"
+                                autoCapitalize="none"
+                            />
+                        </View>
+
+                          {/* payment method */}
+                                          {/* select payment method */}
+                <SelectPaymentMethod
+                    selectedPaymentOption={selectedPaymentOption}
+                    setSelectedPaymentOption={setSelectedPaymentOption}
+
+                />
+                {/* select payment method */}
+                          {/* payment method */}
+
                     </View>
 
-                    {/* amount scroller */}
-                    <View>
-                        <AmountScroller
-                            amounts={amounts} amount={amount}
-                            setAmount={setAmount}
-                        />
-                    </View>
-                    {/* amount scroller */}
+                    <TouchableOpacity
+                        style={[generalStyles.loginContainer, styles.buttonCardStyles]}
+                        onPress={() => handlePayNow()}
 
-                    {/* payment methods */}
-                    {
-                        PaymentList.map((item: any, index: number) => {
-                            return (
-                                <PaymentCard key={index}
-                                    data={item}
-                                    selectedPaymentMethod={selectedPaymentMethod}
-                                    setSelectedPaymentMethod={setSelectedPaymentMethod}
-                                />
-                            );
-                        })
-                    }
-                    {/* payment methods */}
+                    >
+                        <Text style={[generalStyles.loginText, { color: COLORS.primaryBlackHex, paddingBottom: 10 }]}>
+                            {'Proceed'}
+                        </Text>
+                    </TouchableOpacity>
 
                 </View>
-
-                <TouchableOpacity
-                    style={[generalStyles.loginContainer, styles.buttonCardStyles]}
-                    onPress={() => handlePayNow()}
-
-                >
-                    <Text style={[generalStyles.loginText, { color: COLORS.primaryBlackHex }]}>
-                        {'Proceed'}
-                    </Text>
-                </TouchableOpacity>
-
-                  </View>
 
 
                 {/* pay area */}
@@ -216,16 +219,23 @@ const styles = StyleSheet.create({
     },
     buttonCardStyles: {
         width: "80%",
-        // marginHorizontal: 20,
         backgroundColor: COLORS.primaryGreenHex,
     },
-    borderStyles: {
-        borderWidth: 0.5,
-        borderBottomWidth: 0.5,
-        height: 45,
-        borderColor: COLORS.primaryLightGreyHex,
-        borderRadius: 10,
-        paddingLeft: 10,
-        paddingRight: 10
+    stationCard: {
+        backgroundColor: COLORS.primaryBlackHex, elevation: 10, padding: 10, borderRadius: 10
     },
+    stationCardText: {
+        paddingVertical: 5,
+        marginHorizontal:10
+    },
+    buttonStyles: {
+        // width: 100,
+        width: "100%",
+        marginTop: 5,
+        height: 40,
+        // marginHorizontal: 10,
+        marginVertical: 5,
+        borderRadius: 10
+    },
+
 })

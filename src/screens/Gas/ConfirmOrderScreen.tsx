@@ -12,11 +12,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import SelectPaymentMethod from '../../components/SelectPaymentMethod'
 import DeliveryAddress from '../../components/DeliveryAddress'
 import AmountCalculator from '../../components/AmountCalculator'
-import { CREATE_CUSTOMER_ORDER_WITH_PAYMENT, CREATE_MY_ORDER, SUBMIT_ORDER, } from '../utils/constants/routes'
+import { SUBMIT_ORDER, } from '../utils/constants/routes'
 import { ActivityIndicator } from '../../components/ActivityIndicator'
 import { showMessage } from 'react-native-flash-message'
-import { Dialog, PanningProvider, RadioButton, RadioGroup, Switch } from 'react-native-ui-lib';
-import * as Progress from 'react-native-progress';
+import {  RadioButton, RadioGroup, Switch } from 'react-native-ui-lib';
 
 
 const ConfirmOrderScreen = () => {

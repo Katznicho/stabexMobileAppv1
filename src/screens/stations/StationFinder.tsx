@@ -7,51 +7,33 @@ import StationsLIst from '../../components/StationsLIst';
 import { ActivityIndicator } from '../../components/ActivityIndicator';
 import useGetUserLocation from '../../hooks/useGetUserLocation';
 import { usePostQuery } from '../../hooks/usePostQuery';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store/dev';
 
 
 const StationFinder: React.FC<any> = () => {
 
     const { position } = useGetUserLocation()
+    const {   station } = useSelector((state: RootState) => state.user);
 
-    const { data, error, isLoading, refetch } = usePostQuery<any>({
-        endpoint: '/api/Stations/StationsList',
-        params: {
-            "account": "hasWalletAccount"
-        },
-        queryOptions: {
-            enabled: true,
-            refetchInterval: 20000,
-            refetchOnWindowFocus: true,
-            refetchOnMount: true,
-        },
-    })
-
-    if (error) {
-    }
-
-    if (isLoading || position === null) {
-        return <View style={[{ flex: 1 }, generalStyles.ScreenContainer]}>
-            <ActivityIndicator />
-
-        </View>
-    }
+    
 
 
     return (
         <View style={[{ flex: 1 }, generalStyles.ScreenContainer]}>
             <View>
                 <MapHeader 
-                                   stations={data?.data}
+                                   stations={station}
                                    position={position}
                 />
             </View>
 
               <Maps
-                stations={data?.data}
+                stations={station}
                 position={position}
             />  
             <StationsLIst
-                stations={data?.data}
+                stations={station}
                 position={position}
             />
 

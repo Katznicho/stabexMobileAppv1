@@ -18,27 +18,8 @@ const StationListCard: React.FC<any> = React.memo(({ data, position, screen }: a
         return calculateDistance(position?.latitude, position?.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude));
     }, [position, data?.latitude, data?.longitude]);
 
-    // const distance = useMemo(() => {
-    //     // Check if position latitude and longitude are not null
-    //     if (position?.latitude !== null && position?.longitude !== null) {
-    //         // Check if data latitude and longitude are not null
-    //         if (data?.latitude !== null && data?.longitude !== null) {
-    //             return calculateDistance(position.latitude, position.longitude, parseFloat(data.latitude), parseFloat(data.longitude));
-    //         } else {
-    //             // Handle case where data latitude or longitude is null
-    //             return 0; // or return any other default value
-    //         }
-    //     } else {
-    //         // Handle case where position latitude or longitude is null
-    //         return 0; // or return any other default value
-    //     }
-    // }, [position, data?.latitude, data?.longitude]);
 
-    // console.log("========distance============")
-    // console.log(distance(position?.latitude, position?.longitude, parseFloat(data?.latitude), parseFloat(data?.longitude)))
     
-    
-
     return (
         <View>
             <TouchableOpacity

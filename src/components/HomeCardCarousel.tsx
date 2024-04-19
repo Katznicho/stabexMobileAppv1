@@ -1,5 +1,5 @@
 import {  Text, View, Image, Alert, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 import { COLORS, FONTFAMILY } from '../theme/theme'
 import { generalStyles } from '../screens/utils/generatStyles';
 import Carousel from 'react-native-reanimated-carousel';
@@ -7,12 +7,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store/dev';
 import { logoutUser, showAuthScreen } from '../redux/store/slices/UserSlice';
 import { useNavigation } from '@react-navigation/native';
+import useGetUserLocation from '../hooks/useGetUserLocation';
 
 
 const HomeCardCarousel = ({ cards , cardIndex, height , width, carouselHeight, IconComponent, iconName}: any) => {
 
     const dispatch = useDispatch<AppDispatch>();
-    const { user,  isGuest } = useSelector((state: RootState) => state.user);
+    const {  isGuest, station } = useSelector((state: RootState) => state.user);
+    const position = useGetUserLocation();
+
+    
+
+    const onHandlePress = ()=>{
+        console.log(cardIndex)
+        // =>isGuest ? handleShowAlert() :cardIndex==6|| cardIndex==7 ? null : navigation.navigate(cards[cardIndex].route)
+        if(isGuest){
+            return handleShowAlert()
+        }
+        else if(cardIndex==6|| cardIndex==7){
+            return null
+        }
+
+        else if(cardIndex==2){
+            //  setLoading(true)
+            return  navigation.navigate('HomeStationDetails', { station: station[0] ,data:station[0] , position: position });
+        }
+        else{
+            navigation.navigate(cards[cardIndex].route)
+        }
+    }
 
     const handleShowAlert = () => {
         try {
@@ -43,7 +66,7 @@ const HomeCardCarousel = ({ cards , cardIndex, height , width, carouselHeight, I
     return (
         <TouchableOpacity
          activeOpacity={1}
-         onPress={() =>isGuest ? handleShowAlert() :cardIndex==6|| cardIndex==7 ? null : navigation.navigate(cards[cardIndex].route)}
+         onPress={onHandlePress}
         // onPress={() => isGuest ? handleShowAlert() : (cardIndex[cardIndex]?.isDisabled ? null : navigation.navigate(cards[cardIndex].route))}
 
         >

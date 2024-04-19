@@ -19,6 +19,7 @@ const StationListDetails = () => {
     const { data, position } = useRoute<any>().params;
     const { authToken } = useSelector((state: RootState) => state.user);
 
+
     const [openTopUpModal, setOpenTopUpModal] = React.useState<boolean>(true);
     const [products, setProducts] = useState<any>([]);
     const [paymentMethods , setPaymentMethods]=  useState<any>([]);
@@ -87,10 +88,7 @@ const StationListDetails = () => {
                 size={FONTSIZE.size_16}
               />
             </TouchableOpacity>
-
-
           </View>
-
 
           {/* more details */}
         </ImageBackground>
@@ -247,17 +245,7 @@ const styles = StyleSheet.create({
         // marginHorizontal: 40,
         marginVertical: 10
     },
-    CardTitle: {
-        fontFamily: FONTFAMILY.Lovato_Regular,
-        color: COLORS.primaryWhiteHex,
-        fontSize: FONTSIZE.size_14,
-    },
-    CardSubtitle: {
-        fontFamily: FONTFAMILY.Lovato_Light,
-        color: COLORS.primaryWhiteHex,
-        fontSize: FONTSIZE.size_10,
-        // marginHorizontal: SPACING.space_10
-    },
+    
     ImageHeaderBarContainerWithBack: {
         padding: SPACING.space_30,
         flexDirection: 'row',
@@ -282,7 +270,8 @@ const styles = StyleSheet.create({
         flex: 1, // This will make both columns take equal width
       },
       labelStyles: {
-        fontFamily: FONTFAMILY.Lovato_Demi, color: COLORS.primaryWhiteHex
+        fontFamily: FONTFAMILY.Lovato_Demi, color: 
+        COLORS.primaryWhiteHex
       }
 
 })

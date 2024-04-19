@@ -1,13 +1,13 @@
 import { StyleSheet, View, Text, SafeAreaView, StatusBar, Platform } from 'react-native'
 import React, { useState } from 'react'
-import { ActivityIndicator } from '../../components/ActivityIndicator';
 import { generalStyles } from '../utils/generatStyles';
 import StationsFlatList from '../../components/StationsFlatList';
 import { COLORS, FONTSIZE } from '../../theme/theme';
 import ArrowBack from '../../components/ArrowBack';
 import SearchBar from '../../components/SearchBar';
-import { usePostQuery } from '../../hooks/usePostQuery';
 import useGetUserLocation from '../../hooks/useGetUserLocation';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store/dev';
 
 
 const GasStationLIst = () => {
@@ -19,30 +19,9 @@ const GasStationLIst = () => {
         setSearchText('');
     };
     const { position } = useGetUserLocation()
+    const {   station } = useSelector((state: RootState) => state.user);
 
-    const { data, error, isLoading, refetch } = usePostQuery<any>({
-        endpoint: '/api/Stations/StationsList',
-        queryOptions: {
-            enabled: true,
-            refetchInterval: 20000,
-            refetchOnWindowFocus: true,
-            refetchOnMount: true,
-        },
-    })
-
-
-    if (error) {
-        console.log("error", error)
-    }
-
-
-
-    if (isLoading) {
-        return <View style={[{ flex: 1 }, generalStyles.ScreenContainer]}>
-            <ActivityIndicator />
-
-        </View>
-    }
+    
 
     return (
         <SafeAreaView style={[generalStyles.ScreenContainer]}>
@@ -64,7 +43,7 @@ const GasStationLIst = () => {
                     <Text style={[generalStyles.CardTitle, styles.textColor]}>Stations</Text>
                 </View>
                 <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "center" }]}>
-                    <Text style={[generalStyles.CardSubtitle, styles.textColor, { fontSize: FONTSIZE.size_16 }]}>{data?.data?.length} Results</Text>
+                    <Text style={[generalStyles.CardSubtitle, styles.textColor, { fontSize: FONTSIZE.size_16 }]}>{station?.length} Results</Text>
                 </View>
                 <SearchBar
                     searchText={searchText}
@@ -73,9 +52,9 @@ const GasStationLIst = () => {
                 />
             </View>
             {
-                data?.data?.length && (
+                station?.length && (
                     <StationsFlatList
-                        stations={data?.data}
+                        stations={station}
                         position={position}
                         screen="StationGasDetails"
                         searchText={searchText}

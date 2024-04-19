@@ -107,18 +107,18 @@ export default QuickActions
 
 const styles = StyleSheet.create({
     CardTitle: {
-        fontFamily: FONTFAMILY.poppins_medium,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_16,
     },
     CardSubtitle: {
-        fontFamily: FONTFAMILY.poppins_light,
+        fontFamily: FONTFAMILY.Lovato_Regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_10,
         marginHorizontal: SPACING.space_10
     },
     CardPriceCurrency: {
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.Lovato_Bold,
         color: COLORS.primaryOrangeHex,
         fontSize: FONTSIZE.size_18,
     },

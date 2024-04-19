@@ -214,4 +214,24 @@ export const validateConfirmPassword = (confirmPassword: string, password: strin
     return confirmPassword === password; // Check if confirm password matches the original password
 };
 
+export const sortStations = async (stationsToSort: any[], userPosition: any) => {
+    const sorted = await Promise.all(
+        stationsToSort.map(async (station) => {
+            const distance = calculateDistance(
+                userPosition?.latitude,
+                userPosition?.longitude,
+                parseFloat(station?.latitude),
+                parseFloat(station?.longitude)
+            );
+            return { ...station, distance };
+        })
+    );
+
+    sorted.sort((a, b) => {
+        return a.distance - b.distance;
+    });
+
+    return sorted;
+};
+
 

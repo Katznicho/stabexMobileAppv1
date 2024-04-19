@@ -16,13 +16,12 @@ const StationSiteList = () => {
 
     const [searchText, setSearchText] = useState('');
     const [loading, setLoading] = useState(true);
-    const { authToken, user } = useSelector((state: RootState) => state.user);
+
 
     const resetSearch = () => {
         setSearchText('');
     };
     const { position } = useGetUserLocation()
-    // const [position, setPosition] = useState<any>({});
 
 
     const { data, error, isLoading, refetch } = usePostQuery<any>({
@@ -82,15 +81,12 @@ const StationSiteList = () => {
                     <StationsFlatList
                         stations={data?.data}
                         position={position}
-                        // screen="StationGasDetails"
                         searchText={searchText}
                         setSearchText={setSearchText}
                         resetSearch={resetSearch}
                     />
                 )
             }
-
-
         </SafeAreaView>
     )
 }

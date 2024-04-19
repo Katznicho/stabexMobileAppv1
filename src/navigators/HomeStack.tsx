@@ -1,15 +1,14 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
-import { generalStyles } from '../screens/utils/generatStyles';
 import { useNavigation } from '@react-navigation/native';
-import { COLORS } from '../theme/theme';
 import HeaderBar from '../components/HeaderBar';
 import { RootState } from '../redux/store/dev';
 import { useSelector } from 'react-redux';
 import StationSiteList from '../screens/PayOnSite/StationSiteList';
 import StationListDetails from '../screens/PayOnSite/StationListDetails';
-import GasStationLIst from '../screens/Gas/GasStationLIst';
+import ShortestSiteDistance from '../screens/PayOnSite/ShortestSiteDistance';
+
 
 
 
@@ -38,11 +37,10 @@ const HomeStack = () => {
                 name="PayOnSite"
                 component={StationSiteList}
                 options={{
-                 headerShown:false
+                    headerShown: false
                 }}>
 
             </Stack.Screen>
-
 
             <Stack.Screen
                 name="HomeStationDetails"
@@ -51,8 +49,18 @@ const HomeStack = () => {
                     headerShown: false,
                     animation: 'slide_from_bottom',
                 }}>
-
             </Stack.Screen>
+
+            {/*site distance  */}
+            <Stack.Screen
+                name="ShortestSiteDistance"
+                component={ShortestSiteDistance}
+                options={{
+                    headerShown: false,
+                    animation: 'slide_from_bottom',
+                }}>
+            </Stack.Screen>
+            {/* site distance */}
 
         </Stack.Navigator>
     )

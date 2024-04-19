@@ -31,7 +31,7 @@ const PaymentMethodOptionsModal: React.FC<Props> = ({ openPicker, setOpenPicker,
         <RBSheet
             ref={refRBSheet}
             height={550}
-            closeOnDragDown={false}
+            // closeOnDragDown={false}
             closeOnPressMask={false}
             // openDuration={250}
             customStyles={{

@@ -3,7 +3,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { COLORS } from '../../theme/theme';
 import { generalStyles } from '../../screens/utils/generatStyles';
-import AmountScroller from '../AmountScroller';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import { ActivityIndicator } from '../ActivityIndicator';
@@ -194,7 +193,6 @@ const TopUpModal: React.FC<Props> = ({ openPicker, setOpenPicker, card }: Props)
         <RBSheet
             ref={refRBSheet}
             height={600}
-            closeOnDragDown={false}
             closeOnPressMask={false}
             // openDuration={250}
             customStyles={{
@@ -256,14 +254,7 @@ const TopUpModal: React.FC<Props> = ({ openPicker, setOpenPicker, card }: Props)
                         />
                     </View>
 
-                    {/* amount scroller */}
-                    <View>
-                        <AmountScroller
-                            amounts={amounts} amount={amount}
-                            setAmount={setAmount}
-                        />
-                    </View>
-                    {/* amount scroller */}
+
 
                     {/* select payment method */}
                     <SelectPaymentMethod

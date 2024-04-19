@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, ActivityIndicator, Text, SafeAreaView, TouchableOpacity, RefreshControl } from 'react-native';
-import { calculateDistance } from '../screens/utils/helpers/helpers';
 import StationListCard from './StationListCard';
 import { generalStyles } from '../screens/utils/generatStyles';
 import EmptyContainer from './EmptyContainer';
@@ -18,41 +17,14 @@ const StationsFlatList = ({ stations, position, screen = "HomeStationDetails", s
     const fetchData = async () => {
         try {
             setLoading(true);
-            let sorted;
-            if (searchText) {
-                sorted = await sortStations(stations.filter((station: { station_name: string }) =>
-                    station?.station_name?.toLowerCase()?.includes(searchText.toLowerCase())), position);
-            } else {
-                sorted = await sortStations(stations, position);
-            }
-            setSortedStations(sorted);
+            setSortedStations(stations);
         } finally {
             setLoading(false);
             setRefreshing(false);
         }
     };
 
-    const sortStations = async (stationsToSort: any[], userPosition: any) => {
-        const sorted = await Promise.all(
-            stationsToSort.map(async (station) => {
-                const distance = 
-                      calculateDistance(
-                        userPosition?.latitude,
-                        userPosition?.longitude,
-                        parseFloat(station?.latitude),
-                        parseFloat(station?.longitude)
-                    )
-                    // Set distance to infinity if lat or lon is null
-                return { ...station, distance };
-            })
-        );
-
-        sorted.sort((a, b) => {
-            return a.distance - b.distance;
-        });
-
-        return sorted;
-    };
+    
 
     const handleRefresh = () => {
         setRefreshing(true);
