@@ -31,7 +31,8 @@ const LubricantStack = () => {
                     headerLeft: () => (
                         <ArrowBack />
                     ),
-                }}>
+                }}
+                >
 
             </Stack.Screen>
 

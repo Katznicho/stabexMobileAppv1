@@ -8,7 +8,6 @@ import ApplyForCard from '../screens/cardScreens/ApplyForCard';
 import CardScreen from '../screens/cardScreens/CardScreen';
 import CardTransactions from '../screens/cardScreens/CardTransactions';
 import ArrowBack from '../components/ArrowBack';
-import PaymentSummary from '../screens/cardScreens/PaymentSummary';
 import LinkCard from '../screens/cardScreens/LinkCard';
 import VerifyCardOtp from '../screens/cardScreens/VerifyCardOtp';
 import ResendCardOtp from '../screens/cardScreens/ResendCardOtp';
@@ -108,24 +107,6 @@ const CardStack = () => {
             {/* card transactions */}
 
 
-
-            {/* summary */}
-            <Stack.Screen
-                name="PaymentSummary"
-                component={PaymentSummary}
-                options={{
-                    animation: 'slide_from_bottom',
-                    title: 'Payment Summary',
-                    headerStyle: generalStyles.headerStyle,
-                    headerTitleStyle: generalStyles.titleHeaderStyles,
-                    headerTintColor: COLORS.primaryBlackHex,
-                    headerTitleAlign: 'center',
-                    headerLeft: () => (
-                        <ArrowBack />
-                    ),
-                }}
-            ></Stack.Screen>
-            {/* summary */}
 
             {/* verification */}
             <Stack.Screen

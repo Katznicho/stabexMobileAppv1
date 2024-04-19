@@ -1,10 +1,8 @@
 import { View, TouchableOpacity, Image } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { showMessage } from 'react-native-flash-message';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store/dev';
 import UploadComponent from './UploadComponent';
-import { updateProfilePicture } from '../redux/store/slices/UserSlice';
 import { generalStyles } from '../screens/utils/generatStyles';
 import { COLORS } from '../theme/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -59,8 +57,6 @@ const HeadProfileCard = () => {
                         <View
                             style={[generalStyles.absoluteStyles, { bottom: -6, right: -15 }]}
                         >
-
-
                             <TouchableOpacity
                                 style={{
                                     backgroundColor: COLORS.primaryOrangeHex,
@@ -87,16 +83,10 @@ const HeadProfileCard = () => {
                     />
                 )}
             </TouchableOpacity>
-
-
-
             {/* progress bar */}
-
             {/* loader */}
             {loading && <ActivityIndicator />}
             {/* loader */}
-
-
 
             {/* modal section */}
             {showModal && (

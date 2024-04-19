@@ -65,4 +65,3 @@ const ActionSheetComponent = ({ visible, setVisible }: any) => {
 
 export default ActionSheetComponent
 
-const styles = StyleSheet.create({})

@@ -11,8 +11,6 @@ const SelectPaymentMethod = ({ selectedPaymentOption, setSelectedPaymentOption }
 
     const [openPicker, setOpenPicker] = useState<boolean>(false)
 
-
-
     const { data, error, isLoading, refetch } = usePostQuery<any>({
         endpoint: '/api/Payment/PaymentModes',
 

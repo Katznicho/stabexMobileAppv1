@@ -158,7 +158,8 @@ const Login = () => {
                     },
                     authToken: token,
                     isGuest: false,
-                    linkedCard: null
+                    linkedCard: null,
+                    station: []
                   }),
                 );
               } else {

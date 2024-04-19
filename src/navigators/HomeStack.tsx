@@ -7,7 +7,10 @@ import { RootState } from '../redux/store/dev';
 import { useSelector } from 'react-redux';
 import StationSiteList from '../screens/PayOnSite/StationSiteList';
 import StationListDetails from '../screens/PayOnSite/StationListDetails';
-import ShortestSiteDistance from '../screens/PayOnSite/ShortestSiteDistance';
+import PaymentSiteSummary from '../screens/PayOnSite/PaymentSiteSummary';
+import { generalStyles } from '../screens/utils/generatStyles';
+import ArrowBack from '../components/ArrowBack';
+import { COLORS } from '../theme/theme';
 
 
 
@@ -50,17 +53,25 @@ const HomeStack = () => {
                     animation: 'slide_from_bottom',
                 }}>
             </Stack.Screen>
-
-            {/*site distance  */}
+            {/* pay on site summary */}
             <Stack.Screen
-                name="ShortestSiteDistance"
-                component={ShortestSiteDistance}
+                name="PayOnSiteSummary"
+                component={PaymentSiteSummary}
                 options={{
-                    headerShown: false,
                     animation: 'slide_from_bottom',
-                }}>
+                    title: 'Payment Summary',
+                    headerStyle: generalStyles.headerStyle,
+                    headerTitleStyle: generalStyles.titleHeaderStyles,
+                    headerTintColor: COLORS.primaryBlackHex,
+                    headerTitleAlign: 'center',
+                    headerLeft: () => (
+                        <ArrowBack />
+                    ),
+                }}
+                >
             </Stack.Screen>
-            {/* site distance */}
+            {/* pay on site summary */}
+
 
         </Stack.Navigator>
     )

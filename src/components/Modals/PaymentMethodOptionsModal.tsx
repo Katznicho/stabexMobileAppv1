@@ -80,7 +80,7 @@ const PaymentMethodOptionsModal: React.FC<Props> = ({ openPicker, setOpenPicker,
                     paymentOptions?.map((option: any) => (
                         <TouchableOpacity
                             activeOpacity={1}
-                            key={option.id}
+                            key={option.Id}
 
                             onPress={() => {
                                 setSelectedPaymentOption(option)

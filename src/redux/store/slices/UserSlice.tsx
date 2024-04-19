@@ -84,8 +84,6 @@ export const userSlice = createSlice({
       state.isLoggedIn = false
     },
     storeStations: (state, action: PayloadAction<any>) => {
-      console.log("storing stations")
-       console.log(action.payload)
       state.station = action.payload
     }
 

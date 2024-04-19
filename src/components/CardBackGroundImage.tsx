@@ -41,7 +41,7 @@ const CardBackGroundImage: React.FC<any> = ({ card }: any) => {
                     <Text style={[generalStyles.CardTitle, {
                         color: COLORS.primaryRedHex,
                         fontSize: FONTSIZE.size_18,
-                        fontFamily: FONTFAMILY.poppins_medium,
+                        fontFamily: FONTFAMILY.Lovato_Regular,
                         fontWeight: "bold",
                         textAlign: "center",
                         textTransform: "uppercase",
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     textStyles: {
         color: COLORS.primaryOrangeHex,
         fontSize: FONTSIZE.size_28,
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.Lovato_Bold,
         alignSelf: "center"
     },
     boxStyles: {

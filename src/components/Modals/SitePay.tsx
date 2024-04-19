@@ -5,7 +5,6 @@ import { COLORS, FONTFAMILY, FONTSIZE } from '../../theme/theme';
 import { generalStyles } from '../../screens/utils/generatStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { showMessage } from 'react-native-flash-message';
-import call from 'react-native-phone-call'
 import { useNavigation } from '@react-navigation/native';
 import SelectPaymentMethod from '../SelectPaymentMethod';
 type Props = {
@@ -15,9 +14,8 @@ type Props = {
 };
 
 
-
-
 const SitePay: React.FC<Props> = ({ openPicker, setOpenPicker, station }: Props) => {
+
 
 
 
@@ -54,23 +52,8 @@ const SitePay: React.FC<Props> = ({ openPicker, setOpenPicker, station }: Props)
         }
 
         else {
-            if (selectedPaymentMethod === "AIRTEL") {
-
-                return call({
-                    number: `*185*9*${station?.airtel_merchant_code ?? '1191184'}*${amount}*${station?.airtel_merchant_code ?? '1191184#'}`,
-                    prompt: false,
-                    skipCanOpen: true
-                }).catch(console.error);
-
-            }
-            else {
-                return call({
-                    number: `*165*3*${station?.mtn_merchant_code ?? '319142'}*${amount}*1#`,
-                    prompt: false,
-                    skipCanOpen: true
-                }).catch(console.error);
-
-            }
+           return navigation.navigate("PayOnSiteSummary", { amount, selectedPaymentMethod, station })
+            
         }
 
     }
@@ -184,7 +167,12 @@ const SitePay: React.FC<Props> = ({ openPicker, setOpenPicker, station }: Props)
                     </View>
 
                     <TouchableOpacity
-                        style={[generalStyles.loginContainer, styles.buttonCardStyles]}
+                        style={[
+                            generalStyles.loginContainer, 
+                            styles.buttonCardStyles,
+                            (!selectedPaymentOption && !amount) && { opacity: 0.5 }
+
+                        ]}
                         onPress={() => handlePayNow()}
 
                     >
